@@ -1,0 +1,24 @@
+.header
+    background-color: white
+    &.-sticky
+        left: 0
+        position: fixed 
+        top: -100%
+        +transition(500ms)
+        width: 100%
+        z-index: 10
+        &.-stuck
+            top: 0
+    >#header
+        >.container
+            align-items: center
+            @extend .flex
+            flex-flow: row wrap 
+            justify-content: space-between
+            padding-top: 15px
+            padding-bottom: 15px
+            >.logo
+                flex: 0 0 auto 
+                img 
+                    +mq('820px', max)
+                        max-width: 70px
