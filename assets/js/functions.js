@@ -26,6 +26,27 @@ $(document).ready(function () {
     $(window).resize(function(){
         _closeMenu()
     });
+    $(".login-form").validate({
+        rules: {
+            login: {
+                required: true,
+                normalizer: function(value) {
+                    return $.trim(value);
+                }
+            },
+            senha: {
+                required: true
+            }            
+        },
+        messages: {
+            login: {
+                required: "Campo obrigatorio."
+            },
+            senha: {
+                required: "Campo obrigatorio."
+            }            
+        }
+    });
 });
       
       
