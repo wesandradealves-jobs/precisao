@@ -1,0 +1,52 @@
+.navigation
+    +rem('font-size', 14px)
+    +mq('820px', max)
+        +rem('font-size', 12px)
+    &.-mobile
+        +height(500ms)
+        max-height: 0
+        overflow: hidden
+        &.-on
+            max-height: 600px
+        >ul 
+            >li 
+                background-color: $red
+                border-bottom: 1px darken($red, 15%) solid 
+                color: white 
+                display: block
+                +rem('font-size', 11px)
+                padding: 8px 15px
+    &:not(.-mobile)
+        flex: 1
+        >ul 
+            align-items: center
+            @extend .flex
+            flex-flow: row wrap 
+            justify-content: flex-end 
+            width: 100%
+            >li 
+                margin-right: 15px
+                position: relative
+                text-align: center
+                &:last-child
+                    display: none
+                &:not(:last-child)
+                    &::after 
+                        background-color: $red
+                        content: ""
+                        display: block
+                        height: 2px
+                        left: 0
+                        position: absolute
+                        top: 100%
+                        +transition(500ms)
+                        width: 0
+                    &:hover
+                        color: $red
+                        &::after
+                            width: 100%        
+                +mq('690px', max)
+                    &:not(:last-child)
+                        display: none 
+                    &:last-child 
+                        display: inline-block  

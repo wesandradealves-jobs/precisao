@@ -1,0 +1,65 @@
+.cotacao-form
+    +animation('left-to-right', 500ms)
+    background-color: $lightgray
+    +mq('820px', max)
+        margin: 0 auto
+    padding: 25px 35px 0
+    +mq('480px', max)
+        padding-left: 15px
+        padding-right: 15px
+    +shadow(0px,0px,20px,-10px,black)
+    width: 327px
+    +mq('480px', max)
+        width: 100%
+    >.cotacao-header
+        >.title
+            +rem('font-size', 16px)
+            font-weight: bold 
+            text-align: center 
+        >.text
+            +rem('font-size', 14px)
+            +mq('480px', max)
+                +rem('font-size', 11px)
+            margin: 15px auto
+            text-align: center
+    >.cotacao-content
+        background-color: rgba(0,0,0,.02)
+        border-top: 1px rgba(0,0,0,.1) solid
+        margin: 0 -35px auto 
+        +mq('480px', max)
+            margin: 0 -15px auto
+        padding: 25px 35px 25px
+        +mq('480px', max)
+            padding-left: 15px
+            padding-right: 15px
+        >span 
+            display: block 
+            width: 100%
+            &:not(:last-child)
+                margin-bottom: 20px
+                +mq('480px', max)
+                    margin-bottom: 8px
+        button 
+            width: 100%
+        input, textarea, select, .custom-select
+            @extend .btn
+            background-color: white
+            border: 1px rgba(0,0,0,.1) solid
+            +rem('font-size', 12px)
+            +mq('480px', max)
+                +rem('font-size', 11px)
+            color: gray
+            font-weight: normal
+            text-align: left
+            text-transform: initial 
+            width: inherit
+            &:focus,&:active
+                border-color: gray
+            &[placeholder]
+                color: gray
+            &::-moz-placeholder
+                color: gray
+            &::-webkit-input-placeholder
+                color: gray
+            &:-ms-input-placeholder 
+                color: gray

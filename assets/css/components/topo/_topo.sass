@@ -1,0 +1,18 @@
+.header
+    >#topo
+        background-color: $lightgray
+        color: $red
+        +rem('font-size', 12px)
+        font-weight: bold
+        +mq('820px', max)
+            text-align: center
+        >.container
+            padding-top: 8px
+            padding-bottom: 8px
+            >.phone
+                &::before
+                    content: url(assets/imgs/phone.png)
+                    display: inline-block
+                    line-height: 0
+                    margin-right: 6px
+                    vertical-align: middle
