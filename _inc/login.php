@@ -20,6 +20,7 @@
                     if(isset($resultado)){
                         $_SESSION['login'] = $resultado['login'];
                         $_SESSION['uid'] = $resultado['id'];
+                        $_SESSION['timestamp']=time();
                         header("Location: ../profile/index.php");
                     }  else{    
                         $_SESSION['loginErro'] = "Usuário ou senha Inválido";
@@ -30,7 +31,7 @@
                     header("Location: ../login.php");
                 }
             } else {
-                $_SESSION['loginErro'] = "Please re-enter your reCAPTCHA.";
+                $_SESSION['loginErro'] = "Por favor, digite o reCAPTCHA.";
                 header("Location: ../login.php");
             }
     } else {

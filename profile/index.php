@@ -1,6 +1,7 @@
 <?php
     require_once('../_inc/db.php');
     session_start();
+    require_once('../_inc/expire.php');
     if(!$_SESSION['login']){
         header("Location: ../login.php");
     } else {
