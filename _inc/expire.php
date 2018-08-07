@@ -1,5 +1,6 @@
 <?php 
     $idletime=900; //15 minutos
+    $idleMsgs=10; //10s
     if (time()-$_SESSION['timestamp']>$idletime){
         // session_destroy();
         // session_unset();

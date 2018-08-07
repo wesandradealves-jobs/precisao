@@ -81,6 +81,7 @@
                     </li> -->
                     <li>
                         <a class="profile-pic" href="<?php echo "edit-profile.php?euid=".$uid; ?>"> <img src="https://pixinvent.com/materialize-material-design-admin-template/images/avatar/avatar-7.png" alt="user-img" width="36" class="img-circle">Seja bem vindo(a), <b class="hidden-xs"><?php echo $_SESSION['login']; ?></b></a>
+                        <a class="acesse" href="http://localhost/precisao/" title="Acesse seu site" target="_blank">Acesse seu site</a>
                     </li>
                 </ul>
             </div>
@@ -99,13 +100,19 @@
                 </div>
                 <ul class="nav" id="side-menu">
                     <li style="padding: 70px 0 0;">
-                        <a href="<?php echo "index.php?euid=".$uid; ?>" class="waves-effect"><i class="fa fa-clock-o fa-fw" aria-hidden="true"></i>Dashboard</a>
+                        <a href="<?php echo "index.php?euid=".$uid; ?>" class="waves-effect"><i class="fa fa-dashboard fa-fw" aria-hidden="true"></i>Dashboard</a>
                     </li>
                     <li>
-                        <a href="<?php echo "usuarios.php?euid=".$uid; ?>" class="waves-effect"><i class="fa fa-user fa-fw" aria-hidden="true"></i>Usuários</a>
+                        <a href="<?php echo "usuarios.php?euid=".$uid; ?>" class="waves-effect"><i class="fa fa-group fa-fw" aria-hidden="true"></i>Usuários</a>
                     </li>
+                    <li>
+                        <a href="<?php echo "contato.php?euid=".$uid; ?>" class="waves-effect"><i class="fa fa-envelope-o fa-fw" aria-hidden="true"></i>Contato</a>
+                    </li>
+                    <li>
+                        <a href="<?php echo "portfolio-comercial.php?euid=".$uid; ?>" class="waves-effect"><i class="fa fa-book fa-fw" aria-hidden="true"></i>Portfolio Comercial</a>
+                    </li> 
                     <!-- <li>
-                        <a href="profile.html" class="waves-effect"><i class="fa fa-user fa-fw" aria-hidden="true"></i>Profile</a>
+                        <a href="profile.html" class="waves-effect"><i class="fa fa-group fa-fw" aria-hidden="true"></i>Profile</a>
                     </li>
                     <li>
                         <a href="basic-table.html" class="waves-effect"><i class="fa fa-table fa-fw" aria-hidden="true"></i>Basic Table</a>
@@ -225,7 +232,7 @@
                                     <option>July 2017</option>
                                 </select>
                             </div> -->
-                            <h3 class="box-title table-header">Usuários recentes</h3>
+                            <h3 class="box-title table-header">Usuários</h3>
                             <div class="table-responsive">
                                 <table class="table">
                                     <thead class="table-header">

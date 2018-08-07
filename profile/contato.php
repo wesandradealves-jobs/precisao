@@ -12,15 +12,15 @@
     
     // Pegar dados
 
-    $stmt = $conn->prepare("SELECT `login`, `senha`, `lastupdate` FROM `usuarios` WHERE id = $euid");
+    $stmt = $conn->prepare("SELECT `telefone`, `email`, `endereco` FROM `contato`");
 
     if($stmt){
         $stmt->execute();
-        $stmt->bind_result($login, $senha, $lastupdate);
+        $stmt->bind_result($telefone, $email, $endereco);
         while($stmt->fetch()) {
-            $alogin = $login;
-            $asenha = $senha;
-            $alastupdate = $lastupdate;
+            $atelefone = $telefone;
+            $aemail = $email;
+            $aendereco = $endereco;
         }
         $stmt->close();
     }
@@ -28,36 +28,24 @@
 
     // Update
 
-    if($euid){
-        if(isset($_POST['update'])){
-            if(is_numeric($_POST['id'])){
-                $id = $_POST['id'];
-                $login = htmlentities($_POST['login'], ENT_QUOTES);
-                $senha = md5(htmlentities($_POST['senha'], ENT_QUOTES));
-                $time = time();
-                $lastupdate = date("Y-m-d G:i:s", $time);
+    if(isset($_POST['update'])){
+        $telefone = htmlentities($_POST['telefone'], ENT_QUOTES);
+        $email = htmlentities($_POST['email'], ENT_QUOTES);
+        $endereco = htmlentities($_POST['endereco'], ENT_QUOTES);
 
-                if($login && $senha){
-                    $stmt = $conn->prepare("UPDATE usuarios SET `senha` = ?, `login` = ?, `lastupdate` = ? WHERE `usuarios`.`id` = $euid");
+        $stmt = $conn->prepare("UPDATE contato SET `telefone` = ?, `email` = ?, `endereco` = ?");
 
-                    if(isset($stmt) && $stmt !== FALSE) {
-                        $stmt->bind_param("sss", $senha, $login, $lastupdate);
-                        $stmt->execute();
-                        $stmt->close();
-                    } else {
-                        die($conn->error);
-                    }
-                    
-                    if($uid == $euid && $senha != $asenha){
-                        header("Location: ../_inc/logout.php?action=update");
-                    } else {
-                        $_SESSION['acessedUid'] = $euid;
-                        header("Location: edit-profile.php?misc=true&euid=".$_SESSION['acessedUid']);
-                    }
-                    // $conn->close();
-                }
-            }
+        if(isset($stmt) && $stmt !== FALSE) {
+            $stmt->bind_param("sss", $telefone, $email, $endereco);
+            $stmt->execute();
+            $stmt->close();
+        } else {
+            die($conn->error);
         }
+        
+        $_SESSION['acessedUid'] = $euid;
+        header("Location: contato.php?euid=".$_SESSION['acessedUid']);
+        // $conn->close();
     }
 ?>
 <!DOCTYPE html>
@@ -161,7 +149,7 @@
                     </li>
                     <li>
                         <a href="<?php echo "portfolio-comercial.php?euid=".$uid; ?>" class="waves-effect"><i class="fa fa-book fa-fw" aria-hidden="true"></i>Portfolio Comercial</a>
-                    </li> 
+                    </li>                    
                     <!-- <li>
                         <a href="profile.html" class="waves-effect"><i class="fa fa-group fa-fw" aria-hidden="true"></i>Profile</a>
                     </li>
@@ -196,14 +184,8 @@
         <div id="page-wrapper">
             <div class="container-fluid">
                 <div class="row bg-title">
-                    <div class="col-lg-8 col-md-4 col-sm-4 col-xs-12">
-                        <h4 class="page-title">Minha Conta / Editar Perfil</h4> <p class="last-update"><b>Última Atualização: </b><i><?php echo $alastupdate; ?></i></p></div>
-                    <div class="col-lg-4 col-sm-8 col-md-8 col-xs-12">
-                        <!-- <a href="https://wrappixel.com/templates/ampleadmin/" target="_blank" class="btn btn-danger pull-right m-l-20 hidden-xs hidden-sm waves-effect waves-light">Upgrade to Pro</a> -->
-                        <ol class="breadcrumb">
-                            <li><a href="<?php echo "index.php?euid=".$uid; ?>">Dashboard</a></li>
-                            <li class="active">Minha Conta</li>
-                        </ol>
+                    <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
+                        <h4 class="page-title">Contato</h4> 
                     </div>
                 </div>
                 <!-- /.row -->
@@ -236,52 +218,26 @@
                         <div class="white-box">
                             <form class="form-horizontal form-material" action="" method="POST">
                                 <div class="form-group">
-                                    <label class="col-md-12">Login</label>
+                                    <label class="col-md-12">Telefone</label>
                                     <div class="col-md-12">
-                                        <input name="login" <?php echo ($uid == $euid) ? 'disabled' : '' ?> type="text" value="<?php echo $alogin; ?>" placeholder="<?php echo $alogin; ?>" class="form-control form-control-line"> 
+                                        <input name="telefone" type="text" value="<?php echo $atelefone; ?>" class="form-control form-control-line"> 
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label class="col-md-12">Senha</label>
+                                    <label class="col-md-12">E-mail</label>
                                     <div class="col-md-12">
-                                        <input name="senha" type="password" value="<?php echo $asenha; ?>" class="form-control form-control-line"> </div>
-                                </div>
-                                
-                                <input type="hidden" value="<?php echo $euid; ?>" name="id" />
-                                <?php if($uid == $euid) : ?>
-                                    <input type="hidden" value="<?php echo $alogin; ?>" name="login" />
-                                <?php endif; ?>
-                                <!-- <div class="form-group">
-                                    <label for="example-email" class="col-md-12">Email</label>
-                                    <div class="col-md-12">
-                                        <input type="email" placeholder="johnathan@admin.com" class="form-control form-control-line" name="example-email" id="example-email"> </div>
-                                </div>
-                                <div class="form-group">
-                                    <label class="col-md-12">Phone No</label>
-                                    <div class="col-md-12">
-                                        <input type="text" placeholder="123 456 7890" class="form-control form-control-line"> </div>
-                                </div>
-                                <div class="form-group">
-                                    <label class="col-md-12">Message</label>
-                                    <div class="col-md-12">
-                                        <textarea rows="5" class="form-control form-control-line"></textarea>
+                                        <input name="email" type="text" value="<?php echo $aemail; ?>" class="form-control form-control-line">
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label class="col-sm-12">Select Country</label>
-                                    <div class="col-sm-12">
-                                        <select class="form-control form-control-line">
-                                            <option>London</option>
-                                            <option>India</option>
-                                            <option>Usa</option>
-                                            <option>Canada</option>
-                                            <option>Thailand</option>
-                                        </select>
+                                    <label class="col-md-12">Endereço</label>
+                                    <div class="col-md-12">
+                                        <textarea name="endereco" rows="5" class="form-control form-control-line"><?php echo utf8_decode($aendereco); ?></textarea>
                                     </div>
-                                </div> -->
+                                </div>
                                 <div class="form-group">
                                     <div class="col-sm-12">
-                                        <input type="submit" name="update" class="btn btn-success" value="Atualizar perfil" />
+                                        <input type="submit" name="update" class="btn btn-success" value="Salvar" />
                                     </div>
                                 </div>
                             </form>
