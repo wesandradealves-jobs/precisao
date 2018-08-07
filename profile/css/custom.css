@@ -4,3 +4,20 @@
 .navbar-header{
     background-color: #f33155!important
 }
+.bg-title h4, .bg-title p{
+    display: inline-block;
+    margin-top: 0!important;
+    margin-bottom: 0;
+    margin-right: 5px;
+    vertical-align: baseline;
+}
+.bg-title .last-update{
+    font-size: 1rem;
+    color: lightgray;
+}
+.table-header{
+    text-transform: uppercase;
+}
+#side-menu > li > a.active{
+    border-color: black!important;
+}

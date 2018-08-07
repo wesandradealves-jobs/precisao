@@ -1,7 +1,7 @@
 <?php
     require_once('../_inc/db.php');
     session_start();
-        if(!$_SESSION['login']){
+    if(!$_SESSION['login']){
         header("Location: ../login.php");
     } else {
         $uid = $_SESSION['uid'];
@@ -10,14 +10,15 @@
 
     // Pegar dados
 
-    $stmt = $conn->prepare("SELECT `login`, `senha` FROM `usuarios` WHERE id = $euid");
+    $stmt = $conn->prepare("SELECT `login`, `senha`, `lastupdate` FROM `usuarios` WHERE id = $euid");
 
     if($stmt){
         $stmt->execute();
-        $stmt->bind_result($login, $senha);
+        $stmt->bind_result($login, $senha, $lastupdate);
         while($stmt->fetch()) {
             $alogin = $login;
             $asenha = $senha;
+            $alastupdate = $lastupdate;
         }
         $stmt->close();
     }
@@ -31,12 +32,14 @@
                 $id = $_POST['id'];
                 $login = htmlentities($_POST['login'], ENT_QUOTES);
                 $senha = md5(htmlentities($_POST['senha'], ENT_QUOTES));
+                $time = time();
+                $lastupdate = date("Y-m-d G:i:s", $time);
 
                 if($login && $senha){
-                    $stmt = $conn->prepare("UPDATE usuarios SET `senha` = ?, `login` = ? WHERE `usuarios`.`id` = $euid");
+                    $stmt = $conn->prepare("UPDATE usuarios SET `senha` = ?, `login` = ?, `lastupdate` = ? WHERE `usuarios`.`id` = $euid");
 
                     if(isset($stmt) && $stmt !== FALSE) {
-                        $stmt->bind_param("ss", $senha, $login);
+                        $stmt->bind_param("sss", $senha, $login, $lastupdate);
                         $stmt->execute();
                         $stmt->close();
                     } else {
@@ -150,7 +153,7 @@
                 </div>
                 <ul class="nav" id="side-menu">
                     <li style="padding: 70px 0 0;">
-                        <!-- <a href="index.php" class="waves-effect"><i class="fa fa-clock-o fa-fw" aria-hidden="true"></i>Dashboard</a> -->
+                        <a href="<?php echo "index.php?euid=".$uid; ?>" class="waves-effect"><i class="fa fa-clock-o fa-fw" aria-hidden="true"></i>Dashboard</a>
                     </li>
                     <!-- <li>
                         <a href="profile.html" class="waves-effect"><i class="fa fa-user fa-fw" aria-hidden="true"></i>Profile</a>
@@ -186,12 +189,12 @@
         <div id="page-wrapper">
             <div class="container-fluid">
                 <div class="row bg-title">
-                    <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
-                        <h4 class="page-title">Minha Conta</h4> </div>
-                    <div class="col-lg-9 col-sm-8 col-md-8 col-xs-12">
+                    <div class="col-lg-8 col-md-4 col-sm-4 col-xs-12">
+                        <h4 class="page-title">Minha Conta / Editar Perfil</h4> <p class="last-update"><b>Última Atualização: </b><i><?php echo $alastupdate; ?></i></p></div>
+                    <div class="col-lg-4 col-sm-8 col-md-8 col-xs-12">
                         <!-- <a href="https://wrappixel.com/templates/ampleadmin/" target="_blank" class="btn btn-danger pull-right m-l-20 hidden-xs hidden-sm waves-effect waves-light">Upgrade to Pro</a> -->
                         <ol class="breadcrumb">
-                            <li><a href="#">Dashboard</a></li>
+                            <li><a href="<?php echo "index.php?euid=".$uid; ?>">Dashboard</a></li>
                             <li class="active">Minha Conta</li>
                         </ol>
                     </div>

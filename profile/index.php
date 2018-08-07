@@ -1,7 +1,7 @@
 <?php
     require_once('../_inc/db.php');
     session_start();
-        if(!isset($_SESSION['login'])){
+    if(!$_SESSION['login']){
         header("Location: ../login.php");
     } else {
         $uid = $_SESSION['uid'];
@@ -98,7 +98,7 @@
                 </div>
                 <ul class="nav" id="side-menu">
                     <li style="padding: 70px 0 0;">
-                        <!-- <a href="index.php" class="waves-effect"><i class="fa fa-clock-o fa-fw" aria-hidden="true"></i>Dashboard</a> -->
+                        <a href="<?php echo "index.php?euid=".$uid; ?>" class="waves-effect"><i class="fa fa-clock-o fa-fw" aria-hidden="true"></i>Dashboard</a>
                     </li>
                     <!-- <li>
                         <a href="profile.html" class="waves-effect"><i class="fa fa-user fa-fw" aria-hidden="true"></i>Profile</a>
@@ -207,7 +207,7 @@
                 <!-- ============================================================== -->
                 <div class="row">
                     <?php 
-                        if ($result = $conn->query("SELECT * FROM usuarios ORDER BY id")) :
+                        if ($result = $conn->query("SELECT * FROM usuarios ORDER BY id DESC LIMIT 5")) :
                             if ($result->num_rows > 0) :
                     ?>
                     <div class="col-md-12 col-lg-12 col-sm-12">
@@ -221,14 +221,15 @@
                                     <option>July 2017</option>
                                 </select>
                             </div> -->
-                            <h3 class="box-title">Usuarios recentes</h3>
+                            <h3 class="box-title table-header">Usuários recentes</h3>
                             <div class="table-responsive">
                                 <table class="table">
-                                    <thead>
+                                    <thead class="table-header">
                                         <tr>
                                             <th>#</th>
                                             <th>ALIAS</th>
                                             <th>INSERIDO EM</th>
+                                            <th>Última Atualização</th>
                                             <th>-</th>
                                         </tr>
                                     </thead>
@@ -237,11 +238,19 @@
                                         <?php while ($row = $result->fetch_object()) : ?>
                                         <tr>
                                             <td><?php echo $row->id; ?></td>
-                                            <td class="txt-oflo"><?php echo $row->login; ?></td>
+                                            <td class="txt-oflo"><?php echo $row->login.(($row->id == $uid) ? ' (Você)' : ''); ?></td>
                                             <td class="txt-oflo"><?php echo $row->date; ?></td>
+                                            <td class="txt-oflo"><?php echo $row->lastupdate; ?></td>
                                             <td><a class="action" href="<?php echo "edit-profile.php?euid=".$row->id; ?>">Editar</a></td>
                                         </tr>
                                         <?php endwhile; ?>
+                                        <tr>
+                                            <td>
+                                                <?php if($result->num_rows >= 5) : ?>
+                                                    <a href="<?php echo "usuarios.php?euid=".$uid; ?>">Ver Todos</a>
+                                                <?php endif; ?>
+                                            </td>
+                                        </tr>
                                     </tbody>
                                 </table>
                             </div>
