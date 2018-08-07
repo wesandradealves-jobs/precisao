@@ -19,7 +19,8 @@
 
                     if(isset($resultado)){
                         $_SESSION['login'] = $resultado['login'];
-                        header("Location: ../dashboard.php");
+                        $_SESSION['uid'] = $resultado['id'];
+                        header("Location: ../profile/index.php");
                     }  else{    
                         $_SESSION['loginErro'] = "Usuário ou senha Inválido";
                         header("Location: ../login.php");
