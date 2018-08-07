@@ -232,7 +232,7 @@
                                     <option>July 2017</option>
                                 </select>
                             </div> -->
-                            <h3 class="box-title table-header">Usuários</h3>
+                            <h3 class="box-title table-header">Usuários (<a href="<?php echo "adicionar-usuario.php?euid=".$uid; ?>" title="Adicionar Novo">Adicionar novo usuário</a>)</h3>
                             <div class="table-responsive">
                                 <table class="table">
                                     <thead class="table-header">
@@ -252,7 +252,7 @@
                                             <td class="txt-oflo"><?php echo $row->login.(($row->id == $uid) ? ' (Você)' : ''); ?></td>
                                             <td class="txt-oflo"><?php echo $row->date; ?></td>
                                             <td class="txt-oflo"><?php echo $row->lastupdate; ?></td>
-                                            <td><a class="action" href="<?php echo "edit-profile.php?euid=".$row->id; ?>">Editar</a></td>
+                                            <td><a class="action" href="<?php echo "edit-profile.php?euid=".$row->id; ?>">Editar</a> | <a class="action" href="<?php echo "../_inc/delete.php?uid=".$uid."&id=".$row->id; ?>">Deletar</a></td>
                                         </tr>
                                         <?php endwhile; ?>
                                     </tbody>
