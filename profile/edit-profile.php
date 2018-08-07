@@ -6,7 +6,7 @@
     } else {
         $uid = $_SESSION['uid'];
     }
-    $euid = isset($_GET['euid']);
+    $euid = $_GET['euid'];
 
     // Pegar dados
 
@@ -154,6 +154,9 @@
                 <ul class="nav" id="side-menu">
                     <li style="padding: 70px 0 0;">
                         <a href="<?php echo "index.php?euid=".$uid; ?>" class="waves-effect"><i class="fa fa-clock-o fa-fw" aria-hidden="true"></i>Dashboard</a>
+                    </li>
+                    <li>
+                        <a href="<?php echo "usuarios.php?euid=".$uid; ?>" class="waves-effect"><i class="fa fa-user fa-fw" aria-hidden="true"></i>Usuários</a>
                     </li>
                     <!-- <li>
                         <a href="profile.html" class="waves-effect"><i class="fa fa-user fa-fw" aria-hidden="true"></i>Profile</a>

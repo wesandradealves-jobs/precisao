@@ -210,7 +210,7 @@
                 <!-- ============================================================== -->
                 <div class="row">
                     <?php 
-                        if ($result = $conn->query("SELECT * FROM usuarios ORDER BY id DESC LIMIT 5")) :
+                        if ($result = $conn->query("SELECT * FROM usuarios ORDER BY id DESC")) :
                             if ($result->num_rows > 0) :
                     ?>
                     <div class="col-md-12 col-lg-12 col-sm-12">
@@ -247,13 +247,6 @@
                                             <td><a class="action" href="<?php echo "edit-profile.php?euid=".$row->id; ?>">Editar</a></td>
                                         </tr>
                                         <?php endwhile; ?>
-                                        <?php if($result->num_rows >= 5) : ?>
-                                        <tr>
-                                            <td>
-                                                <a href="<?php echo "usuarios.php?euid=".$uid; ?>">Ver Todos</a>
-                                            </td>
-                                        </tr>
-                                        <?php endif; ?>
                                     </tbody>
                                 </table>
                             </div>
