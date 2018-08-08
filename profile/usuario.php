@@ -252,13 +252,13 @@
                                     <label class="col-md-12">Login</label>
                                     <div class="col-md-12">
                                         <?php $euid = isset($id) ? $id : ''; ?>
-                                        <input name="login" <?php echo ($uid == $euid) ? 'disabled' : '' ?> type="text" value="<?php echo (isset($login)) ? $login : ''; ?>" class="form-control form-control-line"> 
+                                        <input name="login" <?php echo ($uid == $euid) ? 'disabled' : '' ?> type="text" value="<?php echo (isset($login) && isset($id)) ? $login : ''; ?>" class="form-control form-control-line"> 
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label class="col-md-12">Senha</label>
                                     <div class="col-md-12">
-                                    <input name="senha" type="password" value="<?php echo (isset($senha)) ? $senha : ''; ?>" class="form-control form-control-line"> </div>
+                                    <input name="senha" type="password" value="<?php echo (isset($senha) && isset($id)) ? $senha : ''; ?>" class="form-control form-control-line"> </div>
                                 </div>
 
                                 <?php if($uid == $euid): ?>
