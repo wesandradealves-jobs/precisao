@@ -45,147 +45,28 @@
             $stmt->close();
         }
         if(isset($_POST['update'])) :
-            if(is_numeric($id)){
+            if(is_numeric($id) && ($_POST['login'] && $_POST['senha'])){
                 $login = htmlentities($_POST['login'], ENT_QUOTES);
                 $senha = ($_POST['senha'] == $senha) ? $senha : md5(htmlentities($_POST['senha'], ENT_QUOTES));
                 $time = time();
                 $lastupdate = date("Y-m-d G:i:s", $time);
-                if($login && $senha){
-                    $stmt = $conn->prepare("UPDATE usuarios SET `senha` = ?, `login` = ?, `lastupdate` = ? WHERE `usuarios`.`id` = $id");
-                    if(isset($stmt) && $stmt !== FALSE) {
-                        $stmt->bind_param("sss", $senha, $login, $lastupdate);
-                        $stmt->execute();
-                        $stmt->close();
-                    } else {
-                        die($conn->error);
-                    }
-                    
-                    if($id == $euid && $senha != $asenha){
-                        header("Location: ../_inc/logout.php?action=update");
-                    } else {
-                        header("Location: usuario.php?id=".$id."&euid=".$euid);
-                    }
+                $stmt = $conn->prepare("UPDATE usuarios SET `senha` = ?, `login` = ?, `lastupdate` = ? WHERE `usuarios`.`id` = $id");
+                if(isset($stmt) && $stmt !== FALSE) {
+                    $stmt->bind_param("sss", $senha, $login, $lastupdate);
+                    $stmt->execute();
+                    $stmt->close();
+                } else {
+                    die($conn->error);
+                }
+                
+                if($id == $euid && $senha != $asenha){
+                    header("Location: ../_inc/logout.php?action=update");
+                } else {
+                    header("Location: usuario.php?id=".$id."&euid=".$euid);
                 }
             }
         endif; 
-
-
-        // if(isset($_POST['update'])) :
-        //     if(is_numeric($id)){
-        //         $login = htmlentities($_POST['login'], ENT_QUOTES);
-        //         $senha = md5(htmlentities($_POST['senha'], ENT_QUOTES));
-        //         $time = time();
-        //         $lastupdate = ($lastupdate) ? $lastupdate : date("Y-m-d G:i:s", $time);
-
-        //         if($login && $senha){
-        //             $stmt = $conn->prepare("UPDATE usuarios SET `senha` = ?, `login` = ?, `lastupdate` = ? WHERE `usuarios`.`id` = $euid");
-
-        //             if(isset($stmt) && $stmt !== FALSE) {
-        //                 $stmt->bind_param("sss", $senha, $login, $lastupdate);
-        //                 $stmt->execute();
-        //                 $stmt->close();
-        //             } else {
-        //                 die($conn->error);
-        //             }
-                    
-        //             if($uid == $euid && $senha != $asenha){
-        //                 header("Location: ../_inc/logout.php?action=update");
-        //             } else {
-        //                 header("Location: usuario.php?id=".$id."&euid=".$euid);
-        //             }
-        //             // $conn->close();
-        //         }
-        //     }  
-        //     // $titulo = htmlentities($_POST['titulo'], ENT_QUOTES);
-        //     // $url = htmlentities($_POST['url'], ENT_QUOTES);
-        //     // $text = htmlentities($_POST['text'], ENT_QUOTES);
-
-        //     // $target_dir = "uploads/";
-        //     // $target_file = $target_dir . basename($_FILES["file"]["name"]);
-        //     // $uploadOk = 1;
-        //     // $imageFileType = pathinfo($target_file, PATHINFO_EXTENSION);
-
-        //     // if($_FILES["file"]["tmp_name"]) {
-        //     //     if($imageFileType == "jpg" || $imageFileType == "png" || $imageFileType == "gif" || $imageFileType == "bmp") {
-        //     //         if (move_uploaded_file($_FILES["file"]["tmp_name"], $target_file)) {
-        //     //             $files = date("dmYhis") . basename($_FILES["file"]["name"]);
-        //     //         } else {
-        //     //             echo "Error Uploading File";
-        //     //             exit;
-        //     //         }
-        //     //     } else {
-        //     //         echo "File Not Supported";
-        //     //         exit;
-        //     //     }
-        //     // }
-
-        //     // $file = basename($_FILES["file"]["name"]);
-        //     // $boolFile = ($file) ? $file : $url;
-
-        //     // $stmt = $conn->prepare("UPDATE servicos SET `titulo` = ?, `url` = ?, `text` = ? WHERE `servicos`.`id` = '".$id."'");
-
-        //     // if(isset($stmt) && $stmt !== FALSE) {
-        //     //     $stmt->bind_param("sss", $titulo, $boolFile, $text);
-        //     //     $stmt->execute();
-        //     //     $stmt->close();
-        //     //     (($url != $file) && $file) ? unlink('../profile/uploads/'.$url) : '';
-        //     // } else {
-        //     //     die($conn->error);
-        //     // }
-            
-        //     // header("Location: servico.php?id=".$id."&euid=".$uid);  
-        // endif;
     }
-    
-    // // Pegar dados
-
-    // $stmt = $conn->prepare("SELECT `login`, `senha`, `lastupdate` FROM `usuarios` WHERE id = $euid");
-
-    // if($stmt){
-    //     $stmt->execute();
-    //     $stmt->bind_result($login, $s(enha, $lastupdate)) ? $lastupdate : '';
-    //     while($stmt->fetch()) {
-    //         $alogin = $login;
-    //         $asenha = $senha;
-    //         $alastupd(ate = $lastupdate;) ? $lastupdate : ''
-    //     }
-    //     $stmt->close();
-    // }
-    // // $conn->close();    
-
-    // // Update
-
-    // if($euid){
-    //     if(isset($_POST['update'])){
-    //         if(is_numeric($_POST['id'])){
-    //             $id = $_POST['id'];
-    //             $login = htmlentities($_POST['login'], ENT_QUOTES);
-    //             $senha = md5(htmlentities($_POST['senha'], ENT_QUOTES));
-    //             $time = time();
-    //       (      $lastupdate ) ? $lastupdate : ''= date("Y-m-d G:i:s", $time);
-
-    //             if($login && $senha){
-    //                 $stmt = $conn->prepare("UPDATE usuarios SET `senha` = ?, `login` = ?, `lastupdate` = ? WHERE `usuarios`.`id` = $euid");
-
-    //                 if(isset($stmt) && $stmt !== FALSE) {
-    //                     $stmt->bind_param("sss", $senha, $l(ogin, $lastupdate)) ? $lastupdate : '';
-    //                     $stmt->execute();
-    //                     $stmt->close();
-    //                 } else {
-    //                     die($conn->error);
-    //                 }
-                    
-    //                 if($uid == $euid && $senha != $asenha){
-    //                     header("Location: ../_inc/logout.php?action=update");
-    //                 } else {
-    //                     $_SESSION['acessedUid'] = $euid;
-    //                     header("Location: edit-profile.php?misc=true&euid=".$_SESSION['acessedUid']);
-    //                 }
-    //                 // $conn->close();
-    //             }
-    //         }
-    //     }
-    // }
 ?>
 <!DOCTYPE html>
 <html lang="pt-br">
@@ -366,12 +247,12 @@
                     </div> -->
                     <div class="col-lg-12">
                         <div class="white-box">
-                            <form class="form-horizontal form-material" action="" method="POST">
+                            <form role="form" class="form-horizontal form-material usuario" action="" method="POST">
                                 <div class="form-group">
                                     <label class="col-md-12">Login</label>
                                     <div class="col-md-12">
                                         <?php $euid = isset($id) ? $id : ''; ?>
-                                        <input name="login" <?php echo ($uid == $euid) ? 'disabled' : '' ?> type="text" value="<?php echo (isset($login)) ? $login : ''; ?>" placeholder="<?php echo (isset($login)) ? $login : ''; ?>" class="form-control form-control-line"> 
+                                        <input name="login" <?php echo ($uid == $euid) ? 'disabled' : '' ?> type="text" value="<?php echo (isset($login)) ? $login : ''; ?>" class="form-control form-control-line"> 
                                     </div>
                                 </div>
                                 <div class="form-group">
