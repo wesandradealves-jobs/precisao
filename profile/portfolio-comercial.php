@@ -60,6 +60,9 @@
 
         if(isset($stmt) && $stmt !== FALSE) {
             $stmt->bind_param("sss", $text, $boolFile, $label);
+            if($boolFile != $aurl){
+                unlink('uploads/'.$aurl);
+            }
             $stmt->execute();
             $stmt->close();
         } else {
@@ -252,7 +255,9 @@
                                         <input type="file" name="file" class="form-control form-control-line" />
                                         <p><small>Arquivo atual: <?php echo $aurl; ?></small></p>
                                         <input type="hidden" name="url" value="<?php echo $aurl; ?>" />
-                                        <p><a href="<?php echo "../_inc/delete.php?uid=".$uid."&file=".$aurl; ?>" title="Deletar arquivo atual">*Remover arquivo atual</a></p>
+                                        <?php if($aurl) : ?>
+                                            <p><a href="<?php echo "../_inc/delete.php?uid=".$uid."&file=".$aurl; ?>" title="Deletar arquivo atual">*Remover arquivo atual</a></p>
+                                        <?php endif; ?>
                                     </div>
                                 </div>
                                 <div class="form-group">
