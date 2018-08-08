@@ -1,5 +1,6 @@
 .cotacao-form
-    +animation('left-to-right', 500ms)
+    +mq('1280px', min)
+        +animation('left-to-right', 500ms)
     background-color: $lightgray
     +mq('820px', max)
         margin: 0 auto

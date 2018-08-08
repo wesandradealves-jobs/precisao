@@ -8,6 +8,7 @@ const gulp = require('gulp'),
     uglify = require('gulp-uglify'),    
     htmlmin = require('gulp-htmlmin'),
     imagemin = require('gulp-imagemin'),    
+    {phpMinify} = require('@cedx/gulp-php-minify'),
     imageminJpegtran = require('imagemin-jpegtran'),
     imageminPngquant = require('imagemin-pngquant'), 
     imageminGifsicle = require('imagemin-gifsicle'), 
@@ -153,6 +154,10 @@ gulp.task('html', function() {
     .pipe(production(ext_replace('.php')))
     .pipe(gulp.dest('dist'));
 });
+gulp.task('php', () => gulp.src('*.php', {read: false})
+  .pipe(phpMinify())
+  .pipe(gulp.dest('dist'))
+);
 
 // Create util files for prod:build
 gulp.task("create-file", function() {   
@@ -192,7 +197,7 @@ gulp.task('clean:build', function () {
 // Build task
 gulp.task('build', function (callback) {
     console.log('Building project...')
-    runSequence('clean:build', ['html', 'css-dist', 'images', 'favico', 'fonts', 'htaccess', 'js-dist', 'create-file'],
+    runSequence('clean:build', ['html', 'php', 'css-dist', 'images', 'favico', 'fonts', 'htaccess', 'js-dist', 'create-file'],
         callback
     );
 });

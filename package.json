@@ -32,6 +32,7 @@
     "sass-rem": "^2.0.1"
   },
   "devDependencies": {
+    "@cedx/gulp-php-minify": "^8.0.0",
     "jquery-mousewheel": "^3.1.13",
     "owl.carousel": "^2.3.4"
   },
