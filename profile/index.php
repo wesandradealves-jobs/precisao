@@ -2,6 +2,9 @@
     require_once('../_inc/db.php');
     session_start();
     require_once('../_inc/expire.php');
+
+    $usr = $_SESSION['login'];
+
     if(!$_SESSION['login']){
         header("Location: ../login.php");
     } else {
@@ -252,7 +255,7 @@
                                             <td class="txt-oflo"><?php echo $row->login.(($row->id == $uid) ? ' (Você)' : ''); ?></td>
                                             <td class="txt-oflo"><?php echo $row->date; ?></td>
                                             <td class="txt-oflo"><?php echo $row->lastupdate; ?></td>
-                                            <td><a class="action" href="<?php echo "edit-profile.php?euid=".$row->id; ?>">Editar</a></td>
+                                            <td><a class="action" href="<?php echo "edit-profile.php?euid=".$row->id; ?>">Editar</a> | <a class="action" href="<?php echo "../_inc/delete.php?uid=".$uid."&id=".$row->id; ?>">Deletar</a></td>
                                         </tr>
                                         <?php endwhile; ?>
                                         <?php if($result->num_rows >= 5) : ?>
