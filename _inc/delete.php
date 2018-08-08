@@ -35,16 +35,32 @@
         }
     } else {
         $file = $_GET['file'];
-        
-        $stmt = $conn->prepare("UPDATE portfolio_comercial SET `url` = '' WHERE `portfolio_comercial`.`url` = '".$file."'");
-        
-        if(isset($stmt) && $stmt !== FALSE) {
-            $stmt->execute();
-            $stmt->close();
-            unlink('../profile/uploads/'.$file);
-            header("Location: ../profile/portfolio-comercial.php?euid=".$_GET['uid']);
+
+        if($_GET['type']){
+            $id = $_GET['id'];
+
+            $stmt = $conn->prepare("UPDATE servicos SET `url` = '' WHERE `servicos`.`url` = '".$file."'");
+            
+            if(isset($stmt) && $stmt !== FALSE) {
+                $stmt->execute();
+                $stmt->close();
+                unlink('../profile/uploads/'.$file);
+                header("Location: ../profile/edit-servico.php?id=".$id."&euid=".$_GET['uid']);
+            } else {
+                die($conn->error);
+            }        
         } else {
-            die($conn->error);
-        }        
+            $stmt = $conn->prepare("UPDATE portfolio_comercial SET `url` = '' WHERE `portfolio_comercial`.`url` = '".$file."'");
+        
+            if(isset($stmt) && $stmt !== FALSE) {
+                $stmt->execute();
+                $stmt->close();
+                unlink('../profile/uploads/'.$file);
+                header("Location: ../profile/portfolio-comercial.php?euid=".$_GET['uid']);
+            } else {
+                die($conn->error);
+            }   
+        }
+        
     }
 ?>

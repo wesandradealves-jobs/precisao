@@ -2,9 +2,6 @@
     require_once('../_inc/db.php');
     session_start();
     require_once('../_inc/expire.php');
-
-    $usr = $_SESSION['login'];
-
     if(!$_SESSION['login']){
         header("Location: ../login.php");
     } else {
@@ -116,7 +113,7 @@
                     </li> 
                     <li>
                         <a href="<?php echo "servicos.php?euid=".$uid; ?>" class="waves-effect"><i class="fa fa-briefcase fa-fw" aria-hidden="true"></i>Serviços</a>
-                    </li>  
+                    </li> 
                     <!-- <li>
                         <a href="profile.html" class="waves-effect"><i class="fa fa-group fa-fw" aria-hidden="true"></i>Profile</a>
                     </li>
@@ -152,7 +149,7 @@
             <div class="container-fluid">
                 <div class="row bg-title">
                     <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
-                        <h4 class="page-title">Dashboard</h4> 
+                        <h4 class="page-title">Serviços</h4> 
                     </div>
                         <!-- <div class="col-lg-9 col-sm-8 col-md-8 col-xs-12">
                             <a href="https://wrappixel.com/templates/ampleadmin/" target="_blank" class="btn btn-danger pull-right m-l-20 hidden-xs hidden-sm waves-effect waves-light">Upgrade to Pro</a>
@@ -224,7 +221,7 @@
                 <!-- ============================================================== -->
                 <div class="row">
                     <?php 
-                        if ($result = $conn->query("SELECT * FROM usuarios ORDER BY id DESC LIMIT 5")) :
+                        if ($result = $conn->query("SELECT * FROM servicos ORDER BY id DESC")) :
                             if ($result->num_rows > 0) :
                     ?>
                     <div class="col-md-12 col-lg-12 col-sm-12">
@@ -238,15 +235,15 @@
                                     <option>July 2017</option>
                                 </select>
                             </div> -->
-                            <h3 class="box-title table-header">Usuários recentes</h3>
+                            <h3 class="box-title table-header">(+ <a href="<?php echo "adicionar-servico.php?euid=".$uid; ?>" title="Adicionar Novo">Adicionar novo Serviço</a>)</h3>
                             <div class="table-responsive">
                                 <table class="table">
                                     <thead class="table-header">
                                         <tr>
                                             <th>#</th>
-                                            <th>ALIAS</th>
-                                            <th>INSERIDO EM</th>
-                                            <th>Última Atualização</th>
+                                            <th>TITULO</th>
+                                            <th>THUMBNAIL</th>
+                                            <th>TEXTO</th>
                                             <th>-</th>
                                         </tr>
                                     </thead>
@@ -255,19 +252,12 @@
                                         <?php while ($row = $result->fetch_object()) : ?>
                                         <tr>
                                             <td><?php echo $row->id; ?></td>
-                                            <td class="txt-oflo"><?php echo $row->login.(($row->id == $uid) ? ' (Você)' : ''); ?></td>
-                                            <td class="txt-oflo"><?php echo $row->date; ?></td>
-                                            <td class="txt-oflo"><?php echo $row->lastupdate; ?></td>
-                                            <td><a class="action" href="<?php echo "edit-profile.php?euid=".$row->id; ?>">Editar</a> | <a class="action" href="<?php echo "../_inc/delete.php?uid=".$uid."&id=".$row->id; ?>">Deletar</a></td>
+                                            <td class="txt-oflo"><?php echo $row->titulo; ?></td>
+                                            <td class="txt-oflo"><?php echo $row->url; ?></td>
+                                            <td class="txt-oflo"><?php echo ($row->text) ? substr($row->text, 0, 40).( ( strlen($row->text) >= 40 ) ? '(...)' : '' ) : '' ?></td>
+                                            <td><a class="action" href="<?php echo "edit-servico.php?euid=".$uid."&id=".$row->id; ?>">Editar</a> | <a class="action" href="<?php echo "../_inc/delete.php?type=servico&uid=".$uid."&id=".$row->id; ?>">Deletar</a></td>
                                         </tr>
                                         <?php endwhile; ?>
-                                        <?php if($result->num_rows >= 5) : ?>
-                                        <tr>
-                                            <td>
-                                                <a href="<?php echo "usuarios.php?euid=".$uid; ?>">Ver Todos</a>
-                                            </td>
-                                        </tr>
-                                        <?php endif; ?>
                                     </tbody>
                                 </table>
                             </div>

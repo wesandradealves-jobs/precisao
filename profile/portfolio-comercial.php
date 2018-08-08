@@ -39,7 +39,7 @@
         $imageFileType = pathinfo($target_file, PATHINFO_EXTENSION);
 
         if($_FILES["file"]["tmp_name"]) {
-            if($imageFileType != "rtf" || $imageFileType != "txt" || $imageFileType != "doc"  || $imageFileType != "pdf") {
+            if($imageFileType == "rtf" || $imageFileType == "txt" || $imageFileType == "doc"  || $imageFileType == "pdf") {
                 if (move_uploaded_file($_FILES["file"]["tmp_name"], $target_file)) {
                     $files = date("dmYhis") . basename($_FILES["file"]["name"]);
                 } else {
@@ -175,7 +175,10 @@
                     </li>
                     <li>
                         <a href="<?php echo "portfolio-comercial.php?euid=".$uid; ?>" class="waves-effect"><i class="fa fa-book fa-fw" aria-hidden="true"></i>Portfolio Comercial</a>
-                    </li>                    
+                    </li>   
+                    <li>
+                        <a href="<?php echo "servicos.php?euid=".$uid; ?>" class="waves-effect"><i class="fa fa-briefcase fa-fw" aria-hidden="true"></i>Serviços</a>
+                    </li>                
                     <!-- <li>
                         <a href="profile.html" class="waves-effect"><i class="fa fa-group fa-fw" aria-hidden="true"></i>Profile</a>
                     </li>
