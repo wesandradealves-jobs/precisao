@@ -12,9 +12,15 @@
         $_SESSION['logindeslogado'] = "Deslogado com sucesso";
     } else if(isset($_GET['expire'])){
         $_SESSION['logindeslogado'] = "Deslogado por tempo de inatividade. Por favor, entre novamente.";
-    } else {
+    } else if(isset($_GET['selfupdate'])){
         $_SESSION['logindeslogado'] = "Sua senha foi alterada. Por favor, entre novamente.";
+    } else {
+        $_SESSION['logindeslogado'] = "Deslogado com sucesso";
     }
     //redirecionar o usuario para a página de login
-    header("Location: ../login.php");
+    if(isset($_GET['action']) == 'home'){
+        header("Location: ../profile/index.php");
+    } else {
+        header("Location: ../login.php");
+    }
 ?>

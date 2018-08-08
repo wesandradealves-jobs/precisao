@@ -12,80 +12,51 @@
     
     // Pegar dados e definir acao
 
-    if ($result = $conn->query("SELECT * FROM contato ORDER BY id")) {
+    if ($result = $conn->query("SELECT * FROM seo ORDER BY id")) {
         if ($result->num_rows > 0) {
             // Atualizo se tiver
-            $stmt = $conn->prepare("SELECT `telefone`, `email`, `endereco` FROM `contato` ORDER BY id");
+            $stmt = $conn->prepare("SELECT `code` FROM `seo` ORDER BY id");
             if($stmt){
                 $stmt->execute();
-                $stmt->bind_result($telefone, $email, $endereco);
+                $stmt->bind_result($code);
                 while($stmt->fetch()) {
-                    $telefone = $telefone;
-                    $email = $email;
-                    $endereco = $endereco;
+                    $code = $code;
                 }
                 $stmt->close();
             }
 
             if(isset($_POST['update'])):
-                $telefone = htmlentities($_POST['telefone'], ENT_QUOTES);
-                $endereco = htmlentities($_POST['endereco'], ENT_QUOTES);
-                $email = htmlentities($_POST['email'], ENT_QUOTES);
-                
-                $stmt = $conn->prepare("UPDATE contato SET `telefone` = ?, `email` = ?, `endereco` = ?");
+                $code = htmlentities($_POST['code'], ENT_QUOTES);
+
+                $stmt = $conn->prepare("UPDATE seo SET `code` = ?");
 
                 if(isset($stmt) && $stmt !== FALSE) {
-                    $stmt->bind_param("sss", $telefone, $email, $endereco);
+                    $stmt->bind_param("s", $code);
                     $stmt->execute();
                     $stmt->close();
                 } else {
                     die($conn->error);
                 }
                 
-                header("Location: contato.php?euid=".$uid); 
+                header("Location: seo.php?euid=".$uid); 
             endif;
         } else {
-            // Adiciono se nao tiver
             if(isset($_POST['update'])) :
-                $stmt = $conn->prepare("INSERT contato (`telefone`, `email`, `endereco`) VALUES (?, ?, ?)");
-                $telefone = htmlentities($_POST['telefone'], ENT_QUOTES);
-                $email = htmlentities($_POST['email'], ENT_QUOTES);
-                $endereco = htmlentities($_POST['endereco'], ENT_QUOTES);
+                $stmt = $conn->prepare("INSERT seo (`code`) VALUES (?)");
+                $code = htmlentities($_POST['code'], ENT_QUOTES);
 
                 if(isset($stmt) && $stmt !== FALSE) {
-                    $stmt->bind_param("sss", $telefone, $email, $endereco);
+                    $stmt->bind_param("s", $code);
                     $stmt->execute();
                     $stmt->close();
                 } else {
                     die($conn->error);
                 }
                 
-                header("Location: contato.php?euid=".$uid); 
-            endif;           
+                header("Location: seo.php?euid=".$uid); 
+            endif;  
         }
     }
-
-    // // Update
-
-    // if(isset($_POST['update'])){
-    //     $telefone = htmlentities($_POST['telefone'], ENT_QUOTES);
-    //     $email = htmlentities($_POST['email'], ENT_QUOTES);
-    //     $endereco = htmlentities($_POST['endereco'], ENT_QUOTES);
-
-    //     $stmt = $conn->prepare("UPDATE contato SET `telefone` = ?, `email` = ?, `endereco` = ?");
-
-    //     if(isset($stmt) && $stmt !== FALSE) {
-    //         $stmt->bind_param("sss", $telefone, $email, $endereco);
-    //         $stmt->execute();
-    //         $stmt->close();
-    //     } else {
-    //         die($conn->error);
-    //     }
-        
-    //     $_SESSION['acessedUid'] = $euid;
-    //     header("Location: contato.php?euid=".$_SESSION['acessedUid']);
-    //     // $conn->close();
-    // }
 ?>
 <!DOCTYPE html>
 <html lang="pt-br">
@@ -218,7 +189,7 @@
             <div class="container-fluid">
                 <div class="row bg-title">
                     <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
-                        <h4 class="page-title">Contato</h4> 
+                        <h4 class="page-title">SEO/Metas</h4> 
                     </div>
                 </div>
                 <!-- /.row -->
@@ -251,21 +222,9 @@
                         <div class="white-box">
                             <form class="form-horizontal form-material" action="" method="POST">
                                 <div class="form-group">
-                                    <label class="col-md-12">Telefone</label>
+                                    <label class="col-md-12">Insira seu header aqui:</label>
                                     <div class="col-md-12">
-                                        <input name="telefone" type="text" value="<?php echo (isset($telefone)) ? $telefone : ''; ?>" class="form-control form-control-line"> 
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label class="col-md-12">E-mail</label>
-                                    <div class="col-md-12">
-                                        <input name="email" type="text" value="<?php echo (isset($email)) ? $email : ''; ?>" class="form-control form-control-line">
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label class="col-md-12">Endereço</label>
-                                    <div class="col-md-12">
-                                        <textarea name="endereco" rows="5" class="form-control form-control-line"><?php echo (isset($endereco)) ? $endereco : ''; ?></textarea>
+                                        <textarea name="code" rows="5" class="form-control form-control-line"><?php echo (isset($code)) ? $code : ''; ?></textarea>
                                     </div>
                                 </div>
                                 <div class="form-group">

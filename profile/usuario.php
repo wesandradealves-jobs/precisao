@@ -60,7 +60,7 @@
                 }
                 
                 if($id == $euid && $senha != $asenha){
-                    header("Location: ../_inc/logout.php?action=update");
+                    header("Location: ../_inc/logout.php?action=selfupdate");
                 } else {
                     header("Location: usuario.php?id=".$id."&euid=".$euid);
                 }
@@ -178,6 +178,9 @@
                     </li> 
                     <li>
                         <a href="<?php echo "a-empresa.php?euid=".$uid; ?>" class="waves-effect"><i class="fa fa-building fa-fw" aria-hidden="true"></i>A Empresa</a>
+                    </li> 
+                    <li>
+                        <a href="<?php echo "seo.php?euid=".$uid; ?>" class="waves-effect"><i class="fa fa-code fa-fw" aria-hidden="true"></i>SEO</a>
                     </li> 
                 </ul>
                 <div class="center p-20">

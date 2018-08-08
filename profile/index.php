@@ -123,6 +123,9 @@
                     <li>
                         <a href="<?php echo "a-empresa.php?euid=".$uid; ?>" class="waves-effect"><i class="fa fa-building fa-fw" aria-hidden="true"></i>A Empresa</a>
                     </li> 
+                    <li>
+                        <a href="<?php echo "seo.php?euid=".$uid; ?>" class="waves-effect"><i class="fa fa-code fa-fw" aria-hidden="true"></i>SEO</a>
+                    </li> 
                 </ul>
                 <div class="center p-20">
                     <a href="../_inc/logout.php" target="_blank" class="btn btn-danger btn-block waves-effect waves-light" title="Sair">Sair</a>
