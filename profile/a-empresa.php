@@ -12,56 +12,52 @@
     
     // Pegar dados e definir acao
 
-    if ($result = $conn->query("SELECT * FROM contato ORDER BY id")) {
+    if ($result = $conn->query("SELECT * FROM a_empresa ORDER BY id")) {
         if ($result->num_rows > 0) {
             // Atualizo se tiver
-            $stmt = $conn->prepare("SELECT `telefone`, `email`, `endereco` FROM `contato` ORDER BY id");
+            $stmt = $conn->prepare("SELECT `titulo`, `text` FROM `a_empresa` ORDER BY id");
             if($stmt){
                 $stmt->execute();
-                $stmt->bind_result($telefone, $email, $endereco);
+                $stmt->bind_result($titulo, $text);
                 while($stmt->fetch()) {
-                    $telefone = $telefone;
-                    $email = $email;
-                    $endereco = $endereco;
+                    $titulo = $titulo;
+                    $text = $text;
                 }
                 $stmt->close();
             }
 
             if(isset($_POST['update'])):
-                $telefone = htmlentities($_POST['telefone'], ENT_QUOTES);
-                $endereco = htmlentities($_POST['endereco'], ENT_QUOTES);
-                $email = htmlentities($_POST['email'], ENT_QUOTES);
-                
-                $stmt = $conn->prepare("UPDATE contato SET `telefone` = ?, `email` = ?, `endereco` = ?");
+                $titulo = htmlentities($_POST['titulo'], ENT_QUOTES);
+                $text = htmlentities($_POST['text'], ENT_QUOTES);
+
+                $stmt = $conn->prepare("UPDATE a_empresa SET `titulo` = ?, `text` = ?");
 
                 if(isset($stmt) && $stmt !== FALSE) {
-                    $stmt->bind_param("sss", $telefone, $email, $endereco);
+                    $stmt->bind_param("ss", $titulo, $text);
                     $stmt->execute();
                     $stmt->close();
                 } else {
                     die($conn->error);
                 }
                 
-                header("Location: contato.php?euid=".$uid); 
+                header("Location: a-empresa.php?euid=".$uid); 
             endif;
         } else {
-            // Adiciono se nao tiver
             if(isset($_POST['update'])) :
-                $stmt = $conn->prepare("INSERT contato (`telefone`, `email`, `endereco`) VALUES (?, ?, ?)");
-                $telefone = htmlentities($_POST['telefone'], ENT_QUOTES);
-                $email = htmlentities($_POST['email'], ENT_QUOTES);
-                $endereco = htmlentities($_POST['endereco'], ENT_QUOTES);
+                $stmt = $conn->prepare("INSERT a_empresa (`titulo`, `text`) VALUES (?, ?)");
+                $titulo = htmlentities($_POST['titulo'], ENT_QUOTES);
+                $text = htmlentities($_POST['text'], ENT_QUOTES);
 
                 if(isset($stmt) && $stmt !== FALSE) {
-                    $stmt->bind_param("sss", $telefone, $email, $endereco);
+                    $stmt->bind_param("ss", $titulo, $text);
                     $stmt->execute();
                     $stmt->close();
                 } else {
                     die($conn->error);
                 }
                 
-                header("Location: contato.php?euid=".$uid); 
-            endif;           
+                header("Location: a-empresa.php?euid=".$uid); 
+            endif;  
         }
     }
 
@@ -215,7 +211,7 @@
             <div class="container-fluid">
                 <div class="row bg-title">
                     <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
-                        <h4 class="page-title">Contato</h4> 
+                        <h4 class="page-title">A Empresa</h4> 
                     </div>
                 </div>
                 <!-- /.row -->
@@ -248,21 +244,15 @@
                         <div class="white-box">
                             <form class="form-horizontal form-material" action="" method="POST">
                                 <div class="form-group">
-                                    <label class="col-md-12">Telefone</label>
+                                    <label class="col-md-12">Titulo</label>
                                     <div class="col-md-12">
-                                        <input name="telefone" type="text" value="<?php echo (isset($telefone)) ? $telefone : ''; ?>" class="form-control form-control-line"> 
+                                        <input name="titulo" type="text" value="<?php echo (isset($titulo)) ? $titulo : ''; ?>" class="form-control form-control-line"> 
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label class="col-md-12">E-mail</label>
+                                    <label class="col-md-12">Texto</label>
                                     <div class="col-md-12">
-                                        <input name="email" type="text" value="<?php echo (isset($email)) ? $email : ''; ?>" class="form-control form-control-line">
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label class="col-md-12">Endereço</label>
-                                    <div class="col-md-12">
-                                        <textarea name="endereco" rows="5" class="form-control form-control-line"><?php echo (isset($endereco)) ? $endereco : ''; ?></textarea>
+                                        <textarea name="text" rows="5" class="form-control form-control-line"><?php echo (isset($text)) ? $text : ''; ?></textarea>
                                     </div>
                                 </div>
                                 <div class="form-group">
