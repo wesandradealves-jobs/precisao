@@ -80,7 +80,7 @@
                             <input type="text" placeholder="Search..." class="form-control"> <a href=""><i class="fa fa-search"></i></a> </form>
                     </li> -->
                     <li>
-                        <a class="profile-pic" href="<?php echo "edit-profile.php?euid=".$uid; ?>"> <img src="https://pixinvent.com/materialize-material-design-admin-template/images/avatar/avatar-7.png" alt="user-img" width="36" class="img-circle">Seja bem vindo(a), <b class="hidden-xs"><?php echo $_SESSION['login']; ?></b></a>
+                        <a class="profile-pic" href="<?php echo "usuario.php?euid=".$uid; ?>"> <img src="https://pixinvent.com/materialize-material-design-admin-template/images/avatar/avatar-7.png" alt="user-img" width="36" class="img-circle">Seja bem vindo(a), <b class="hidden-xs"><?php echo $_SESSION['login']; ?></b></a>
                         <a class="acesse" href="http://localhost/precisao/" title="Acesse seu site" target="_blank">Acesse seu site</a>
                     </li>
                 </ul>
@@ -220,10 +220,6 @@
                 <!-- table -->
                 <!-- ============================================================== -->
                 <div class="row">
-                    <?php 
-                        if ($result = $conn->query("SELECT * FROM usuarios ORDER BY id DESC")) :
-                            if ($result->num_rows > 0) :
-                    ?>
                     <div class="col-md-12 col-lg-12 col-sm-12">
                         <div class="white-box">
                             <!-- <div class="col-md-3 col-sm-4 col-xs-6 pull-right">
@@ -235,7 +231,11 @@
                                     <option>July 2017</option>
                                 </select>
                             </div> -->
-                            <h3 class="box-title table-header">(+ <a href="<?php echo "adicionar-usuario.php?euid=".$uid; ?>" title="Adicionar Novo">Adicionar novo usuário</a>)</h3>
+                            <h3 class="box-title table-header">(+ <a href="<?php echo "usuario.php?euid=".$uid ?>" title="Adicionar Novo">Adicionar novo usuário</a>)</h3>
+                            <?php 
+                                if ($result = $conn->query("SELECT * FROM usuarios ORDER BY id DESC")) :
+                                    if ($result->num_rows > 0) :
+                            ?>
                             <div class="table-responsive">
                                 <table class="table">
                                     <thead class="table-header">
@@ -255,20 +255,20 @@
                                             <td class="txt-oflo"><?php echo $row->login.(($row->id == $uid) ? ' (Você)' : ''); ?></td>
                                             <td class="txt-oflo"><?php echo $row->date; ?></td>
                                             <td class="txt-oflo"><?php echo $row->lastupdate; ?></td>
-                                            <td><a class="action" href="<?php echo "edit-profile.php?euid=".$row->id; ?>">Editar</a> | <a class="action" href="<?php echo "../_inc/delete.php?uid=".$uid."&id=".$row->id; ?>">Deletar</a></td>
+                                            <td><a class="action" href="<?php echo "usuario.php?euid=".$uid."&id=".$row->id; ?>">Editar</a> | <a class="action" href="<?php echo "../_inc/delete.php?source=usuarios&uid=".$uid."&id=".$row->id; ?>">Deletar</a></td>
                                         </tr>
                                         <?php endwhile; ?>
                                     </tbody>
                                 </table>
                             </div>
+                            <?php 
+                                endif; 
+                                endif; 
+                                $conn->close();
+                                unset($conn);
+                            ?>
                         </div>
                     </div>
-                    <?php 
-                        endif; 
-                        endif; 
-                        $conn->close();
-                        unset($conn);
-                    ?>
                 </div>
                 <!-- ============================================================== -->
                 <!-- chat-listing & recent comments -->

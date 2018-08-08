@@ -10,68 +10,101 @@
     $euid = $_GET['euid'];
     $pageWasRefreshed = isset($_SERVER['HTTP_CACHE_CONTROL']) && $_SERVER['HTTP_CACHE_CONTROL'] === 'max-age=0';
     
-    // Pegar dados
+    // Pegar dados e definir acao
 
-    $stmt = $conn->prepare("SELECT `text`, `url`, `label` FROM `portfolio_comercial`");
-
-    if($stmt){
-        $stmt->execute();
-        $stmt->bind_result($text, $url, $label);
-        while($stmt->fetch()) {
-            $atext = $text;
-            $aurl = $url;
-            $alabel = $label;
-        }
-        $stmt->close();
-    }
-    // $conn->close();    
-
-    // Update
-
-    if(isset($_POST['update'])){
-        $text = htmlentities($_POST['text'], ENT_QUOTES);
-        $url = htmlentities($_POST['url'], ENT_QUOTES);
-        $label = htmlentities($_POST['label'], ENT_QUOTES);
-
-        $target_dir = "uploads/";
-        $target_file = $target_dir . basename($_FILES["file"]["name"]);
-        $uploadOk = 1;
-        $imageFileType = pathinfo($target_file, PATHINFO_EXTENSION);
-
-        if($_FILES["file"]["tmp_name"]) {
-            if($imageFileType == "rtf" || $imageFileType == "txt" || $imageFileType == "doc"  || $imageFileType == "pdf") {
-                if (move_uploaded_file($_FILES["file"]["tmp_name"], $target_file)) {
-                    $files = date("dmYhis") . basename($_FILES["file"]["name"]);
-                } else {
-                    echo "Error Uploading File";
-                    exit;
+    if ($result = $conn->query("SELECT * FROM portfolio_comercial ORDER BY id")) {
+        if ($result->num_rows > 0) {
+            // Atualizo se tiver
+            $stmt = $conn->prepare("SELECT `label`, `url`, `text` FROM `portfolio_comercial` ORDER BY id");
+            if($stmt){
+                $stmt->execute();
+                $stmt->bind_result($label, $url, $text);
+                while($stmt->fetch()) {
+                    $label = $label;
+                    $url = $url;
+                    $text = $text;
                 }
-            } else {
-                echo "File Not Supported";
-                exit;
+                $stmt->close();
             }
-        }
 
-        $file = basename($_FILES["file"]["name"]);
+            if(isset($_POST['update'])):
+                $label = htmlentities($_POST['label'], ENT_QUOTES);
+                $text = htmlentities($_POST['text'], ENT_QUOTES);
+                $url = htmlentities($_POST['url'], ENT_QUOTES);
+                $target_dir = "uploads/";
+                $target_file = $target_dir . basename($_FILES["file"]["name"]);
+                $uploadOk = 1;
+                $imageFileType = pathinfo($target_file, PATHINFO_EXTENSION);
 
-        $stmt = $conn->prepare("UPDATE portfolio_comercial SET `text` = ?, `url` = ?, `label` = ?");
+                if($_FILES["file"]["tmp_name"]) {
+                    if($imageFileType == "txt" || $imageFileType == "doc" || $imageFileType == "pdf" || $imageFileType == "rtf") {
+                        if (move_uploaded_file($_FILES["file"]["tmp_name"], $target_file)) {
+                            $files = date("dmYhis") . basename($_FILES["file"]["name"]);
+                        } else {
+                            echo "Error Uploading File";
+                            exit;
+                        }
+                    } else {
+                        echo "File Not Supported";
+                        exit;
+                    }
+                }
 
-        $boolFile = ($file) ? $file : $url;
+                $file = basename($_FILES["file"]["name"]);
+                $boolFile = ($file) ? $file : $url;
 
-        if(isset($stmt) && $stmt !== FALSE) {
-            $stmt->bind_param("sss", $text, $boolFile, $label);
-            if($boolFile != $aurl){
-                unlink('uploads/'.$aurl);
-            }
-            $stmt->execute();
-            $stmt->close();
+                $stmt = $conn->prepare("UPDATE portfolio_comercial SET `label` = ?, `url` = ?, `text` = ?");
+
+                if(isset($stmt) && $stmt !== FALSE) {
+                    $stmt->bind_param("sss", $label, $boolFile, $text);
+                    $stmt->execute();
+                    $stmt->close();
+                    (($url != $file) && $file) ? unlink('../profile/uploads/'.$url) : '';
+                } else {
+                    die($conn->error);
+                }
+                
+                header("Location: portfolio-comercial.php?euid=".$uid); 
+            endif;
         } else {
-            die($conn->error);
+            // Adiciono se nao tiver
+            if(isset($_POST['update'])) :
+                $stmt = $conn->prepare("INSERT portfolio_comercial (`label`, `url`, `text`) VALUES (?, ?, ?)");
+                $label = htmlentities($_POST['label'], ENT_QUOTES);
+                $text = htmlentities($_POST['text'], ENT_QUOTES);
+
+                $target_dir = "uploads/";
+                $target_file = $target_dir . basename($_FILES["file"]["name"]);
+                $uploadOk = 1;
+                $imageFileType = pathinfo($target_file, PATHINFO_EXTENSION);
+
+                if($_FILES["file"]["tmp_name"]) {
+                    if($imageFileType == "txt" || $imageFileType == "doc" || $imageFileType == "pdf" || $imageFileType == "rtf") {
+                        if (move_uploaded_file($_FILES["file"]["tmp_name"], $target_file)) {
+                            $files = date("dmYhis") . basename($_FILES["file"]["name"]);
+                        } else {
+                            echo "Error Uploading File";
+                            exit;
+                        }
+                    } else {
+                        echo "File Not Supported";
+                        exit;
+                    }
+                }
+
+                $file = "'".basename($_FILES["file"]["name"])."'";
+
+                if(isset($stmt) && $stmt !== FALSE) {
+                    $stmt->bind_param("sss", $label, $file, $text);
+                    $stmt->execute();
+                    $stmt->close();
+                } else {
+                    die($conn->error);
+                }
+                
+                header("Location: portfolio-comercial.php?euid=".$uid); 
+            endif;           
         }
-        
-        $_SESSION['acessedUid'] = $euid;
-        header("Location: portfolio-comercial.php?euid=".$_SESSION['acessedUid']);
-        // $conn->close();
     }
 ?>
 <!DOCTYPE html>
@@ -249,24 +282,25 @@
                                 <div class="form-group">
                                     <label class="col-md-12">Label do botão</label>
                                     <div class="col-md-12">
-                                        <input name="label" type="text" value="<?php echo $alabel; ?>" class="form-control form-control-line"> 
+                                        <input name="label" type="text" value="<?php echo (isset($label)) ? $label : ''; ?>" class="form-control form-control-line"> 
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label class="col-md-12">URL</label>
+                                    <label class="col-md-12">Suba o portfolio</label>
                                     <div class="col-md-12">
                                         <input type="file" name="file" class="form-control form-control-line" />
-                                        <p><small>Arquivo atual: <?php echo $aurl; ?></small></p>
-                                        <input type="hidden" name="url" value="<?php echo $aurl; ?>" />
-                                        <?php if($aurl) : ?>
-                                            <p><a href="<?php echo "../_inc/delete.php?uid=".$uid."&file=".$aurl; ?>" title="Deletar arquivo atual">*Remover arquivo atual</a></p>
-                                        <?php endif; ?>
+                                        <p><small>Arquivo atual: <?php echo (isset($url)) ? $url : ''; ?></small></p>
+                                        <input type="hidden" name="url" value="<?php echo (isset($url)) ? $url : ''; ?>" />
+                                        <!--
+                                        <?php if(isset($url)) : ?>
+                                            <p><a href="<?php echo "../_inc/delete.php?source=portfolio-comercial&uid=".$uid."&file=".$url; ?>" title="Deletar arquivo atual">*Remover arquivo atual</a></p>
+                                        <?php endif; ?> -->
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label class="col-md-12">Texto</label>
                                     <div class="col-md-12">
-                                        <textarea name="text" rows="5" class="form-control form-control-line"><?php echo utf8_decode($atext); ?></textarea>
+                                        <textarea name="text" rows="5" class="form-control form-control-line"><?php echo (isset($text)) ? $text : '';; ?></textarea>
                                     </div>
                                 </div>
                                 <div class="form-group">

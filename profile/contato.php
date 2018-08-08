@@ -10,43 +10,82 @@
     $euid = $_GET['euid'];
     $pageWasRefreshed = isset($_SERVER['HTTP_CACHE_CONTROL']) && $_SERVER['HTTP_CACHE_CONTROL'] === 'max-age=0';
     
-    // Pegar dados
+    // Pegar dados e definir acao
 
-    $stmt = $conn->prepare("SELECT `telefone`, `email`, `endereco` FROM `contato`");
+    if ($result = $conn->query("SELECT * FROM contato ORDER BY id")) {
+        if ($result->num_rows > 0) {
+            // Atualizo se tiver
+            $stmt = $conn->prepare("SELECT `telefone`, `email`, `endereco` FROM `contato` ORDER BY id");
+            if($stmt){
+                $stmt->execute();
+                $stmt->bind_result($telefone, $email, $endereco);
+                while($stmt->fetch()) {
+                    $telefone = $telefone;
+                    $email = $email;
+                    $endereco = $endereco;
+                }
+                $stmt->close();
+            }
 
-    if($stmt){
-        $stmt->execute();
-        $stmt->bind_result($telefone, $email, $endereco);
-        while($stmt->fetch()) {
-            $atelefone = $telefone;
-            $aemail = $email;
-            $aendereco = $endereco;
-        }
-        $stmt->close();
-    }
-    // $conn->close();    
+            if(isset($_POST['update'])):
+                $telefone = htmlentities($_POST['telefone'], ENT_QUOTES);
+                $endereco = htmlentities($_POST['endereco'], ENT_QUOTES);
+                $email = htmlentities($_POST['email'], ENT_QUOTES);
+                
+                $stmt = $conn->prepare("UPDATE contato SET `telefone` = ?, `email` = ?, `endereco` = ?");
 
-    // Update
-
-    if(isset($_POST['update'])){
-        $telefone = htmlentities($_POST['telefone'], ENT_QUOTES);
-        $email = htmlentities($_POST['email'], ENT_QUOTES);
-        $endereco = htmlentities($_POST['endereco'], ENT_QUOTES);
-
-        $stmt = $conn->prepare("UPDATE contato SET `telefone` = ?, `email` = ?, `endereco` = ?");
-
-        if(isset($stmt) && $stmt !== FALSE) {
-            $stmt->bind_param("sss", $telefone, $email, $endereco);
-            $stmt->execute();
-            $stmt->close();
+                if(isset($stmt) && $stmt !== FALSE) {
+                    $stmt->bind_param("sss", $telefone, $email, $endereco);
+                    $stmt->execute();
+                    $stmt->close();
+                } else {
+                    die($conn->error);
+                }
+                
+                header("Location: contato.php?euid=".$uid); 
+            endif;
         } else {
-            die($conn->error);
+            // Adiciono se nao tiver
+            if(isset($_POST['update'])) :
+                $stmt = $conn->prepare("INSERT contato (`telefone`, `email`, `endereco`) VALUES (?, ?, ?)");
+                $telefone = htmlentities($_POST['telefone'], ENT_QUOTES);
+                $email = htmlentities($_POST['email'], ENT_QUOTES);
+                $endereco = htmlentities($_POST['endereco'], ENT_QUOTES);
+
+                if(isset($stmt) && $stmt !== FALSE) {
+                    $stmt->bind_param("sss", $telefone, $email, $endereco);
+                    $stmt->execute();
+                    $stmt->close();
+                } else {
+                    die($conn->error);
+                }
+                
+                header("Location: contato.php?euid=".$uid); 
+            endif;           
         }
-        
-        $_SESSION['acessedUid'] = $euid;
-        header("Location: contato.php?euid=".$_SESSION['acessedUid']);
-        // $conn->close();
     }
+
+    // // Update
+
+    // if(isset($_POST['update'])){
+    //     $telefone = htmlentities($_POST['telefone'], ENT_QUOTES);
+    //     $email = htmlentities($_POST['email'], ENT_QUOTES);
+    //     $endereco = htmlentities($_POST['endereco'], ENT_QUOTES);
+
+    //     $stmt = $conn->prepare("UPDATE contato SET `telefone` = ?, `email` = ?, `endereco` = ?");
+
+    //     if(isset($stmt) && $stmt !== FALSE) {
+    //         $stmt->bind_param("sss", $telefone, $email, $endereco);
+    //         $stmt->execute();
+    //         $stmt->close();
+    //     } else {
+    //         die($conn->error);
+    //     }
+        
+    //     $_SESSION['acessedUid'] = $euid;
+    //     header("Location: contato.php?euid=".$_SESSION['acessedUid']);
+    //     // $conn->close();
+    // }
 ?>
 <!DOCTYPE html>
 <html lang="pt-br">
@@ -223,19 +262,19 @@
                                 <div class="form-group">
                                     <label class="col-md-12">Telefone</label>
                                     <div class="col-md-12">
-                                        <input name="telefone" type="text" value="<?php echo $atelefone; ?>" class="form-control form-control-line"> 
+                                        <input name="telefone" type="text" value="<?php echo (isset($telefone)) ? $telefone : ''; ?>" class="form-control form-control-line"> 
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label class="col-md-12">E-mail</label>
                                     <div class="col-md-12">
-                                        <input name="email" type="text" value="<?php echo $aemail; ?>" class="form-control form-control-line">
+                                        <input name="email" type="text" value="<?php echo (isset($email)) ? $email : ''; ?>" class="form-control form-control-line">
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label class="col-md-12">Endereço</label>
                                     <div class="col-md-12">
-                                        <textarea name="endereco" rows="5" class="form-control form-control-line"><?php echo utf8_decode($aendereco); ?></textarea>
+                                        <textarea name="endereco" rows="5" class="form-control form-control-line"><?php echo (isset($endereco)) ? $endereco : ''; ?></textarea>
                                     </div>
                                 </div>
                                 <div class="form-group">

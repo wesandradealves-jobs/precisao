@@ -220,10 +220,6 @@
                 <!-- table -->
                 <!-- ============================================================== -->
                 <div class="row">
-                    <?php 
-                        if ($result = $conn->query("SELECT * FROM servicos ORDER BY id DESC")) :
-                            if ($result->num_rows > 0) :
-                    ?>
                     <div class="col-md-12 col-lg-12 col-sm-12">
                         <div class="white-box">
                             <!-- <div class="col-md-3 col-sm-4 col-xs-6 pull-right">
@@ -235,7 +231,11 @@
                                     <option>July 2017</option>
                                 </select>
                             </div> -->
-                            <h3 class="box-title table-header">(+ <a href="<?php echo "adicionar-servico.php?euid=".$uid; ?>" title="Adicionar Novo">Adicionar novo Serviço</a>)</h3>
+                            <h3 class="box-title table-header">(+ <a href="<?php echo "servico.php?euid=".$uid; ?>" title="Adicionar Novo">Adicionar novo Serviço</a>)</h3>
+                            <?php 
+                                if ($result = $conn->query("SELECT * FROM servicos ORDER BY id DESC")) :
+                                    if ($result->num_rows > 0) :
+                            ?>
                             <div class="table-responsive">
                                 <table class="table">
                                     <thead class="table-header">
@@ -255,20 +255,20 @@
                                             <td class="txt-oflo"><?php echo $row->titulo; ?></td>
                                             <td class="txt-oflo"><?php echo $row->url; ?></td>
                                             <td class="txt-oflo"><?php echo ($row->text) ? substr($row->text, 0, 40).( ( strlen($row->text) >= 40 ) ? '(...)' : '' ) : '' ?></td>
-                                            <td><a class="action" href="<?php echo "edit-servico.php?euid=".$uid."&id=".$row->id; ?>">Editar</a> | <a class="action" href="<?php echo "../_inc/delete.php?type=servico&uid=".$uid."&id=".$row->id; ?>">Deletar</a></td>
+                                            <td><a class="action" href="<?php echo "servico.php?euid=".$uid."&id=".$row->id; ?>">Editar</a> | <a class="action" href="<?php echo "../_inc/delete.php?source=servico&file=".$row->url."&uid=".$uid."&id=".$row->id; ?>">Deletar</a></td>
                                         </tr>
                                         <?php endwhile; ?>
                                     </tbody>
                                 </table>
                             </div>
+                            <?php 
+                                endif; 
+                                endif; 
+                                $conn->close();
+                                unset($conn);
+                            ?>
                         </div>
                     </div>
-                    <?php 
-                        endif; 
-                        endif; 
-                        $conn->close();
-                        unset($conn);
-                    ?>
                 </div>
                 <!-- ============================================================== -->
                 <!-- chat-listing & recent comments -->
