@@ -14,58 +14,95 @@
 
     if(!isset($_GET['id'])){
         if(isset($_POST['update'])) :
-            $login = htmlentities($_POST['login'], ENT_QUOTES);
-            $senha = md5(htmlentities($_POST['senha'], ENT_QUOTES));
-            if($login && $senha){ 
-                $stmt = $conn->prepare("INSERT usuarios (`senha`, `login`) VALUES (?, ?)");
-    
-                if(isset($stmt) && $stmt !== FALSE) {
-                    $stmt->bind_param("ss", $senha, $login);
-                    $stmt->execute();
-                    $stmt->close();
+            $stmt = $conn->prepare("INSERT artigos (`titulo`, `url`, `text`) VALUES (?, ?, ?)");
+            $titulo = htmlentities($_POST['titulo'], ENT_QUOTES);
+            $text = htmlentities($_POST['text'], ENT_QUOTES);
+
+            $target_dir = "uploads/";
+            $target_file = $target_dir . basename($_FILES["file"]["name"]);
+            $uploadOk = 1;
+            $imageFileType = pathinfo($target_file, PATHINFO_EXTENSION);
+
+            if($_FILES["file"]["tmp_name"]) {
+                if($imageFileType == "jpg" || $imageFileType == "png" || $imageFileType == "gif" || $imageFileType == "bmp") {
+                    if (move_uploaded_file($_FILES["file"]["tmp_name"], $target_file)) {
+                        $files = date("dmYhis") . basename($_FILES["file"]["name"]);
+                    } else {
+                        echo "Error Uploading File";
+                        exit;
+                    }
                 } else {
-                    die($conn->error);
+                    echo "File Not Supported";
+                    exit;
                 }
-                
-                header("Location: usuarios.php?euid=".$uid);
             }
+
+            $file = basename($_FILES["file"]["name"]);
+
+            if(isset($stmt) && $stmt !== FALSE) {
+                $stmt->bind_param("sss", $titulo, $file, $text);
+                $stmt->execute();
+                $stmt->close();
+            } else {
+                die($conn->error);
+            }
+            
+            header("Location: artigos.php?euid=".$uid); 
         endif;           
     } else {
         $id = $_GET['id'];
-
-        $stmt = $conn->prepare("SELECT `login`, `senha`, `lastupdate` FROM `usuarios` WHERE `usuarios`.`id` = '".$id."'");
+        $stmt = $conn->prepare("SELECT `titulo`, `url`, `text` FROM `artigos` WHERE `artigos`.`id` = '".$id."'");
         if($stmt){
             $stmt->execute();
-            $stmt->bind_result($login, $senha, $lastupdate);
+            $stmt->bind_result($titulo, $url, $text);
             while($stmt->fetch()) {
-                $login = $login;
-                $senha = $senha;
-                $lastupdate = $lastupdate;
+                $titulo = $titulo;
+                $url = $url;
+                $text = $text;
             }
             $stmt->close();
         }
+
         if(isset($_POST['update'])) :
-            if(is_numeric($id) && ($_POST['login'] && $_POST['senha'])){
-                $login = htmlentities($_POST['login'], ENT_QUOTES);
-                $senha = ($_POST['senha'] == $senha) ? $senha : md5(htmlentities($_POST['senha'], ENT_QUOTES));
-                $time = time();
-                $lastupdate = date("Y-m-d G:i:s", $time);
-                $stmt = $conn->prepare("UPDATE usuarios SET `senha` = ?, `login` = ?, `lastupdate` = ? WHERE `usuarios`.`id` = $id");
-                if(isset($stmt) && $stmt !== FALSE) {
-                    $stmt->bind_param("sss", $senha, $login, $lastupdate);
-                    $stmt->execute();
-                    $stmt->close();
+            $titulo = htmlentities($_POST['titulo'], ENT_QUOTES);
+            $url = htmlentities($_POST['url'], ENT_QUOTES);
+            $text = htmlentities($_POST['text'], ENT_QUOTES);
+
+            $target_dir = "uploads/";
+            $target_file = $target_dir . basename($_FILES["file"]["name"]);
+            $uploadOk = 1;
+            $imageFileType = pathinfo($target_file, PATHINFO_EXTENSION);
+
+            if($_FILES["file"]["tmp_name"]) {
+                if($imageFileType == "jpg" || $imageFileType == "png" || $imageFileType == "gif" || $imageFileType == "bmp") {
+                    if (move_uploaded_file($_FILES["file"]["tmp_name"], $target_file)) {
+                        $files = date("dmYhis") . basename($_FILES["file"]["name"]);
+                    } else {
+                        echo "Error Uploading File";
+                        exit;
+                    }
                 } else {
-                    die($conn->error);
-                }
-                
-                if($id == $euid && $senha != $asenha){
-                    header("Location: ../_inc/logout.php?action=update");
-                } else {
-                    header("Location: usuario.php?id=".$id."&euid=".$euid);
+                    echo "File Not Supported";
+                    exit;
                 }
             }
-        endif; 
+
+            $file = basename($_FILES["file"]["name"]);
+            $boolFile = ($file) ? $file : $url;
+
+            $stmt = $conn->prepare("UPDATE artigos SET `titulo` = ?, `url` = ?, `text` = ? WHERE `artigos`.`id` = '".$id."'");
+
+            if(isset($stmt) && $stmt !== FALSE) {
+                $stmt->bind_param("sss", $titulo, $boolFile, $text);
+                $stmt->execute();
+                $stmt->close();
+                (($url != $file) && $file) ? unlink('../profile/uploads/'.$url) : '';
+            } else {
+                die($conn->error);
+            }
+            
+            header("Location: artigo.php?id=".$id."&euid=".$uid);  
+        endif;
     }
 ?>
 <!DOCTYPE html>
@@ -169,13 +206,13 @@
                     </li>
                     <li>
                         <a href="<?php echo "portfolio-comercial.php?euid=".$uid; ?>" class="waves-effect"><i class="fa fa-book fa-fw" aria-hidden="true"></i>Portfolio Comercial</a>
-                    </li>
+                    </li>   
                     <li>
-                        <a href="<?php echo "servicos.php?euid=".$uid; ?>" class="waves-effect"><i class="fa fa-briefcase fa-fw" aria-hidden="true"></i>Serviços</a>
-                    </li> 
+                        <a href="<?php echo "artigos.php?euid=".$uid; ?>" class="waves-effect"><i class="fa fa-briefcase fa-fw" aria-hidden="true"></i>Serviços</a>
+                    </li>      
                     <li>
                         <a href="<?php echo "artigos.php?euid=".$uid; ?>" class="waves-effect"><i class="fa fa-university fa-fw" aria-hidden="true"></i>Artigos</a>
-                    </li> 
+                    </li>     
                     <!-- <li>
                         <a href="profile.html" class="waves-effect"><i class="fa fa-group fa-fw" aria-hidden="true"></i>Profile</a>
                     </li>
@@ -210,16 +247,8 @@
         <div id="page-wrapper">
             <div class="container-fluid">
                 <div class="row bg-title">
-                    <div class="col-lg-8 col-md-4 col-sm-4 col-xs-12">
-                        <h4 class="page-title"><?php echo (isset($id)) ? 'Editar Conta' : 'Adicionar nova conta'; ?></h4> 
-                        <?php if(isset($id)) : ?><p class="last-update"><b>Última Atualização: <?php echo (isset($lastupdate)) ? $lastupdate : ''; ?> </b><i></i></p> <?php endif; ?>
-                    </div>
-                    <div class="col-lg-4 col-sm-8 col-md-8 col-xs-12">
-                        <!-- <a href="https://wrappixel.com/templates/ampleadmin/" target="_blank" class="btn btn-danger pull-right m-l-20 hidden-xs hidden-sm waves-effect waves-light">Upgrade to Pro</a> -->
-                        <ol class="breadcrumb">
-                            <li><a href="<?php echo "index.php?euid=".$uid; ?>">Dashboard</a></li>
-                            <li class="active">Minha Conta</li>
-                        </ol>
+                    <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
+                        <h4 class="page-title"><?php echo (isset($id)) ? 'Editar' : 'Adicionar'; ?> Artigo</h4> 
                     </div>
                 </div>
                 <!-- /.row -->
@@ -250,60 +279,32 @@
                     </div> -->
                     <div class="col-lg-12">
                         <div class="white-box">
-                            <form role="form" class="form-horizontal form-material usuario" action="" method="POST">
+                            <form class="form-horizontal form-material" action="" method="POST" enctype="multipart/form-data">
                                 <div class="form-group">
-                                    <label class="col-md-12">Login</label>
+                                    <label class="col-md-12">Titulo</label>
                                     <div class="col-md-12">
-                                        <?php $euid = isset($id) ? $id : ''; ?>
-                                        <input name="login" <?php echo ($uid == $euid) ? 'disabled' : '' ?> type="text" value="<?php echo (isset($login) && isset($id)) ? $login : ''; ?>" class="form-control form-control-line"> 
+                                        <input name="titulo" type="text" value="<?php echo (isset($titulo)) ? $titulo : ''; ?>" class="form-control form-control-line"> 
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label class="col-md-12">Senha</label>
+                                    <label class="col-md-12">Thumbnail</label>
                                     <div class="col-md-12">
-                                    <input name="senha" type="password" value="<?php echo (isset($senha) && isset($id)) ? $senha : ''; ?>" class="form-control form-control-line"> </div>
-                                </div>
-
-                                <?php if($uid == $euid): ?>
-                                    <input type="hidden" value="<?php echo $login; ?>" name="login" />
-                                <?php endif; ?>
-
-                                <!-- <input type="hidden" value="<?php echo $login; ?>" name="login" /> -->
-                                <!-- <input type="hidden" value="<?php echo $login; ?>" name="login" /> -->
-                                
-                                <!-- <input type="hidden" value="<?php echo $euid; ?>" name="id" />
-                                
-                                <?php if($uid == $euid) : ?>
-                                    <input type="hidden" value="<?php echo $alogin; ?>" name="login" />
-                                <?php endif; ?> -->
-                                <!-- <div class="form-group">
-                                    <label for="example-email" class="col-md-12">Email</label>
-                                    <div class="col-md-12">
-                                        <input type="email" placeholder="johnathan@admin.com" class="form-control form-control-line" name="example-email" id="example-email"> </div>
-                                </div>
-                                <div class="form-group">
-                                    <label class="col-md-12">Phone No</label>
-                                    <div class="col-md-12">
-                                        <input type="text" placeholder="123 456 7890" class="form-control form-control-line"> </div>
-                                </div>
-                                <div class="form-group">
-                                    <label class="col-md-12">Message</label>
-                                    <div class="col-md-12">
-                                        <textarea rows="5" class="form-control form-control-line"></textarea>
+                                        <input type="file" name="file" class="form-control form-control-line" />
+                                        <?php if(isset($url)) : ?>
+                                            <p><small>Arquivo atual: <?php echo (isset($url)) ? $url : ''; ?></small></p>
+                                            <input type="hidden" name="url" value="<?php echo (isset($url)) ? $url : ''; ?>"/>
+                                        <?php endif; ?>
+                                        <!-- <?php if($aurl) : ?>
+                                            <p><a href="<?php echo "../_inc/delete.php?source=artigo-thumbnail&id=".$id."&uid=".$uid."&file=".$aurl; ?>" title="Deletar arquivo atual">*Remover arquivo atual</a></p>
+                                        <?php endif; ?> --> 
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label class="col-sm-12">Select Country</label>
-                                    <div class="col-sm-12">
-                                        <select class="form-control form-control-line">
-                                            <option>London</option>
-                                            <option>India</option>
-                                            <option>Usa</option>
-                                            <option>Canada</option>
-                                            <option>Thailand</option>
-                                        </select>
+                                    <label class="col-md-12">Texto</label>
+                                    <div class="col-md-12">
+                                        <textarea name="text" rows="5" class="form-control form-control-line"><?php echo (isset($text)) ? $text : ''; ?></textarea>
                                     </div>
-                                </div> -->
+                                </div>
                                 <div class="form-group">
                                     <div class="col-sm-12">
                                         <input type="submit" name="update" class="btn btn-success" value="Salvar" />

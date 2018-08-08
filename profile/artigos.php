@@ -19,7 +19,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
     <link rel="icon" type="image/png" sizes="16x16" href="plugins/images/admin-logo-dark.png">
-    <title>Precisao Servicos Gerais - Dashboard - Ola, <?php echo $_SESSION['login']; ?></title>
+    <title>Precisao artigos Gerais - Dashboard - Ola, <?php echo $_SESSION['login']; ?></title>
     <!-- Bootstrap Core CSS -->
     <link href="bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- Menu CSS -->
@@ -152,7 +152,7 @@
             <div class="container-fluid">
                 <div class="row bg-title">
                     <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
-                        <h4 class="page-title">Serviços</h4> 
+                        <h4 class="page-title">Artigos</h4> 
                     </div>
                         <!-- <div class="col-lg-9 col-sm-8 col-md-8 col-xs-12">
                             <a href="https://wrappixel.com/templates/ampleadmin/" target="_blank" class="btn btn-danger pull-right m-l-20 hidden-xs hidden-sm waves-effect waves-light">Upgrade to Pro</a>
@@ -234,9 +234,9 @@
                                     <option>July 2017</option>
                                 </select>
                             </div> -->
-                            <h3 class="box-title table-header">(+ <a href="<?php echo "servico.php?euid=".$uid; ?>" title="Adicionar Novo">Adicionar novo Serviço</a>)</h3>
+                            <h3 class="box-title table-header">(+ <a href="<?php echo "artigo.php?euid=".$uid; ?>" title="Adicionar Novo">Adicionar novo Artigo</a>)</h3>
                             <?php 
-                                if ($result = $conn->query("SELECT * FROM servicos ORDER BY id DESC")) :
+                                if ($result = $conn->query("SELECT * FROM artigos ORDER BY id DESC")) :
                                     if ($result->num_rows > 0) :
                             ?>
                             <div class="table-responsive">
@@ -258,7 +258,7 @@
                                             <td class="txt-oflo"><?php echo $row->titulo; ?></td>
                                             <td class="txt-oflo"><?php echo $row->url; ?></td>
                                             <td class="txt-oflo"><?php echo ($row->text) ? substr($row->text, 0, 40).( ( strlen($row->text) >= 40 ) ? '(...)' : '' ) : '' ?></td>
-                                            <td><a class="action" href="<?php echo "servico.php?euid=".$uid."&id=".$row->id; ?>">Editar</a> | <a class="action" href="<?php echo "../_inc/delete.php?source=servico&file=".$row->url."&uid=".$uid."&id=".$row->id; ?>">Deletar</a></td>
+                                            <td><a class="action" href="<?php echo "artigo.php?euid=".$uid."&id=".$row->id; ?>">Editar</a> | <a class="action" href="<?php echo "../_inc/delete.php?source=artigo&file=".$row->url."&uid=".$uid."&id=".$row->id; ?>">Deletar</a></td>
                                         </tr>
                                         <?php endwhile; ?>
                                     </tbody>

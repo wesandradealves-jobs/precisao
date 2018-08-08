@@ -5,6 +5,23 @@
     $source = $_GET['source'];
 
     switch($source){
+        case "artigo":
+            $id = $_GET['id'];
+            $file = $_GET['file'];
+            $stmt = $conn->prepare("UPDATE `artigos` SET `url` = '' WHERE `artigos`.`id` = $id");
+            $stmtProc = $conn->prepare("DELETE FROM artigos WHERE id = ? LIMIT 1");
+            if((isset($stmtProc) && $stmtProc !== FALSE) || isset($stmt) && $stmt !== FALSE) {
+                $stmt->execute();
+                $stmtProc->bind_param("i",$id);
+                $stmtProc->execute();
+                ($_GET['file']) ? unlink('../profile/uploads/'.$file) : '';
+            } else {
+                die($conn->error);
+            }    
+            $stmt->close();
+            $stmtProc->close();
+            header("Location: ../profile/artigos.php?euid=".$_GET['uid']);
+        break;
         case "servico":
             $id = $_GET['id'];
             $file = $_GET['file'];

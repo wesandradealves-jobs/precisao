@@ -209,7 +209,10 @@
                     </li>   
                     <li>
                         <a href="<?php echo "servicos.php?euid=".$uid; ?>" class="waves-effect"><i class="fa fa-briefcase fa-fw" aria-hidden="true"></i>Serviços</a>
-                    </li>                
+                    </li>      
+                    <li>
+                        <a href="<?php echo "artigos.php?euid=".$uid; ?>" class="waves-effect"><i class="fa fa-university fa-fw" aria-hidden="true"></i>Artigos</a>
+                    </li>     
                     <!-- <li>
                         <a href="profile.html" class="waves-effect"><i class="fa fa-group fa-fw" aria-hidden="true"></i>Profile</a>
                     </li>
@@ -289,7 +292,7 @@
                                         <input type="file" name="file" class="form-control form-control-line" />
                                         <?php if(isset($url)) : ?>
                                             <p><small>Arquivo atual: <?php echo (isset($url)) ? $url : ''; ?></small></p>
-                                            <input type="hidden" name="url" value="<?php echo isset($url); ?>"/>
+                                            <input type="hidden" name="url" value="<?php echo (isset($url)) ? $url : ''; ?>"/>
                                         <?php endif; ?>
                                         <!-- <?php if($aurl) : ?>
                                             <p><a href="<?php echo "../_inc/delete.php?source=servico-thumbnail&id=".$id."&uid=".$uid."&file=".$aurl; ?>" title="Deletar arquivo atual">*Remover arquivo atual</a></p>

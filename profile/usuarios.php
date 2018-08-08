@@ -19,7 +19,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
     <link rel="icon" type="image/png" sizes="16x16" href="plugins/images/admin-logo-dark.png">
-    <title>Precisao Servicos Gerais - Dashboard - Ola, <?php echo $_SESSION['login']; ?></title>
+    <title>Precisao Serviços Gerais - Dashboard - Ola, <?php echo $_SESSION['login']; ?></title>
     <!-- Bootstrap Core CSS -->
     <link href="bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- Menu CSS -->
@@ -113,6 +113,9 @@
                     </li> 
                     <li>
                         <a href="<?php echo "servicos.php?euid=".$uid; ?>" class="waves-effect"><i class="fa fa-briefcase fa-fw" aria-hidden="true"></i>Serviços</a>
+                    </li> 
+                    <li>
+                        <a href="<?php echo "artigos.php?euid=".$uid; ?>" class="waves-effect"><i class="fa fa-university fa-fw" aria-hidden="true"></i>Artigos</a>
                     </li> 
                     <!-- <li>
                         <a href="profile.html" class="waves-effect"><i class="fa fa-group fa-fw" aria-hidden="true"></i>Profile</a>
@@ -374,7 +377,7 @@
                 </div>
             </div>
             <!-- /.container-fluid -->
-            <footer class="footer text-center"> <?php echo date('Y'); ?> &copy; Precisao Servicos Gerais </footer>
+            <footer class="footer text-center"> <?php echo date('Y'); ?> &copy; Precisao Serviços Gerais </footer>
         </div>
         <!-- ============================================================== -->
         <!-- End Page Content -->
