@@ -80,4 +80,7 @@
          sparkResize = setTimeout(sparklineLogin, 500);
      });
      sparklineLogin();
+     $(".list-open").on("click", function () {
+        $(this).toggleClass("toggle"); 
+    });
  });

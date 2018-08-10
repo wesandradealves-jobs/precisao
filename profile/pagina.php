@@ -8,100 +8,89 @@
         $uid = $_SESSION['uid'];
     }
     $euid = $_GET['euid'];
-
+    function removeAccents($str) {
+        $a = array('À', 'Á', 'Â', 'Ã', 'Ä', 'Å', 'Æ', 'Ç', 'È', 'É', 'Ê', 'Ë', 'Ì', 'Í', 'Î', 'Ï', 'Ð', 'Ñ', 'Ò', 'Ó', 'Ô', 'Õ', 'Ö', 'Ø', 'Ù', 'Ú', 'Û', 'Ü', 'Ý', 'ß', 'à', 'á', 'â', 'ã', 'ä', 'å', 'æ', 'ç', 'è', 'é', 'ê', 'ë', 'ì', 'í', 'î', 'ï', 'ñ', 'ò', 'ó', 'ô', 'õ', 'ö', 'ø', 'ù', 'ú', 'û', 'ü', 'ý', 'ÿ', 'Ā', 'ā', 'Ă', 'ă', 'Ą', 'ą', 'Ć', 'ć', 'Ĉ', 'ĉ', 'Ċ', 'ċ', 'Č', 'č', 'Ď', 'ď', 'Đ', 'đ', 'Ē', 'ē', 'Ĕ', 'ĕ', 'Ė', 'ė', 'Ę', 'ę', 'Ě', 'ě', 'Ĝ', 'ĝ', 'Ğ', 'ğ', 'Ġ', 'ġ', 'Ģ', 'ģ', 'Ĥ', 'ĥ', 'Ħ', 'ħ', 'Ĩ', 'ĩ', 'Ī', 'ī', 'Ĭ', 'ĭ', 'Į', 'į', 'İ', 'ı', 'Ĳ', 'ĳ', 'Ĵ', 'ĵ', 'Ķ', 'ķ', 'Ĺ', 'ĺ', 'Ļ', 'ļ', 'Ľ', 'ľ', 'Ŀ', 'ŀ', 'Ł', 'ł', 'Ń', 'ń', 'Ņ', 'ņ', 'Ň', 'ň', 'ŉ', 'Ō', 'ō', 'Ŏ', 'ŏ', 'Ő', 'ő', 'Œ', 'œ', 'Ŕ', 'ŕ', 'Ŗ', 'ŗ', 'Ř', 'ř', 'Ś', 'ś', 'Ŝ', 'ŝ', 'Ş', 'ş', 'Š', 'š', 'Ţ', 'ţ', 'Ť', 'ť', 'Ŧ', 'ŧ', 'Ũ', 'ũ', 'Ū', 'ū', 'Ŭ', 'ŭ', 'Ů', 'ů', 'Ű', 'ű', 'Ų', 'ų', 'Ŵ', 'ŵ', 'Ŷ', 'ŷ', 'Ÿ', 'Ź', 'ź', 'Ż', 'ż', 'Ž', 'ž', 'ſ', 'ƒ', 'Ơ', 'ơ', 'Ư', 'ư', 'Ǎ', 'ǎ', 'Ǐ', 'ǐ', 'Ǒ', 'ǒ', 'Ǔ', 'ǔ', 'Ǖ', 'ǖ', 'Ǘ', 'ǘ', 'Ǚ', 'ǚ', 'Ǜ', 'ǜ', 'Ǻ', 'ǻ', 'Ǽ', 'ǽ', 'Ǿ', 'ǿ', 'Ά', 'ά', 'Έ', 'έ', 'Ό', 'ό', 'Ώ', 'ώ', 'Ί', 'ί', 'ϊ', 'ΐ', 'Ύ', 'ύ', 'ϋ', 'ΰ', 'Ή', 'ή');
+        $b = array('A', 'A', 'A', 'A', 'A', 'A', 'AE', 'C', 'E', 'E', 'E', 'E', 'I', 'I', 'I', 'I', 'D', 'N', 'O', 'O', 'O', 'O', 'O', 'O', 'U', 'U', 'U', 'U', 'Y', 's', 'a', 'a', 'a', 'a', 'a', 'a', 'ae', 'c', 'e', 'e', 'e', 'e', 'i', 'i', 'i', 'i', 'n', 'o', 'o', 'o', 'o', 'o', 'o', 'u', 'u', 'u', 'u', 'y', 'y', 'A', 'a', 'A', 'a', 'A', 'a', 'C', 'c', 'C', 'c', 'C', 'c', 'C', 'c', 'D', 'd', 'D', 'd', 'E', 'e', 'E', 'e', 'E', 'e', 'E', 'e', 'E', 'e', 'G', 'g', 'G', 'g', 'G', 'g', 'G', 'g', 'H', 'h', 'H', 'h', 'I', 'i', 'I', 'i', 'I', 'i', 'I', 'i', 'I', 'i', 'IJ', 'ij', 'J', 'j', 'K', 'k', 'L', 'l', 'L', 'l', 'L', 'l', 'L', 'l', 'l', 'l', 'N', 'n', 'N', 'n', 'N', 'n', 'n', 'O', 'o', 'O', 'o', 'O', 'o', 'OE', 'oe', 'R', 'r', 'R', 'r', 'R', 'r', 'S', 's', 'S', 's', 'S', 's', 'S', 's', 'T', 't', 'T', 't', 'T', 't', 'U', 'u', 'U', 'u', 'U', 'u', 'U', 'u', 'U', 'u', 'U', 'u', 'W', 'w', 'Y', 'y', 'Y', 'Z', 'z', 'Z', 'z', 'Z', 'z', 's', 'f', 'O', 'o', 'U', 'u', 'A', 'a', 'I', 'i', 'O', 'o', 'U', 'u', 'U', 'u', 'U', 'u', 'U', 'u', 'U', 'u', 'A', 'a', 'AE', 'ae', 'O', 'o', 'Α', 'α', 'Ε', 'ε', 'Ο', 'ο', 'Ω', 'ω', 'Ι', 'ι', 'ι', 'ι', 'Υ', 'υ', 'υ', 'υ', 'Η', 'η');
+        return str_replace($a, $b, $str);
+    }
+    
     // Pegar dados e definir acao
-
-    if(!isset($_GET['id'])){
-        if(isset($_POST['update'])) :
-            $stmt = $conn->prepare("INSERT artigos (`titulo`, `url`, `text`) VALUES (?, ?, ?)");
-            $titulo = htmlentities($_POST['titulo'], ENT_QUOTES);
-            $text = htmlentities($_POST['text'], ENT_QUOTES);
-
-            $target_dir = "uploads/";
-            $target_file = $target_dir . basename($_FILES["file"]["name"]);
-            $uploadOk = 1;
-            $imageFileType = pathinfo($target_file, PATHINFO_EXTENSION);
-
-            if($_FILES["file"]["tmp_name"]) {
-                if($imageFileType == "jpg" || $imageFileType == "png" || $imageFileType == "gif" || $imageFileType == "bmp") {
-                    if (move_uploaded_file($_FILES["file"]["tmp_name"], $target_file)) {
-                        $files = date("dmYhis") . basename($_FILES["file"]["name"]);
-                    } else {
-                        echo "Error Uploading File";
-                        exit;
+    
+    if(!empty($_GET['id'])){
+        if($result = $conn->query("SELECT * FROM paginas ORDER BY id")){ 
+            if($result->num_rows > 0){
+                $stmt = $conn->prepare("SELECT `titulo`, `conteudo`, `headers`, `slug` FROM `paginas` WHERE `paginas`.`id` = '".$_GET['id']."'");
+                
+                if($stmt){
+                    $stmt->execute();
+                    $stmt->bind_result($titulo, $conteudo, $headers, $slug);
+                    while($stmt->fetch()) {
+                        $titulo = $titulo;
+                        $conteudo = $conteudo;
+                        $headers = htmlspecialchars($headers);
+                        $slug = $slug;
                     }
-                } else {
-                    echo "File Not Supported";
-                    exit;
+                    $stmt->close();
                 }
-            }
 
-            $file = basename($_FILES["file"]["name"]);
+                if(isset($_POST['update'])):
+                    $titulo = htmlentities($_POST['titulo'], ENT_QUOTES);
+                    $conteudo = $_POST['conteudo'];
+                    $slug = ( htmlentities($_POST['slug'], ENT_QUOTES) != str_replace(' ', '-', strtolower($titulo)) ? str_replace(' ', '-', strtolower($titulo)) : htmlentities($_POST['slug'], ENT_QUOTES));
+                    
+                    $headers = htmlspecialchars($_POST['headers']);
 
-            if(isset($stmt) && $stmt !== FALSE) {
-                $stmt->bind_param("sss", $titulo, $file, $text);
-                $stmt->execute();
-                $stmt->close();
-            } else {
-                die($conn->error);
+                    $stmt = $conn->prepare("UPDATE paginas SET `titulo` = ?, `conteudo` = ?, `slug` = ?, `headers` = ? WHERE `paginas`.`id` = '".$_GET['id']."'");
+
+                    if(isset($stmt) && $stmt !== FALSE) {
+                        $stmt->bind_param("ssss", $titulo, $conteudo, $slug, $headers);
+                        $stmt->execute();
+                        $stmt->close();
+                    } else {
+                        die($conn->error);
+                    }
+                    
+                    header("Location: pagina.php?id=".$_GET['id']."&euid=".$uid); 
+                endif;
+            } else {  
+                // Adiciono se nao tiver
+                if(isset($_POST['update'])) :
+                    $stmt = $conn->prepare("INSERT paginas (`titulo`, `conteudo`, `headers`, `slug`) VALUES (?, ?, ?, ?)");
+                    $titulo = htmlentities($_POST['titulo'], ENT_QUOTES);
+                    $conteudo = $_POST['conteudo'];
+                    $slug = str_replace(' ', '-', strtolower($titulo));
+                    $headers = htmlspecialchars($_POST['headers']);
+
+                    if(isset($stmt) && $stmt !== FALSE) {
+                        $stmt->bind_param("ssss", $titulo, $conteudo, $headers, $slug);
+                        $stmt->execute();
+                        $stmt->close();
+                    } else {
+                        die($conn->error);
+                    }
+                    
+                    header("Location: paginas.php?euid=".$uid); 
+                endif; 
             }
-            
-            header("Location: artigos.php?euid=".$uid); 
-        endif;           
-    } else {
-        $id = $_GET['id'];
-        $stmt = $conn->prepare("SELECT `titulo`, `url`, `text` FROM `artigos` WHERE `artigos`.`id` = '".$id."'");
-        if($stmt){
-            $stmt->execute();
-            $stmt->bind_result($titulo, $url, $text);
-            while($stmt->fetch()) {
-                $titulo = $titulo;
-                $url = $url;
-                $text = $text;
-            }
-            $stmt->close();
         }
-
+    } else {
         if(isset($_POST['update'])) :
+            $stmt = $conn->prepare("INSERT paginas (`titulo`, `conteudo`, `headers`, `slug`) VALUES (?, ?, ?, ?)");
             $titulo = htmlentities($_POST['titulo'], ENT_QUOTES);
-            $url = htmlentities($_POST['url'], ENT_QUOTES);
-            $text = htmlentities($_POST['text'], ENT_QUOTES);
-
-            $target_dir = "uploads/";
-            $target_file = $target_dir . basename($_FILES["file"]["name"]);
-            $uploadOk = 1;
-            $imageFileType = pathinfo($target_file, PATHINFO_EXTENSION);
-
-            if($_FILES["file"]["tmp_name"]) {
-                if($imageFileType == "jpg" || $imageFileType == "png" || $imageFileType == "gif" || $imageFileType == "bmp") {
-                    if (move_uploaded_file($_FILES["file"]["tmp_name"], $target_file)) {
-                        $files = date("dmYhis") . basename($_FILES["file"]["name"]);
-                    } else {
-                        echo "Error Uploading File";
-                        exit;
-                    }
-                } else {
-                    echo "File Not Supported";
-                    exit;
-                }
-            }
-
-            $file = basename($_FILES["file"]["name"]);
-            $boolFile = ($file) ? $file : $url;
-
-            $stmt = $conn->prepare("UPDATE artigos SET `titulo` = ?, `url` = ?, `text` = ? WHERE `artigos`.`id` = '".$id."'");
+            $conteudo = $_POST['conteudo'];
+            $slug = str_replace(' ', '-', strtolower($titulo));
+            $headers = htmlspecialchars($_POST['headers']);
 
             if(isset($stmt) && $stmt !== FALSE) {
-                $stmt->bind_param("sss", $titulo, $boolFile, $text);
+                $stmt->bind_param("ssss", $titulo, $conteudo, $headers, $slug);
                 $stmt->execute();
                 $stmt->close();
-                (($url != $file) && $file) ? unlink('../profile/uploads/'.$url) : '';
             } else {
                 die($conn->error);
             }
             
-            header("Location: artigo.php?id=".$id."&euid=".$uid);  
-        endif;
+            header("Location: paginas.php?euid=".$uid); 
+        endif;         
     }
 ?>
 <!DOCTYPE html>
@@ -209,8 +198,8 @@
         <div id="page-wrapper">
             <div class="container-fluid">
                 <div class="row bg-title">
-                    <div class="col-xs-12">
-                        <h4 class="page-title">Artigos > <?php echo (!empty($_GET['id'])) ? 'Editar Artigo > '.$titulo : 'Adicionar Artigo'; ?></h4>
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                        <h4 class="page-title">Páginas > <?php echo (!empty($_GET['id'])) ? 'Editar Página > '.$titulo : 'Adicionar Nova Página'; ?></h4> 
                     </div>
                 </div>
                 <!-- /.row -->
@@ -241,32 +230,56 @@
                     </div> -->
                     <div class="col-lg-12">
                         <div class="white-box">
-                            <form class="form-horizontal form-material" action="" method="POST" enctype="multipart/form-data">
+                            <form class="form-horizontal form-material" action="" method="POST">
                                 <div class="form-group">
-                                    <label class="col-md-12">Titulo</label>
+                                    <label class="col-md-12">Título</label>
                                     <div class="col-md-12">
                                         <input name="titulo" type="text" value="<?php echo (isset($titulo)) ? $titulo : ''; ?>" class="form-control form-control-line"> 
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label class="col-md-12">Thumbnail</label>
+                                    <label class="col-md-12">Conteudo</label>
                                     <div class="col-md-12">
-                                        <input type="file" name="file" class="form-control form-control-line" />
-                                        <?php if(isset($url)) : ?>
-                                            <p><small>Arquivo atual: <?php echo (isset($url)) ? $url : ''; ?></small></p>
-                                            <input type="hidden" name="url" value="<?php echo (isset($url)) ? $url : ''; ?>"/>
-                                        <?php endif; ?>
-                                        <!-- <?php if($aurl) : ?>
-                                            <p><a href="<?php echo "../_inc/delete.php?source=artigo-thumbnail&id=".$id."&uid=".$uid."&file=".$aurl; ?>" title="Deletar arquivo atual">*Remover arquivo atual</a></p>
-                                        <?php endif; ?> --> 
+                                        <textarea name="conteudo" rows="10" class="froala-editor form-control form-control-line"><?php echo (isset($conteudo)) ? $conteudo : ''; ?></textarea>
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label class="col-md-12">Texto</label>
+                                    <label class="col-md-12">Headers/SEO</label>
                                     <div class="col-md-12">
-                                        <textarea name="text" rows="5" class="froala-editor form-control form-control-line"><?php echo (isset($text)) ? $text : ''; ?></textarea>
+                                    <textarea rows="10" class="form-control form-control-line" name="headers"><?php echo (isset($headers)) ? htmlspecialchars_decode($headers) : ''; ?></textarea>
                                     </div>
                                 </div>
+                                <div class="form-group">
+                                    <label class="col-md-12">Slug</label>
+                                    <div class="col-md-12">
+                                        <input disabled type="text" value="<?php echo (isset($slug)) ? $slug : ''; ?>" class="form-control form-control-line"> 
+                                    </div>
+                                </div>
+                                <input type="hidden" name="slug" value="<?php echo (isset($slug)) ? $slug : ''; ?>">
+                                <!-- <div class="form-group">
+                                    <label class="col-md-12">SEO/Metas para página Home</label>
+                                    <div class="col-md-12">
+                                        <textarea name="home_headers" rows="10" class="froala-editor form-control form-control-line"><?php echo (isset($home_headers)) ? $home_headers : ''; ?></textarea>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-md-12">SEO/Metas para página Terceirize</label>
+                                    <div class="col-md-12">
+                                        <textarea name="terceirize_headers" rows="10" class="froala-editor form-control form-control-line"><?php echo (isset($terceirize_headers)) ? $terceirize_headers : ''; ?></textarea>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-md-12">SEO/Metas para página Trabalhe Conosco</label>
+                                    <div class="col-md-12">
+                                        <textarea name="trabalhe_conosco_headers" rows="10" class="froala-editor form-control form-control-line"><?php echo (isset($trabalhe_conosco_headers)) ? $trabalhe_conosco_headers : ''; ?></textarea>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-md-12">SEO/Metas para página Meio Ambiente</label>
+                                    <div class="col-md-12">
+                                        <textarea name="meio_ambiente_headers" rows="10" class="froala-editor form-control form-control-line"><?php echo (isset($meio_ambiente_headers)) ? $meio_ambiente_headers : ''; ?></textarea>
+                                    </div>
+                                </div>                                                                                                 -->
                                 <div class="form-group">
                                     <div class="col-sm-12">
                                         <input type="submit" name="update" class="btn btn-success" value="Salvar" />
@@ -286,6 +299,7 @@
     <!-- /#wrapper -->
     <!-- jQuery -->
     <script src="plugins/bower_components/jquery/dist/jquery.min.js"></script>
+
     <!-- include summernote css/js -->
     <link href="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.9/summernote.css" rel="stylesheet">
     <script src="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.9/summernote.js"></script>
@@ -295,6 +309,7 @@
             $('.froala-editor').summernote();
         });    
     </script>
+
     <!-- Bootstrap Core JavaScript -->
     <script src="bootstrap/dist/js/bootstrap.min.js"></script>
     <!-- Menu Plugin JavaScript -->

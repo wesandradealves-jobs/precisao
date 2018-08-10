@@ -8,54 +8,54 @@
         $uid = $_SESSION['uid'];
     }
     $euid = $_GET['euid'];
-    $pageWasRefreshed = isset($_SERVER['HTTP_CACHE_CONTROL']) && $_SERVER['HTTP_CACHE_CONTROL'] === 'max-age=0';
-    
+
     // Pegar dados e definir acao
 
-    if ($result = $conn->query("SELECT * FROM seo ORDER BY id")) {
-        if ($result->num_rows > 0) {
-            // Atualizo se tiver
-            $stmt = $conn->prepare("SELECT `code` FROM `seo` ORDER BY id");
-            if($stmt){
+    if(!isset($_GET['id'])){
+        if(isset($_POST['update'])) :
+            $stmt = $conn->prepare("INSERT redes_sociais (`nome`, `url`) VALUES (?, ?)");
+            $nome = htmlentities($_POST['nome'], ENT_QUOTES);
+            $url = htmlentities($_POST['url'], ENT_QUOTES);
+
+            if(isset($stmt) && $stmt !== FALSE) {
+                $stmt->bind_param("ss", $nome, $url);
                 $stmt->execute();
-                $stmt->bind_result($code);
-                while($stmt->fetch()) {
-                    $code = $code;
-                }
                 $stmt->close();
+            } else {
+                die($conn->error);
             }
-
-            if(isset($_POST['update'])):
-                $code = htmlentities($_POST['code'], ENT_QUOTES);
-
-                $stmt = $conn->prepare("UPDATE seo SET `code` = ?");
-
-                if(isset($stmt) && $stmt !== FALSE) {
-                    $stmt->bind_param("s", $code);
-                    $stmt->execute();
-                    $stmt->close();
-                } else {
-                    die($conn->error);
-                }
-                
-                header("Location: seo.php?euid=".$uid); 
-            endif;
-        } else {
-            if(isset($_POST['update'])) :
-                $stmt = $conn->prepare("INSERT seo (`code`) VALUES (?)");
-                $code = htmlentities($_POST['code'], ENT_QUOTES);
-
-                if(isset($stmt) && $stmt !== FALSE) {
-                    $stmt->bind_param("s", $code);
-                    $stmt->execute();
-                    $stmt->close();
-                } else {
-                    die($conn->error);
-                }
-                
-                header("Location: seo.php?euid=".$uid); 
-            endif;  
+            
+            header("Location: redes-sociais.php?euid=".$uid); 
+        endif;           
+    } else {
+        $id = $_GET['id'];
+        $stmt = $conn->prepare("SELECT `nome`, `url` FROM `redes_sociais` WHERE `redes_sociais`.`id` = '".$id."'");
+        if($stmt){
+            $stmt->execute();
+            $stmt->bind_result($nome, $url);
+            while($stmt->fetch()) {
+                $nome = $nome;
+                $url = $url;
+            }
+            $stmt->close();
         }
+
+        if(isset($_POST['update'])) :
+            $nome = htmlentities($_POST['nome'], ENT_QUOTES);
+            $url = htmlentities($_POST['url'], ENT_QUOTES);
+
+            $stmt = $conn->prepare("UPDATE redes_sociais SET `nome` = ?, `url` = ? WHERE `redes_sociais`.`id` = '".$id."'");
+
+            if(isset($stmt) && $stmt !== FALSE) {
+                $stmt->bind_param("ss", $nome, $url);
+                $stmt->execute();
+                $stmt->close();
+            } else {
+                die($conn->error);
+            }
+            
+            header("Location: rede-social.php?id=".$id."&euid=".$uid);  
+        endif;
     }
 ?>
 <!DOCTYPE html>
@@ -130,7 +130,7 @@
                     </li> -->
                     <li>
                         <a class="profile-pic" href="<?php echo "edit-profile.php?euid=".$uid; ?>"> <img src="https://pixinvent.com/materialize-material-design-admin-template/images/avatar/avatar-7.png" alt="user-img" width="36" class="img-circle">Seja bem vindo(a), <b class="hidden-xs"><?php echo $_SESSION['login']; ?></b></a>
-                        <a class="acesse" href="http://localhost/precisao/" title="Acesse seu site" target="_blank">Acesse seu site</a>
+                        <a class="acesse" href="http://precisaoservicos.com.br/hmg" title="Acesse seu site" target="_blank">Acesse seu site</a>
                     </li>
                 </ul>
             </div>
@@ -147,32 +147,7 @@
                 <div class="sidebar-head">
                     <h3><span class="fa-fw open-close"><i class="ti-close ti-menu"></i></span> <span class="hide-menu">Navigation</span></h3>
                 </div>
-                <ul class="nav" id="side-menu">
-                    <li style="padding: 70px 0 0;">
-                        <a href="<?php echo "index.php?euid=".$uid; ?>" class="waves-effect"><i class="fa fa-dashboard fa-fw" aria-hidden="true"></i>Dashboard</a>
-                    </li>
-                    <li>
-                        <a href="<?php echo "usuarios.php?euid=".$uid; ?>" class="waves-effect"><i class="fa fa-group fa-fw" aria-hidden="true"></i>Usuários</a>
-                    </li>
-                    <li>
-                        <a href="<?php echo "contato.php?euid=".$uid; ?>" class="waves-effect"><i class="fa fa-envelope-o fa-fw" aria-hidden="true"></i>Contato</a>
-                    </li>
-                    <li>
-                        <a href="<?php echo "portfolio-comercial.php?euid=".$uid; ?>" class="waves-effect"><i class="fa fa-book fa-fw" aria-hidden="true"></i>Portfolio Comercial</a>
-                    </li>      
-                    <li>
-                        <a href="<?php echo "servicos.php?euid=".$uid; ?>" class="waves-effect"><i class="fa fa-briefcase fa-fw" aria-hidden="true"></i>Serviços</a>
-                    </li>  
-                    <li>
-                        <a href="<?php echo "artigos.php?euid=".$uid; ?>" class="waves-effect"><i class="fa fa-university fa-fw" aria-hidden="true"></i>Artigos</a>
-                    </li>         
-                    <li>
-                        <a href="<?php echo "a-empresa.php?euid=".$uid; ?>" class="waves-effect"><i class="fa fa-building fa-fw" aria-hidden="true"></i>A Empresa</a>
-                    </li> 
-                    <li>
-                        <a href="<?php echo "seo.php?euid=".$uid; ?>" class="waves-effect"><i class="fa fa-code fa-fw" aria-hidden="true"></i>SEO</a>
-                    </li> 
-                </ul>
+                <?php include('_inc/nav.php'); ?>
                 <div class="center p-20">
                     <a href="../_inc/logout.php" target="_blank" class="btn btn-danger btn-block waves-effect waves-light" title="Sair">Sair</a>
                 </div>
@@ -188,8 +163,8 @@
         <div id="page-wrapper">
             <div class="container-fluid">
                 <div class="row bg-title">
-                    <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
-                        <h4 class="page-title">SEO/Metas</h4> 
+                    <div class="col-xs-12">
+                        <h4 class="page-title">Redes Sociais > <?php echo (!empty($_GET['id'])) ? 'Editar Redes Sociais > '.$nome : 'Adicionar Rede Social'; ?></h4>
                     </div>
                 </div>
                 <!-- /.row -->
@@ -222,9 +197,15 @@
                         <div class="white-box">
                             <form class="form-horizontal form-material" action="" method="POST">
                                 <div class="form-group">
-                                    <label class="col-md-12">Insira seu header aqui:</label>
+                                    <label class="col-md-12">Rede Social</label>
                                     <div class="col-md-12">
-                                        <textarea name="code" rows="5" class="form-control form-control-line"><?php echo (isset($code)) ? $code : ''; ?></textarea>
+                                        <input name="nome" type="text" value="<?php echo (isset($nome)) ? $nome : ''; ?>" class="form-control form-control-line"> 
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-md-12">URL</label>
+                                    <div class="col-md-12">
+                                        <input name="url" type="url" value="<?php echo (isset($url)) ? $url : ''; ?>" class="form-control form-control-line"> 
                                     </div>
                                 </div>
                                 <div class="form-group">
@@ -246,6 +227,15 @@
     <!-- /#wrapper -->
     <!-- jQuery -->
     <script src="plugins/bower_components/jquery/dist/jquery.min.js"></script>
+    <!-- include summernote css/js -->
+    <link href="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.9/summernote.css" rel="stylesheet">
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.9/summernote.js"></script>
+
+    <script>
+        $(document).ready(function() {
+            $('.froala-editor').summernote();
+        });    
+    </script>
     <!-- Bootstrap Core JavaScript -->
     <script src="bootstrap/dist/js/bootstrap.min.js"></script>
     <!-- Menu Plugin JavaScript -->

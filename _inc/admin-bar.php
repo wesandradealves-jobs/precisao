@@ -2,7 +2,7 @@
         <div class="container">
           <div>
               <p class="profile-picture">
-                <span>Olá, Usuário.</span>
+                <span>Olá, <?php echo ($_SESSION['login']) ? $_SESSION['login'] : 'Usuário'; ?>.</span>
               </p>
               <ul class="admin-shortcuts">
                 <li> 

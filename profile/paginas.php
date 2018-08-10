@@ -115,7 +115,7 @@
             <div class="container-fluid">
                 <div class="row bg-title">
                     <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
-                        <h4 class="page-title">Artigos</h4> 
+                        <h4 class="page-title">Páginas</h4> 
                     </div>
                         <!-- <div class="col-lg-9 col-sm-8 col-md-8 col-xs-12">
                             <a href="https://wrappixel.com/templates/ampleadmin/" target="_blank" class="btn btn-danger pull-right m-l-20 hidden-xs hidden-sm waves-effect waves-light">Upgrade to Pro</a>
@@ -197,9 +197,9 @@
                                     <option>July 2017</option>
                                 </select>
                             </div> -->
-                            <h3 class="box-title table-header">(+ <a href="<?php echo "artigo.php?euid=".$uid; ?>" title="Adicionar Novo">Adicionar novo Artigo</a>)</h3>
+                            <h3 class="box-title table-header">(+ <a href="<?php echo "pagina.php?euid=".$uid; ?>" title="Adicionar Nova Página">Adicionar nova Página</a>)</h3>
                             <?php 
-                                if ($result = $conn->query("SELECT * FROM artigos ORDER BY id DESC")) :
+                                if ($result = $conn->query("SELECT * FROM paginas ORDER BY id DESC")) :
                                     if ($result->num_rows > 0) :
                             ?>
                             <div class="table-responsive">
@@ -208,8 +208,9 @@
                                         <tr>
                                             <th>#</th>
                                             <th>TITULO</th>
-                                            <th>THUMBNAIL</th>
-                                            <th>TEXTO</th>
+                                            <th>CONTEÚDO</th>
+                                            <th>SEO/HEADERS</th>
+                                            <th>SLUG</th>
                                             <th>-</th>
                                         </tr>
                                     </thead>
@@ -219,9 +220,10 @@
                                         <tr>
                                             <td><?php echo $row->id; ?></td>
                                             <td class="txt-oflo"><?php echo $row->titulo; ?></td>
-                                            <td class="txt-oflo"><?php echo $row->url; ?></td>
-                                            <td class="txt-oflo"><?php echo ($row->text) ? substr($row->text, 0, 40).( ( strlen($row->text) >= 40 ) ? '(...)' : '' ) : '' ?></td>
-                                            <td><a class="action" href="<?php echo "artigo.php?euid=".$uid."&id=".$row->id; ?>">Editar</a> | <a class="action" href="<?php echo "../_inc/delete.php?source=artigo&file=".$row->url."&uid=".$uid."&id=".$row->id; ?>">Deletar</a></td>
+                                            <td class="txt-oflo"><?php echo substr(strip_tags($row->conteudo), 0, 20).((strlen(substr(strip_tags($row->conteudo), 0, 20)) >= 20) ? '...' : ''); ?></td>
+                                            <td class="txt-oflo"><code><?php echo $row->headers; ?></code></td>
+                                            <td class="txt-oflo"><?php echo $row->slug; ?></td>
+                                            <td><a class="action" href="<?php echo "pagina.php?euid=".$uid."&id=".$row->id; ?>">Editar</a> | <a class="action" href="<?php echo "../_inc/delete.php?source=pagina&uid=".$uid."&id=".$row->id; ?>">Deletar</a></td>
                                         </tr>
                                         <?php endwhile; ?>
                                     </tbody>

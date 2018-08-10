@@ -28,6 +28,8 @@
                     }
                 } else {
                     $_SESSION['loginErro'] = "Robot verification failed, please try again.";
+                    
+                    echo $responseData;
                     header("Location: ../login.php");
                 }
             } else {

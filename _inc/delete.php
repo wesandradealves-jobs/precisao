@@ -76,7 +76,6 @@
             }
         break;
         case "portfolio-comercial":
-            $uid = $_GET['uid'];
             $file = $_GET['file'];
             $stmt = $conn->prepare("UPDATE `portfolio_comercial` SET `url` = '' WHERE `portfolio_comercial`.`url` = '".$file."'");
             if(isset($stmt) && $stmt !== FALSE) {
@@ -88,6 +87,30 @@
             }     
             $stmt->close();
             header("Location: ../profile/portfolio-comercial.php?euid=".$_GET['uid']);
+        break;
+        case "pagina":
+            $id = $_GET['id'];
+            $stmt = $conn->prepare("DELETE FROM paginas WHERE id = ? LIMIT 1");
+            if((isset($stmt) && $stmt !== FALSE)) {
+                $stmt->bind_param("i",$id);
+                $stmt->execute();
+            } else {
+                die($conn->error);
+            }    
+            $stmt->close();
+            header("Location: ../profile/paginas.php?euid=".$_GET['uid']);
+        break;
+        case "redes-sociais":
+            $id = $_GET['id'];
+            $stmt = $conn->prepare("DELETE FROM redes_sociais WHERE id = ? LIMIT 1");
+            if((isset($stmt) && $stmt !== FALSE)) {
+                $stmt->bind_param("i",$id);
+                $stmt->execute();
+            } else {
+                die($conn->error);
+            }    
+            $stmt->close();
+            header("Location: ../profile/redes-sociais.php?euid=".$_GET['uid']);
         break;
         default:
         //

@@ -1,5 +1,5 @@
 <?php 
-    require_once('_inc/db.php');
+    include_once('db.php');
     session_start();
     $basename = substr(strtolower(basename($_SERVER['PHP_SELF'])),0,strlen(basename($_SERVER['PHP_SELF']))-4);
 ?>
