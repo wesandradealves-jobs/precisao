@@ -13,9 +13,9 @@
 
     if(!isset($_GET['id'])){
         if(isset($_POST['update'])) :
-            $stmt = $conn->prepare("INSERT servicos (`titulo`, `url`, `text`) VALUES (?, ?, ?)");
-            $titulo = $_POST['titulo'];
-            $text = $_POST['text'];
+            $stmt = $conn->prepare("INSERT banner (`image`, `url`, `html`) VALUES (?, ?, ?)");
+            $url = $_POST['url'];
+            $html = htmlspecialchars($_POST['html']);
 
             $target_dir = "uploads/";
             $target_file = $target_dir . basename($_FILES["file"]["name"]);
@@ -39,33 +39,33 @@
             $file = basename($_FILES["file"]["name"]);
 
             if(isset($stmt) && $stmt !== FALSE) {
-                $stmt->bind_param("sss", $titulo, $file, $text);
+                $stmt->bind_param("sss", $file, $url, $html);
                 $stmt->execute();
                 $stmt->close();
             } else {
                 die($conn->error);
             }
             
-            header("Location: servicos.php?euid=".$uid); 
+            header("Location: banners.php?euid=".$uid); 
         endif;           
     } else {
         $id = $_GET['id'];
-        $stmt = $conn->prepare("SELECT `titulo`, `url`, `text` FROM `servicos` WHERE `servicos`.`id` = '".$id."'");
+        $stmt = $conn->prepare("SELECT `image`, `url`, `html` FROM `banner` WHERE `banner`.`id` = '".$id."'");
         if($stmt){
             $stmt->execute();
-            $stmt->bind_result($titulo, $url, $text);
+            $stmt->bind_result($image, $url, $html);
             while($stmt->fetch()) {
-                $titulo = $titulo;
+                $image = $image;
                 $url = $url;
-                $text = $text;
+                $html = htmlspecialchars($html);
             }
             $stmt->close();
         }
 
         if(isset($_POST['update'])) :
-            $titulo = $_POST['titulo'];
             $url = $_POST['url'];
-            $text = $_POST['text'];
+            $old_file = $_POST['old_file'];
+            $html = htmlspecialchars($_POST['html']);
 
             $target_dir = "uploads/";
             $target_file = $target_dir . basename($_FILES["file"]["name"]);
@@ -87,20 +87,20 @@
             }
 
             $file = basename($_FILES["file"]["name"]);
-            $boolFile = ($file) ? $file : $url;
+            $boolFile = ($file) ? $file : $old_file;
 
-            $stmt = $conn->prepare("UPDATE servicos SET `titulo` = ?, `url` = ?, `text` = ? WHERE `servicos`.`id` = '".$id."'");
+            $stmt = $conn->prepare("UPDATE banner SET `image` = ?, `url` = ?, `html` = ? WHERE `banner`.`id` = '".$id."'");
 
             if(isset($stmt) && $stmt !== FALSE) {
-                $stmt->bind_param("sss", $titulo, $boolFile, $text);
+                $stmt->bind_param("sss", $boolFile, $url, $html);
                 $stmt->execute();
                 $stmt->close();
-                (($url != $file) && $file) ? unlink('../profile/uploads/'.$url) : '';
+                (($old_file != $file) && $file) ? unlink('../profile/uploads/'.$old_file) : '';
             } else {
                 die($conn->error);
             }
             
-            header("Location: servico.php?id=".$id."&euid=".$uid);  
+            header("Location: banner.php?id=".$id."&euid=".$uid);  
         endif;
     }
 ?>
@@ -138,9 +138,8 @@
         <div id="page-wrapper">
             <div class="container-fluid">
                 <div class="row bg-title">
-                    <div class="col-lg-12">
-                        <h4 class="page-title">Serviços > <?php echo (!empty($_GET['id'])) ? 'Editar Serviço > '.$titulo : 'Adicionar Serviço'; ?></h4> 
-                        <!-- <h4 class="page-title"><?php echo (isset($id)) ? 'Editar' : 'Adicionar'; ?> Serviço</h4>  -->
+                    <div class="col-xs-12">
+                        <h4 class="page-title">Banners > <?php echo (!empty($_GET['id'])) ? 'Editar Banner > Banner #'.$id : 'Adicionar Banner'; ?></h4>
                     </div>
                 </div>
                 <!-- /.row -->
@@ -150,25 +149,25 @@
                         <div class="white-box">
                             <form class="form-horizontal form-material" action="" method="POST" enctype="multipart/form-data">
                                 <div class="form-group">
-                                    <label class="col-md-12">Titulo</label>
+                                    <label class="col-md-12">URL</label>
                                     <div class="col-md-12">
-                                        <input name="titulo" type="text" value="<?php echo (isset($titulo)) ? $titulo : ''; ?>" class="form-control form-control-line"> 
+                                        <input name="url" type="text" value="<?php echo (isset($url)) ? $url : ''; ?>" class="form-control form-control-line"> 
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label class="col-md-12">Thumbnail</label>
                                     <div class="col-md-12">
                                         <input type="file" name="file" class="form-control form-control-line" />
-                                        <?php if(isset($url) && $url!=='') : ?>
-                                            <input type="hidden" name="url" value="<?php echo (isset($url) && $url!=='') ? $url : ''; ?>">
-                                            <p><small>Arquivo atual: <a class="<?php echo (substr($url, -3) == 'png' || substr($url, -3) == 'jpg' || substr($url, -3) == 'gif' || substr($url, -3) == 'bmp') ? 'lightbox' : ''; ?>" target="_blank" href="uploads/<?php echo (isset($url)) ? $url : ''; ?>"><?php echo (isset($url)) ? $url : ''; ?></a> <a href="<?php echo "../_inc/delete.php?source=servico-thumbnail&id=".$id."&uid=".$uid."&file=".$url; ?>" title="Deletar arquivo atual"><small>(Remover arquivo atual)</small></a></small></p>
+                                        <?php if(isset($image) && $image!=='') : ?>
+                                            <input type="hidden" name="old_file" value="<?php echo $image; ?>" /> 
+                                            <p><small>Arquivo atual: <a class="<?php echo (substr($image, -3) == 'png' || substr($image, -3) == 'jpg' || substr($image, -3) == 'gif' || substr($image, -3) == 'bmp') ? 'lightbox' : ''; ?>" target="_blank" href="uploads/<?php echo (isset($image)) ? $image : ''; ?>"><?php echo (isset($image)) ? $image : ''; ?></a> <a href="<?php echo "../_inc/delete.php?source=banner-thumbnail&id=".$id."&uid=".$uid."&file=".$image; ?>" title="Deletar arquivo atual"><small>(Remover arquivo atual)</small></a></small></p>
                                         <?php endif; ?>
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label class="col-md-12">Texto</label>
+                                    <label class="col-md-12">Custom HTML</label>
                                     <div class="col-md-12">
-                                        <textarea name="text" rows="5" class="froala-editor form-control form-control-line"><?php echo (isset($text)) ? $text : ''; ?></textarea>
+                                        <textarea rows="10" class="form-control form-control-line" name="html"><?php echo (isset($html)) ? htmlspecialchars_decode($html) : ''; ?></textarea>
                                     </div>
                                 </div>
                                 <div class="form-group">

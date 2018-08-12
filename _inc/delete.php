@@ -22,6 +22,51 @@
             $stmtProc->close();
             header("Location: ../profile/artigos.php?euid=".$_GET['uid']);
         break;
+        case "artigo-thumbnail":
+            $id = $_GET['id'];
+            $file = $_GET['file'];
+            $stmt = $conn->prepare("UPDATE `artigos` SET `url` = '' WHERE `artigos`.`id` = $id");
+            if(isset($stmt) && $stmt !== FALSE) {
+                $stmt->bind_param("i,s", $id, $file);
+                $stmt->execute();
+                ($_GET['file']) ? unlink('../profile/uploads/'.$file) : '';
+            } else {
+                die($conn->error);
+            }     
+            $stmt->close();
+            header("Location: ../profile/artigo.php?id=".$id."&euid=".$_GET['uid']);
+        break;
+        case "banner":
+            $id = $_GET['id'];
+            $file = $_GET['file'];
+            $stmt = $conn->prepare("UPDATE `banner` SET `url` = '' WHERE `banner`.`id` = $id");
+            $stmtProc = $conn->prepare("DELETE FROM banner WHERE id = ? LIMIT 1");
+            if((isset($stmtProc) && $stmtProc !== FALSE) || isset($stmt) && $stmt !== FALSE) {
+                $stmt->execute();
+                $stmtProc->bind_param("i",$id);
+                $stmtProc->execute();
+                ($_GET['file']) ? unlink('../profile/uploads/'.$file) : '';
+            } else {
+                die($conn->error);
+            }    
+            $stmt->close();
+            $stmtProc->close();
+            header("Location: ../profile/banners.php?euid=".$_GET['uid']);
+        break;
+        case "banner-thumbnail":
+            $id = $_GET['id'];
+            $file = $_GET['file'];
+            $stmt = $conn->prepare("UPDATE `banner` SET `image` = '' WHERE `banner`.`id` = $id");
+            if(isset($stmt) && $stmt !== FALSE) {
+                $stmt->bind_param("i,s", $id, $file);
+                $stmt->execute();
+                ($_GET['file']) ? unlink('../profile/uploads/'.$file) : '';
+            } else {
+                die($conn->error);
+            }     
+            $stmt->close();
+            header("Location: ../profile/banner.php?id=".$id."&euid=".$_GET['uid']);
+        break;
         case "servico":
             $id = $_GET['id'];
             $file = $_GET['file'];
@@ -51,7 +96,7 @@
                 die($conn->error);
             }     
             $stmt->close();
-            header("Location: ../profile/edit-servico.php?id=".$id."&euid=".$_GET['uid']);
+            header("Location: ../profile/servico.php?id=".$id."&euid=".$_GET['uid']);
         break;
         case "usuarios":
             if (isset($_GET['id']) && is_numeric($_GET['id']))
@@ -99,6 +144,20 @@
             }    
             $stmt->close();
             header("Location: ../profile/paginas.php?euid=".$_GET['uid']);
+        break;
+        case "pagina-thumbnail":
+            $id = $_GET['id'];
+            $file = $_GET['file'];
+            $stmt = $conn->prepare("UPDATE `paginas` SET `image` = '' WHERE `paginas`.`id` = $id");
+            if(isset($stmt) && $stmt !== FALSE) {
+                $stmt->bind_param("i,s", $id, $file);
+                $stmt->execute();
+                ($_GET['file']) ? unlink('../profile/uploads/'.$file) : '';
+            } else {
+                die($conn->error);
+            }     
+            $stmt->close();
+            header("Location: ../profile/pagina.php?id=".$id."&euid=".$_GET['uid']);
         break;
         case "redes-sociais":
             $id = $_GET['id'];

@@ -1,4 +1,5 @@
 .img-circle{
+    display: none;
     background-color: white
 }
 .navbar-header{
@@ -51,4 +52,16 @@ code,pre{
     padding: 5px;
     width: 100%;
     word-break: break-all;    
+}
+input[type='checkbox']{
+    margin: 0 0;
+    display: block;
+    width: 25px;
+}
+input[readonly]{
+    cursor: default
+}
+select{
+    padding: 8px;
+    cursor: pointer
 }

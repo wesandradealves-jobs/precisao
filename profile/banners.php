@@ -44,26 +44,18 @@
             <div class="container-fluid">
                 <div class="row bg-title">
                     <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
-                        <h4 class="page-title">Páginas</h4> 
+                        <h4 class="page-title">Banners</h4> 
                     </div>
-                        <!-- <div class="col-lg-9 col-sm-8 col-md-8 col-xs-12">
-                            <a href="https://wrappixel.com/templates/ampleadmin/" target="_blank" class="btn btn-danger pull-right m-l-20 hidden-xs hidden-sm waves-effect waves-light">Upgrade to Pro</a>
-                            <ol class="breadcrumb">
-                                <li><a href="#">Dashboard</a></li>
-                            </ol>
-                        </div> -->
-                    <!-- /.col-lg-12 -->
                 </div>
-                <!-- /.row -->
                 <!-- ============================================================== -->
                 <!-- table -->
                 <!-- ============================================================== -->
                 <div class="row">
                     <div class="col-md-12 col-lg-12 col-sm-12">
                         <div class="white-box">
-                            <h3 class="box-title table-header">(+ <a href="<?php echo "pagina.php?euid=".$uid; ?>" title="Adicionar Nova Página">Adicionar nova Página</a>)</h3>
+                            <h3 class="box-title table-header">(+ <a href="<?php echo "banner.php?euid=".$uid; ?>" title="Adicionar Novo">Adicionar novo Banner</a>)</h3>
                             <?php 
-                                if ($result = $conn->query("SELECT * FROM paginas ORDER BY id DESC")) :
+                                if ($result = $conn->query("SELECT * FROM banner ORDER BY id DESC")) :
                                     if ($result->num_rows > 0) :
                             ?>
                             <div class="table-responsive">
@@ -71,16 +63,9 @@
                                     <thead class="table-header">
                                         <tr>
                                             <th>#</th>
-                                            <th>TITULO</th>
-                                            <th>CONTEÚDO</th>
-                                            <th>RESUMO</th>
-                                            <th>IMAGEM HEADER</th>
-                                            <th>SEO/HEADERS</th>
-                                            <th>SLUG</th>
-                                            <th>PÁGINA MÃE</th>
-                                            <th>SCROLL</th>
-                                            <th>SUBPÁGINA</th>
-                                            <th>MENU</th>
+                                            <th>THUMBNAIL</th>
+                                            <th>CUSTOM HTML</th>
+                                            <th>URL</th>
                                             <th>-</th>
                                         </tr>
                                     </thead>
@@ -89,19 +74,13 @@
                                         <?php while ($row = $result->fetch_object()) : ?>
                                         <tr>
                                             <td><?php echo $row->id; ?></td>
-                                            <td class="txt-oflo"><?php echo $row->titulo; ?></td>
-                                            <td class="txt-oflo"><?php echo substr(strip_tags($row->resumo), 0, 20).((strlen(substr(strip_tags($row->resumo), 0, 20)) >= 20) ? '...' : ''); ?></td>
-                                            <td class="txt-oflo"><?php echo substr(strip_tags($row->conteudo), 0, 20).((strlen(substr(strip_tags($row->conteudo), 0, 20)) >= 20) ? '...' : ''); ?></td>
                                             <td class="txt-oflo">
                                                 <a class="<?php echo (substr($row->image, -3) == 'png' || substr($row->image, -3) == 'jpg' || substr($row->image, -3) == 'gif' || substr($row->image, -3) == 'bmp') ? 'lightbox' : ''; ?>" target="_blank" href="uploads/<?php echo (isset($row->image)) ? $row->image : ''; ?>"><?php echo $row->image; ?></a>
-                                            </td>  
-                                            <td class="txt-oflo"><code><?php echo $row->headers; ?></code></td>
-                                            <td class="txt-oflo"><?php echo $row->slug; ?></td>
-                                            <td class="txt-oflo"><?php echo $row->pagina_mae; ?></td>
-                                            <td class="txt-oflo"><?php echo ($row->anchor) ? 'Sim' : 'Não'; ?></td>
-                                            <td class="txt-oflo"><?php echo ($row->subpagina) ? 'Sim' : 'Não'; ?></td>
-                                            <td class="txt-oflo"><?php echo ($row->showmenu) ? 'Sim' : 'Não'; ?></td>
-                                            <td><a class="action" href="<?php echo "pagina.php?euid=".$uid."&id=".$row->id; ?>">Editar</a> | <a class="action" href="<?php echo "../_inc/delete.php?source=pagina&uid=".$uid."&id=".$row->id; ?>">Deletar</a></td>
+                                            </td>                                            
+                                            <!-- <td class="txt-oflo"><a target="_blank" href="uploads/<?php echo $row->image; ?>"><?php echo $row->image; ?></a></td> -->
+                                            <td class="txt-oflo"><code><?php echo $row->html; ?></code></td>
+                                            <td class="txt-oflo"><?php echo $row->url; ?></td>
+                                            <td><a class="action" href="<?php echo "banner.php?euid=".$uid."&id=".$row->id; ?>">Editar</a> | <a class="action" href="<?php echo "../_inc/delete.php?source=banner&file=".$row->image."&uid=".$uid."&id=".$row->id; ?>">Deletar</a></td>
                                         </tr>
                                         <?php endwhile; ?>
                                     </tbody>

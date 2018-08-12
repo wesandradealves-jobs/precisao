@@ -12,4 +12,9 @@
   }else{
       //echo "Conexao realizada com sucesso";
   }     
+
+  mysqli_set_charset($conn,"utf8");
+
+  require_once('functions.php');
+  header('Content-Type: text/html; charset=UTF-8');  
 ?>
