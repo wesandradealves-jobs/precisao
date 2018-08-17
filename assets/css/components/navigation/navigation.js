@@ -13,7 +13,7 @@ if($('body').is('.pg-home')){
 } else {
     $( '.navigation ul li a' ).each(function(e) {
         if (/#/.test(this.href)) {
-            $(this).attr("href", "index.html" + '#' + $(this).attr('href').split('#').pop())
+            $(this).attr("href", "./" + '#' + $(this).attr('href').split('#').pop())
         }
     });
 }

@@ -2,6 +2,8 @@
     include_once('db.php');
     session_start();
 
+    $default_url = './';
+
     $basename = substr(strtolower(basename($_SERVER['PHP_SELF'])),0,strlen(basename($_SERVER['PHP_SELF']))-4);
     
     if(isset($_SESSION['login']) && $basename == 'login'){
@@ -9,7 +11,7 @@
     }
 
     $config = $conn->prepare("SELECT `logo`, `favico`, `titulo` FROM `smtp` ORDER BY id");
-    $contato = $conn->prepare("SELECT `telefone`, `email`, `endereco`, `maps` FROM `contato` ORDER BY id");
+    $contato = $conn->prepare("SELECT `telefone`, `email`, `endereco`, `maps` FROM `contatos` ORDER BY id");
     $banner = $conn->prepare("SELECT * FROM `banner` ORDER BY id ASC");
     $portfolio_comercial = $conn->prepare("SELECT `text`, `url`, `label` FROM `portfolio_comercial` ORDER BY id");
     $servicos = $conn->prepare("SELECT `id`, `titulo`, `url`, `text` FROM `servicos` ORDER BY id ASC LIMIT 3");
@@ -19,7 +21,10 @@
     $fetchServicosPage = $conn->query("SELECT * FROM `paginas` WHERE `slug` = 'servicos' LIMIT 1");
     $fetchArtigosPage = $conn->query("SELECT * FROM `paginas` WHERE `slug` = 'artigos' LIMIT 1");
     $fetchEmpresaPage = $conn->query("SELECT * FROM `paginas` WHERE `slug` = 'a-empresa' LIMIT 1");
-
+  
+    $slug = (isset($_GET['slug'])) ? $_GET['slug'] : '';
+    $type = (isset($_GET['type '])) ? $_GET['type '] : '';
+  
     if($config){
         $config->execute();
         $config->bind_result($logo, $favico, $ctitulo);
@@ -53,12 +58,67 @@
                 if($row->slug == $basename || ($row->slug == "home" && (!$basename||$basename == "index"))){
                     $headers = $row->headers;
                     $slug = $row->slug;
-                    $page = $row->titulo;
+                    $pgTitulo = $row->titulo;
                 } else if($basename == "login"){
                     $slug = $basename;
-                    $page = "Login";
+                    $pgTitulo = "Login";
                     $headers = '<meta name="keywords" content="login, precisao, servicos, gerais" />';
                     $headers .= '<meta property="og:description" content="Login Page" />';
+                } else if($basename == "page"){
+                    
+                    $the_page = $conn->prepare("SELECT `titulo`, `conteudo`, `slug`, `image`, `pagina_mae`, `headers` FROM `paginas` WHERE `slug` = '$slug' LIMIT 1");
+                    
+                    if($the_page){
+                        $the_page->execute();
+                        $the_page->bind_result($pgTitulo, $pgConteudo, $pgSlug, $pgImage, $pgPaginaMaeSlug, $headers);
+                        while($the_page->fetch()) {
+                            $pgTitulo = $pgTitulo;
+                            $pgImage = $pgImage;
+                            $pgSlug = $pgSlug;
+                            $pgConteudo = $pgConteudo;
+                            $headers = $headers;
+                            $pgPaginaMaeSlug = $pgPaginaMaeSlug;
+                        }
+                        $the_mother_page = $conn->prepare("SELECT `titulo`, `image` FROM `paginas` WHERE `slug` = '$pgPaginaMaeSlug' LIMIT 1");
+                      
+                        if($the_mother_page){
+                            if($the_mother_page){
+                                $the_mother_page->execute();
+                                $the_mother_page->bind_result($pgPaginaMaeTitulo, $pgPaginaMaeBanner);
+                                while($the_mother_page->fetch()) {
+                                    $pgPaginaMaeBanner = $pgPaginaMaeBanner;
+                                    $pgPaginaMaeTitulo = $pgPaginaMaeTitulo;
+                                }
+                            }                              
+                        }
+                    }
+                } else if($basename == "single"){
+                    $post_id = $_GET['id'];
+                    $post = $_GET['post'];
+                    $single = $conn->prepare("SELECT * FROM `$post` WHERE `id` = '$post_id' ORDER BY id");
+
+                    if($single){
+                        $single->execute();
+                        $single->bind_result($single_post_id, $single_post_titulo, $single_post_url, $single_post_text, $headers);
+                        while($single->fetch()) {
+                            $single_post_titulo = $single_post_titulo;
+                            $single_post_url = $single_post_url;
+                            $single_post_text = $single_post_text;
+                            $single_post_id = $single_post_id;
+                            $headers = $headers;
+                        }
+                        $sessao = $conn->prepare("SELECT `titulo`, `slug`, `image` FROM `paginas` WHERE `slug` = '$post' ORDER BY id");
+                        if($sessao){
+                            $sessao->execute();
+                            $sessao->bind_result($sessao_titulo, $sessao_slug, $sessao_image);
+                            while($sessao->fetch()) {
+                             $sessao_titulo = $sessao_titulo;
+                             $sessao_slug = $sessao_slug;
+                             $sessao_image = $sessao_image;
+                            }
+                        }
+                        $pgTitulo = $sessao_titulo." - ".$single_post_titulo;
+                    }
                 }
             endwhile;
         endif; 
@@ -68,14 +128,14 @@
 <!DOCTYPE html>
 <html lang="pt-br" xmlns="http://www.w3.org/1999/xhtml">
   <head>
-    <title><?php echo $ctitulo." - ".$page  ?></title>
+    <title><?php echo $ctitulo." - ".$pgTitulo; ?></title>
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="author" content="Wesley Andrade - github.com/wesandradealves" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta property="og:type" content="website" />
-    <meta property="og:title" content="<?php echo $ctitulo." - ".$page  ?>" />
-    <meta property="og:site_name" content="<?php echo $ctitulo." - ".$page  ?>" />
+    <meta property="og:title" content="<?php echo $ctitulo." - ".$pgTitulo; ?>" />
+    <meta property="og:site_name" content="<?php echo $ctitulo." - ".$pgTitulo; ?>" />
     <?php echo (isset($headers)) ? html_entity_decode($headers) : ''; ?>
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="HandheldFriendly" content="true" />

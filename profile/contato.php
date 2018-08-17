@@ -11,10 +11,10 @@
     
     // Pegar dados e definir acao
 
-    if ($result = $conn->query("SELECT * FROM contato ORDER BY id")) {
+    if ($result = $conn->query("SELECT * FROM contatos ORDER BY id")) {
         if ($result->num_rows > 0) {
             // Atualizo se tiver
-            $stmt = $conn->prepare("SELECT `telefone`, `email`, `endereco`, `maps` FROM `contato` ORDER BY id");
+            $stmt = $conn->prepare("SELECT `telefone`, `email`, `endereco`, `maps` FROM `contatos` ORDER BY id");
             if($stmt){
                 $stmt->execute();
                 $stmt->bind_result($telefone, $email, $endereco, $maps);
@@ -33,7 +33,7 @@
                 $email = $_POST['email'];
                 $maps = $_POST['maps'];
                 
-                $stmt = $conn->prepare("UPDATE contato SET `telefone` = ?, `email` = ?, `endereco` = ?, `maps` = ?");
+                $stmt = $conn->prepare("UPDATE contatos SET `telefone` = ?, `email` = ?, `endereco` = ?, `maps` = ?");
 
                 if(isset($stmt) && $stmt !== FALSE) {
                     $stmt->bind_param("ssss", $telefone, $email, $endereco, $maps);
@@ -48,7 +48,7 @@
         } else {
             // Adiciono se nao tiver
             if(isset($_POST['update'])) :
-                $stmt = $conn->prepare("INSERT contato (`telefone`, `email`, `endereco`, `maps`) VALUES (?, ?, ?, ?)");
+                $stmt = $conn->prepare("INSERT contatos (`telefone`, `email`, `endereco`, `maps`) VALUES (?, ?, ?, ?)");
                 $telefone = $_POST['telefone'];
                 $email = $_POST['email'];
                 $endereco = $_POST['endereco'];
@@ -87,7 +87,7 @@
                 </div>
                 <?php include('_inc/nav.php'); ?>
                 <div class="center p-20">
-                    <a href="../_inc/logout.php" target="_blank" class="btn btn-danger btn-block waves-effect waves-light" title="Sair">Sair</a>
+                    <a href="../_inc/logout.php"  class="btn btn-danger btn-block waves-effect waves-light" title="Sair">Sair</a>
                 </div>
             </div>
             

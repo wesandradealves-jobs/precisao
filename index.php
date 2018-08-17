@@ -54,7 +54,7 @@
                             $servicosTPL .= '<div>';
                               $servicosTPL .= '<div>';
                                 $servicosTPL .= '<h3 class="title">'.$stitulo.'</h3>';
-                                $servicosTPL .= '<a href="single.php?post=servicos&slug='.$sSlug.'" title="Saiba Mais +" class="btn -red">Saiba Mais +</a>';
+                                $servicosTPL .= '<a href="single.php?post=servicos&id='.$SID.'" title="Saiba Mais +" class="btn -red">Saiba Mais +</a>';
                               $servicosTPL .= '</div>';
                             $servicosTPL .= '</div>';
                           $servicosTPL .= '</div>';
@@ -81,7 +81,7 @@
               <div class="artigos-section-content">
                 <?php 
                     $artigos->execute();
-                    $artigos->bind_result($AID, $atitulo, $aurl, $atext);
+                    $artigos->bind_result($AID, $atitulo, $aurl, $atext, $headers);
                     while($artigos->fetch()) {
                         $AID = $AID;
                         $atitulo = $atitulo;
@@ -95,8 +95,8 @@
 
                         $artigosTPL .= '<div>';
                           $artigosTPL .= '<h3 class="title">'.$atitulo.'</h3>';
-                          $artigosTPL .= '<p>'.substr(strip_tags($atext), 0, 200).((strlen(substr(strip_tags($atext), 0, 200)) >= 200) ? '...' : '').'</p>';
-                          $artigosTPL .= '<a href="single.php?post=artigos&slug='.$aSlug.'" class="btn -red" title="'.$atitulo.'">Saiba Mais +</a>';
+                          $artigosTPL .= '<p>'.substr(strip_tags(htmlspecialchars_decode($atext)), 0, 200).((strlen(substr(strip_tags(htmlspecialchars_decode($atext)), 0, 200)) >= 200) ? '...' : '').'</p>';
+                          $artigosTPL .= '<a href="single.php?post=artigos&id='.$AID.'" class="btn -red" title="'.$atitulo.'">Saiba Mais +</a>';
                         $artigosTPL .= '</div>';
 
                         echo $artigosTPL;
@@ -108,16 +108,15 @@
           </section>
         <?php endwhile; endif; ?>
         <?php if($fetchEmpresaPage && $fetchEmpresaPage->num_rows) :  while ($row = $fetchEmpresaPage->fetch_object()) : ?>
-          <section id="empresa" class="empresa">
+          <section id="a-empresa" class="empresa">
             <div class="container">
               <div>
                 <div class="section-header">
                   <h2 class="title">
                     <span><?php echo $row->titulo; ?></span>
                   </h2>
-                  <p><?php echo $row->resumo; ?></p>
                 </div>
-                <p><?php echo $row->conteudo; ?></p>
+                <p><?php echo $row->resumo; ?></p>
               </div>
             </div>
           </section>

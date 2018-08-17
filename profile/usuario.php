@@ -11,11 +11,11 @@
 
     // Pegar dados e definir acao
 
-    if(empty($_GET['id'])){
+    if(!isset($_GET['id'])){
         if(isset($_POST['update'])) :
             $login = to_permalink(removeSpecialChars($_POST['login']));
             
-            $senha = md5($_POST['senha']);
+            $senha = md5(to_permalink($_POST['senha']));
             if($login && $senha){ 
                 $stmt = $conn->prepare("INSERT usuarios (`senha`, `login`) VALUES (?, ?)");
     
@@ -34,6 +34,7 @@
         $id = $_GET['id'];
 
         $stmt = $conn->prepare("SELECT `login`, `senha`, `lastupdate` FROM `usuarios` WHERE `usuarios`.`id` = '".$id."'");
+
         if($stmt){
             $stmt->execute();
             $stmt->bind_result($login, $senha, $lastupdate);
@@ -44,10 +45,11 @@
             }
             $stmt->close();
         }
+
         if(isset($_POST['update'])) :
-            if(is_numeric($id) && (to_permalink(removeSpecialChars($_POST['login'])) && $_POST['senha'])){
-                $login = to_permalink(removeSpecialChars($_POST['login']));
-                $senha = ($_POST['senha'] == $senha) ? $senha : md5($_POST['senha']);
+            if(is_numeric($id) && (to_permalink($_POST['login']) && to_permalink($_POST['senha']))){
+                $login = to_permalink($_POST['login']);
+                $senha = (to_permalink($_POST['senha']) == $senha) ? $senha : md5(to_permalink($_POST['senha']));
                 $time = time();
                 $lastupdate = date("Y-m-d G:i:s", $time);
                 $stmt = $conn->prepare("UPDATE usuarios SET `senha` = ?, `login` = ?, `lastupdate` = ? WHERE `usuarios`.`id` = $id");
@@ -59,7 +61,7 @@
                     die($conn->error);
                 }
                 
-                if($id == $euid && ($senha != $_POST['asenha'] || $login != $_POST['alogin'])){
+                if($id == $euid && $senha != $_POST['senha']){
                     header("Location: ../_inc/logout.php");
                 } else {
                     header("Location: usuario.php?id=".$id."&euid=".$euid);
@@ -88,7 +90,7 @@
                 </div>
                 <?php include('_inc/nav.php'); ?>
                 <div class="center p-20">
-                    <a href="../_inc/logout.php" target="_blank" class="btn btn-danger btn-block waves-effect waves-light" title="Sair">Sair</a>
+                    <a href="../_inc/logout.php"  class="btn btn-danger btn-block waves-effect waves-light" title="Sair">Sair</a>
                 </div>
             </div>
             

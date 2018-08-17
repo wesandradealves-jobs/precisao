@@ -40,7 +40,7 @@
                 if(isset($_POST['update'])):
                     $titulo = $_POST['titulo'];
                     $conteudo = $_POST['conteudo'];
-                    $slug = ( $_POST['slug'] != to_permalink(removeSpecialChars($titulo)) ? to_permalink(removeSpecialChars($titulo)) : $_POST['slug']);
+                    $slug = ( $_POST['slug'] != to_permalink($titulo) ? to_permalink($titulo) : $_POST['slug']);
                     $headers = htmlspecialchars($_POST['headers']);
                     $anchor = (isset($_REQUEST['anchor'])) ? 1 : 0;
                     $subpagina = (isset($_REQUEST['subpagina'])) ? 1 : 0;
@@ -90,7 +90,7 @@
                     $stmt = $conn->prepare("INSERT paginas (`titulo`, `conteudo`, `headers`, `slug`, `anchor`, `pagina_mae`, `subpagina`, `showmenu`, `image`, `resumo`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
                     $titulo = $_POST['titulo'];
                     $conteudo = $_POST['conteudo'];
-                    $slug = to_permalink(removeSpecialChars($titulo));
+                    $slug = to_permalink($titulo);
                     $headers = htmlspecialchars($_POST['headers']);
                     $anchor = (isset($_REQUEST['anchor'])) ? 1 : 0;
                     $subpagina = (isset($_REQUEST['subpagina'])) ? 1 : 0;
@@ -136,7 +136,7 @@
             $stmt = $conn->prepare("INSERT paginas (`titulo`, `conteudo`, `headers`, `slug`, `anchor`, `pagina_mae`, `subpagina`, `showmenu`, `image`, `resumo`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
             $titulo = $_POST['titulo'];
             $conteudo = $_POST['conteudo'];
-            $slug = to_permalink(removeSpecialChars($titulo));
+            $slug = to_permalink($titulo);
             $headers = htmlspecialchars($_POST['headers']);
             $anchor = (isset($_REQUEST['anchor'])) ? 1 : 0;
             $subpagina = (isset($_REQUEST['subpagina'])) ? 1 : 0;
@@ -197,7 +197,7 @@
                 </div>
                 <?php include('_inc/nav.php'); ?>
                 <div class="center p-20">
-                    <a href="../_inc/logout.php" target="_blank" class="btn btn-danger btn-block waves-effect waves-light" title="Sair">Sair</a>
+                    <a href="../_inc/logout.php"  class="btn btn-danger btn-block waves-effect waves-light" title="Sair">Sair</a>
                 </div>
             </div>
             

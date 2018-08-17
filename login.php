@@ -9,7 +9,7 @@
   <div class="content">
     <form role="form" action="_inc/login.php" class="login-form" method="POST">
       <span>
-        <img src="assets/imgs/logo.png" alt="PRECISÃO SERVIÇOS GERAIS - Login">
+        <img height="90" src="assets/imgs/logo.png" alt="PRECISÃO SERVIÇOS GERAIS - Login">
       </span>
       <span>
         <label for="login"><i class="fas fa-user"></i></label>
