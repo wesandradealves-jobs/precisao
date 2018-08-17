@@ -13,9 +13,11 @@
 
     if(!isset($_GET['id'])){
         if(isset($_POST['update'])) :
-            $stmt = $conn->prepare("INSERT banner (`image`, `url`, `html`) VALUES (?, ?, ?)");
+            $stmt = $conn->prepare("INSERT banner (`image`, `url`, `html`, `widget`, `widget_name`) VALUES (?, ?, ?, ?, ?)");
             $url = $_POST['url'];
             $html = htmlspecialchars($_POST['html']);
+            $widget = (isset($_REQUEST['widget'])) ? 1 : 0;
+            $widget_name = isset($_POST['widget_name']) ? $_POST['widget_name'] : '';
 
             $target_dir = "uploads/";
             $target_file = $target_dir . basename($_FILES["file"]["name"]);
@@ -39,7 +41,7 @@
             $file = basename($_FILES["file"]["name"]);
 
             if(isset($stmt) && $stmt !== FALSE) {
-                $stmt->bind_param("sss", $file, $url, $html);
+                $stmt->bind_param("sssss", $file, $url, $html, $widget, $widget_name);
                 $stmt->execute();
                 $stmt->close();
             } else {
@@ -50,13 +52,15 @@
         endif;           
     } else {
         $id = $_GET['id'];
-        $stmt = $conn->prepare("SELECT `image`, `url`, `html` FROM `banner` WHERE `banner`.`id` = '".$id."'");
+        $stmt = $conn->prepare("SELECT `image`, `url`, `html`, `widget`, `widget_name` FROM `banner` WHERE `banner`.`id` = '".$id."'");
         if($stmt){
             $stmt->execute();
-            $stmt->bind_result($image, $url, $html);
+            $stmt->bind_result($image, $url, $html, $widget, $widget_name);
             while($stmt->fetch()) {
                 $image = $image;
                 $url = $url;
+                $widget = $widget;
+                $widget_name = $widget_name;
                 $html = htmlspecialchars($html);
             }
             $stmt->close();
@@ -66,6 +70,8 @@
             $url = $_POST['url'];
             $old_file = $_POST['old_file'];
             $html = htmlspecialchars($_POST['html']);
+            $widget = (isset($_REQUEST['widget'])) ? 1 : 0;
+            $widget_name = isset($_POST['widget_name']) ? $_POST['widget_name'] : '';
 
             $target_dir = "uploads/";
             $target_file = $target_dir . basename($_FILES["file"]["name"]);
@@ -89,10 +95,10 @@
             $file = basename($_FILES["file"]["name"]);
             $boolFile = ($file) ? $file : $old_file;
 
-            $stmt = $conn->prepare("UPDATE banner SET `image` = ?, `url` = ?, `html` = ? WHERE `banner`.`id` = '".$id."'");
+            $stmt = $conn->prepare("UPDATE banner SET `image` = ?, `url` = ?, `html` = ?, `widget` = ?, `widget_name` = ? WHERE `banner`.`id` = '".$id."'");
 
             if(isset($stmt) && $stmt !== FALSE) {
-                $stmt->bind_param("sss", $boolFile, $url, $html);
+                $stmt->bind_param("sssss", $boolFile, $url, $html, $widget, $widget_name);
                 $stmt->execute();
                 $stmt->close();
                 (($old_file != $file) && $file) ? unlink('../profile/uploads/'.$old_file) : '';
@@ -164,12 +170,44 @@
                                         <?php endif; ?>
                                     </div>
                                 </div>
+                                <?php if($widget == 0) : ?>
                                 <div class="form-group">
                                     <label class="col-md-12">Custom HTML</label>
                                     <div class="col-md-12">
                                         <textarea rows="10" class="form-control form-control-line" name="html"><?php echo (isset($html)) ? htmlspecialchars_decode($html) : ''; ?></textarea>
                                     </div>
                                 </div>
+                                <?php endif; ?>
+                                <div class="form-group">
+                                    <label class="col-md-12">Tem Widget?</label>
+                                    <div class="col-md-12">
+                                        <input name="widget" type="checkbox" <?php echo (isset($widget) && $widget == 1) ? 'checked' : ''; ?> class="form-control form-control-line"> 
+                                    </div>
+                                </div>
+                                <?php if(isset($widget) && $widget == 1) : ?>
+                                <div class="form-group">
+                                    <label class="col-md-12">Selecione um Widget</label>
+                                    <div class="col-md-12">
+                                        <select name="widget_name">
+                                            <?php 
+                                                $dir = '../_inc/components/';
+                                                if ($handle = opendir($dir)) {
+
+                                                    while (false !== ($entry = readdir($handle))) {
+                                                
+                                                        if ($entry != "." && $entry != "..") {
+                                                
+                                                            echo "<option ".(( substr($entry, 0, -4) == $widget_name ) ? 'selected' : '')." value='".substr($entry, 0, -4)."'>".substr($entry, 0, -4)."</option>";
+                                                        }
+                                                    }
+                                                
+                                                    closedir($handle);
+                                                }
+                                            ?>
+                                        </select>
+                                    </div>
+                                </div>
+                                <?php endif; ?>
                                 <div class="form-group">
                                     <div class="col-sm-12">
                                         <input type="submit" name="update" class="btn btn-success" value="Salvar" />

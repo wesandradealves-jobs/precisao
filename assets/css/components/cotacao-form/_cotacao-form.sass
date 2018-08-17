@@ -41,7 +41,8 @@
                     margin-bottom: 20px
                     +mq('480px', max)
                         margin-bottom: 8px
-            button 
+            button, input[type="submit"]
+                text-align: center  
                 width: 100%
             input, textarea, select, .custom-select
                 @extend .btn
@@ -52,6 +53,7 @@
                     +rem('font-size', 11px)
                 color: gray
                 font-weight: normal
+                outline: 0px !important
                 text-align: left
                 text-transform: initial 
                 width: inherit

@@ -13,11 +13,12 @@
         </section>
         <section class="internal-content">
           <div class="container">
+            <?php if($slug == 'contato'||$slug == 'trabalhe-conosco'): ?>
+            <?php include($slug.".php"); ?>
+            <?php else : ?>
             <div class="internal-content-fill">
               <?php echo htmlspecialchars_decode($pgConteudo); ?>
-              
               <?php 
-                
                 $query=mysqli_query($conn,"select count(id) from `$slug`");
                 
                 if(mysqli_query($conn,"select count(id) from `$slug`")) : $row = mysqli_fetch_row($query);
@@ -103,11 +104,11 @@
                 echo $paginationCtrls;   
   
                 endif;  
+                mysqli_close($conn);
               ?>   
             </div>
-            <aside class="sidebar">
-              <?php //include('_inc/components/cotacao_form.php'); ?>
-            </aside>
+            <?php include('_inc/sidebar.php'); ?>            
+            <?php endif; ?>
           </div>
         </section>
       </main>

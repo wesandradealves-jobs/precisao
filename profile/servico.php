@@ -171,7 +171,7 @@
                                 <div class="form-group">
                                     <label class="col-md-12">Texto</label>
                                     <div class="col-md-12">
-                                        <textarea name="text" rows="5" class="froala-editor form-control form-control-line"><?php echo (isset($text)) ? $text : ''; ?></textarea>
+                                        <textarea name="text" rows="5" class="froala-editor form-control form-control-line"><?php echo (isset($text)) ? htmlspecialchars_decode($text) : ''; ?></textarea>
                                     </div>
                                 </div>
                                 <div class="form-group">

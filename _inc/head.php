@@ -51,6 +51,15 @@
             $plabel = $plabel;
         }
     }  
+
+    if($fetchServicosCotacao = $conn->query("SELECT * FROM `servicos` ORDER BY id ASC")) :
+        if($fetchServicosCotacao->num_rows) :
+            $servicos_para_cotacao = '<option>Selecione um serviço</option>'; 
+            while ($row = $fetchServicosCotacao->fetch_object()) :
+              $servicos_para_cotacao .= '<option value="'.$row->titulo.'">'.$row->titulo.'</option>';
+            endwhile;
+        endif; 
+    endif;  
     
     if($seo = $conn->query("SELECT * FROM paginas ORDER BY id ASC")) :
         if ($seo->num_rows > 0) :
@@ -142,5 +151,5 @@
     <link rel="apple-touch-icon" href="profile/uploads/<?php echo $favico; ?>" />
     <link rel="shortcut icon" type="image/png" href="profile/uploads/<?php echo $favico; ?>" />
   </head>
-  <body <?php echo 'class="pg-'.$slug.'"'; ?>> 
+  <body <?php echo 'class="pg-'.(($slug) ? $slug : $post).'"'; ?>> 
     <div id="wrap">

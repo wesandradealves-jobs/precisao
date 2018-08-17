@@ -88,7 +88,7 @@
                                                 <a class="<?php echo (substr($row->url, -3) == 'png' || substr($row->url, -3) == 'jpg' || substr($row->url, -3) == 'gif' || substr($row->url, -3) == 'bmp') ? 'lightbox' : ''; ?>" target="_blank" href="uploads/<?php echo (isset($row->url)) ? $row->url : ''; ?>"><?php echo $row->url; ?></a>
                                             </td>
                                             <td class="txt-oflo"><code><?php echo $row->headers; ?></code></td>
-                                            <td class="txt-oflo"><?php echo substr(strip_tags($row->text),0,140)."..."; ?></td>
+                                            <td class="txt-oflo"><?php echo substr(strip_tags($row->text),0,30)."..."; ?></td>
                                             <td><a class="action" href="servico.php<?php echo '?euid='.$uid.'&id='.$row->id; ?>">Editar</a> | <a class="action" href="../_inc/delete.php<?php echo '?source=servico&file'.$row->url.'&uid='.$uid.'&id='.$row->id; ?>">Deletar</a></td>
                                         </tr>
                                         <?php endwhile; ?>

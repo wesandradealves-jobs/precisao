@@ -6,7 +6,7 @@
             <div class="owl-carousel owl-theme -webdoor">
               <?php
                 $banner->execute();
-                $banner->bind_result($bannerID, $image, $url, $html);
+                $banner->bind_result($bannerID, $image, $url, $html, $widget, $widget_name);
                 while($banner->fetch()) :
                     $bannerID = $bannerID;
                     $image = $image;
@@ -16,7 +16,17 @@
                     $bannerTPL = '<div style="background-image:url(profile/uploads/'.$image.')" id="post_banner_'.$bannerID.'" class="item">';
                       $bannerTPL .= '<div class="container">';
                         $bannerTPL .= '<div>';
-                          ($html) ? $bannerTPL .= html_entity_decode($html) : '';
+                          if($widget){
+                            if($widget_name) :
+                              ob_start();
+                              include '_inc/components/'.$widget_name.'.php';
+                              $bannerTPL .= ob_get_clean();
+                            endif;
+                          } else if(!$widget){
+                            if($html) :
+                              $bannerTPL .= html_entity_decode($html);
+                            endif;
+                          }
                         $bannerTPL .= '</div>';
                       $bannerTPL .= '</div>';
                     $bannerTPL .= '</div>';
