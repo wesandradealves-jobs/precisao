@@ -13,9 +13,10 @@
 
     if(!isset($_GET['id'])){
         if(isset($_POST['update'])) :
-            $stmt = $conn->prepare("INSERT servicos (`titulo`, `url`, `text`) VALUES (?, ?, ?)");
+            $stmt = $conn->prepare("INSERT servicos (`titulo`, `url`, `text`, `headers`) VALUES (?, ?, ?, ?)");
             $titulo = $_POST['titulo'];
-            $text = $_POST['text'];
+            $text = htmlspecialchars($_POST['text']);
+            $headers = htmlspecialchars($_POST['headers']);
 
             $target_dir = "uploads/";
             $target_file = $target_dir . basename($_FILES["file"]["name"]);
@@ -39,7 +40,7 @@
             $file = basename($_FILES["file"]["name"]);
 
             if(isset($stmt) && $stmt !== FALSE) {
-                $stmt->bind_param("sss", $titulo, $file, $text);
+                $stmt->bind_param("ssss", $titulo, $file, $text, $headers);
                 $stmt->execute();
                 $stmt->close();
             } else {
@@ -50,14 +51,15 @@
         endif;           
     } else {
         $id = $_GET['id'];
-        $stmt = $conn->prepare("SELECT `titulo`, `url`, `text` FROM `servicos` WHERE `servicos`.`id` = '".$id."'");
+        $stmt = $conn->prepare("SELECT `titulo`, `url`, `text`, `headers` FROM `servicos` WHERE `servicos`.`id` = '".$id."'");
         if($stmt){
             $stmt->execute();
-            $stmt->bind_result($titulo, $url, $text);
+            $stmt->bind_result($titulo, $url, $text, $headers);
             while($stmt->fetch()) {
                 $titulo = $titulo;
                 $url = $url;
-                $text = $text;
+                $text = htmlspecialchars($text);
+                $headers = htmlspecialchars($headers);
             }
             $stmt->close();
         }
@@ -65,7 +67,8 @@
         if(isset($_POST['update'])) :
             $titulo = $_POST['titulo'];
             $url = $_POST['url'];
-            $text = $_POST['text'];
+            $text = htmlspecialchars($_POST['text']);
+            $headers = htmlspecialchars($_POST['headers']);
 
             $target_dir = "uploads/";
             $target_file = $target_dir . basename($_FILES["file"]["name"]);
@@ -89,10 +92,10 @@
             $file = basename($_FILES["file"]["name"]);
             $boolFile = ($file) ? $file : $url;
 
-            $stmt = $conn->prepare("UPDATE servicos SET `titulo` = ?, `url` = ?, `text` = ? WHERE `servicos`.`id` = '".$id."'");
+            $stmt = $conn->prepare("UPDATE servicos SET `titulo` = ?, `url` = ?, `text` = ?, `headers` = ? WHERE `servicos`.`id` = '".$id."'");
 
             if(isset($stmt) && $stmt !== FALSE) {
-                $stmt->bind_param("sss", $titulo, $boolFile, $text);
+                $stmt->bind_param("ssss", $titulo, $boolFile, $text, $headers);
                 $stmt->execute();
                 $stmt->close();
                 (($url != $file) && $file) ? unlink('../profile/uploads/'.$url) : '';
@@ -124,7 +127,7 @@
                 </div>
                 <?php include('_inc/nav.php'); ?>
                 <div class="center p-20">
-                    <a href="../_inc/logout.php" target="_blank" class="btn btn-danger btn-block waves-effect waves-light" title="Sair">Sair</a>
+                    <a href="../_inc/logout.php"  class="btn btn-danger btn-block waves-effect waves-light" title="Sair">Sair</a>
                 </div>
             </div>
             
@@ -168,7 +171,13 @@
                                 <div class="form-group">
                                     <label class="col-md-12">Texto</label>
                                     <div class="col-md-12">
-                                        <textarea name="text" rows="5" class="froala-editor form-control form-control-line"><?php echo (isset($text)) ? $text : ''; ?></textarea>
+                                        <textarea name="text" rows="5" class="froala-editor form-control form-control-line"><?php echo (isset($text)) ? htmlspecialchars_decode($text) : ''; ?></textarea>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-md-12">Headers/SEO</label>
+                                    <div class="col-md-12">
+                                    <textarea rows="10" class="form-control form-control-line" name="headers"><?php echo (isset($headers)) ? htmlspecialchars_decode($headers) : ''; ?></textarea>
                                     </div>
                                 </div>
                                 <div class="form-group">

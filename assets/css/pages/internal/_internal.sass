@@ -1,0 +1,35 @@
+.banner
+    &.-internal
+        background-size: cover 
+        background-color: lightgray
+        background-position: center center 
+        background-repeat: no-repeat
+        color: white 
+        >.container
+            align-items: center
+            @extend .flex 
+            flex-flow: row wrap 
+            justify-content: space-between
+            >h2 
+                +rem('font-size', 14px)
+                text-transform: uppercase
+                >span 
+                    font-weight: bold
+                    +rem('font-size', 24px)
+.internal-content
+    background-color: white!important
+    >.container
+        align-items: stretch
+        @extend .flex
+        flex-flow: row wrap 
+        justify-content: space-between
+        >.internal-content-fill
+            flex: 1
+            padding-right: 15px
+            +mq(840px, max)
+                padding-right: 0
+            p  
+                +rem('font-size', 12px)
+            #googleMap
+                height: 300px
+                margin: 30px auto 0

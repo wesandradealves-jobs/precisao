@@ -1,0 +1,30 @@
+.sidebar 
+    border-left: 1px lightgray solid
+    flex: 0 0 auto 
+    max-width: 280px
+    padding-left: 15px
+    width: 30%
+    &.-interna
+        border-left: 0px
+        border-right: 1px lightgray solid 
+        padding-left: 0
+        padding-right: 15px
+        &+*
+            padding-right: 0
+            padding-left: 15px
+    +mq(840px, max)
+        border-left: 0
+        max-width: 100%
+        padding-left: 0
+        width: 100%
+        &+*
+            padding-left: 0
+    >.title
+        display: block 
+        margin-bottom: 15px
+    p 
+        color: gray
+        +rem('font-size', 13px)
+        strong 
+            @extend .title 
+            +rem('font-size', 13px)

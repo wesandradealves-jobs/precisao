@@ -29,7 +29,7 @@
                 </div>
                 <?php include('_inc/nav.php'); ?>
                 <div class="center p-20">
-                    <a href="../_inc/logout.php" target="_blank" class="btn btn-danger btn-block waves-effect waves-light" title="Sair">Sair</a>
+                    <a href="../_inc/logout.php"  class="btn btn-danger btn-block waves-effect waves-light" title="Sair">Sair</a>
                 </div>
             </div>
             
@@ -72,8 +72,8 @@
                                         <tr>
                                             <th>#</th>
                                             <th>TITULO</th>
-                                            <th>CONTEÚDO</th>
                                             <th>RESUMO</th>
+                                            <th>CONTEÚDO</th>
                                             <th>IMAGEM HEADER</th>
                                             <th>SEO/HEADERS</th>
                                             <th>SLUG</th>

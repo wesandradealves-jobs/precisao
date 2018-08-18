@@ -15,8 +15,8 @@
     }
     //redirecionar o usuario para a página de login
     if(isset($_GET['action']) == 'home'){
-        header("Location: ../profile/index.php");
+        header("Location: ../profile/index");
     } else {
-        header("Location: ../login.php");
+        header("Location: ../login");
     }
 ?>

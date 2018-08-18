@@ -29,7 +29,7 @@
                 </div>
                 <?php include('_inc/nav.php'); ?>
                 <div class="center p-20">
-                    <a href="../_inc/logout.php" target="_blank" class="btn btn-danger btn-block waves-effect waves-light" title="Sair">Sair</a>
+                    <a href="../_inc/logout.php"  class="btn btn-danger btn-block waves-effect waves-light" title="Sair">Sair</a>
                 </div>
             </div>
             
@@ -66,6 +66,8 @@
                                             <th>THUMBNAIL</th>
                                             <th>CUSTOM HTML</th>
                                             <th>URL</th>
+                                            <th>Tem Widget</th>
+                                            <th>Widget Name</th>
                                             <th>-</th>
                                         </tr>
                                     </thead>
@@ -80,6 +82,8 @@
                                             <!-- <td class="txt-oflo"><a target="_blank" href="uploads/<?php echo $row->image; ?>"><?php echo $row->image; ?></a></td> -->
                                             <td class="txt-oflo"><code><?php echo $row->html; ?></code></td>
                                             <td class="txt-oflo"><?php echo $row->url; ?></td>
+                                            <td class="txt-oflo"><?php echo ($row->widget) ? 'Sim' : 'Não'; ?></td>
+                                            <td class="txt-oflo"><?php echo isset($row->widget_name); ?></td>
                                             <td><a class="action" href="<?php echo "banner.php?euid=".$uid."&id=".$row->id; ?>">Editar</a> | <a class="action" href="<?php echo "../_inc/delete.php?source=banner&file=".$row->image."&uid=".$uid."&id=".$row->id; ?>">Deletar</a></td>
                                         </tr>
                                         <?php endwhile; ?>

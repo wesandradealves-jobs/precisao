@@ -5,11 +5,33 @@
     <!-- include summernote css/js -->
     <link href="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.9/summernote.css" rel="stylesheet">
     <script src="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.9/summernote.js"></script>
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.9/summernote-ext-elfinder.js"></script>
 
     <script>
         $(document).ready(function() {
-            $('.froala-editor').summernote();
+            $('.froala-editor').summernote({
+                height: 200                            
+            });
         });    
+        function elfinderDialog() {
+            var fm = $('<div/>').dialogelfinder({
+                url : 'http://precisaoservicos.com.br/hmg/_inc/db.php', // change with the url of your connector
+                lang : 'en',
+                width : 840,
+                height: 450,
+                destroyOnClose : true,
+                getFileCallback : function(files, fm) {
+                    console.log(files);
+                    $('.editor').summernote('editor.insertImage', files.url);
+                },
+                commandsOptions : {
+                    getfile : {
+                    oncomplete : 'close',
+                    folders : false
+                    }
+                }
+            }).dialogelfinder('instance');
+        }
     </script>
     <!-- Bootstrap Core JavaScript -->
     <script src="bootstrap/dist/js/bootstrap.min.js"></script>
@@ -29,7 +51,7 @@
     <script src="plugins/bower_components/jquery-sparkline/jquery.sparkline.min.js"></script>
     <!-- Custom Theme JavaScript -->
     <script src="js/custom.min.js"></script>
-    <script src="js/dashboard1.js"></script>
+    <script src="js/dashboard1.js?v=1025"></script>
     <script src="plugins/bower_components/toast-master/js/jquery.toast.js"></script>
 </body>
 

@@ -6,7 +6,7 @@
     $usr = $_SESSION['login'];
 
     if(!$_SESSION['login']){
-        header("Location: ../login.php");
+        header("Location: ../login");
     } else {
         $uid = $_SESSION['uid'];
     }
@@ -32,7 +32,7 @@
                 </div>
                 <?php include('_inc/nav.php'); ?>
                 <div class="center p-20">
-                    <a href="../_inc/logout.php" target="_blank" class="btn btn-danger btn-block waves-effect waves-light" title="Sair">Sair</a>
+                    <a href="../_inc/logout.php"  class="btn btn-danger btn-block waves-effect waves-light" title="Sair">Sair</a>
                 </div>
             </div>
             
@@ -89,7 +89,7 @@
                                             <td class="txt-oflo"><?php echo $row->date; ?></td>
                                             <td class="txt-oflo"><?php echo $row->lastupdate; ?></td>
                                             <!-- <td><a target="_blank" class="action" href="<?php echo "usuario.php?id=".$row->id."&euid=".$uid; ?>"><?php echo ($_SESSION['login'] == $row->login && $row->id==$uid) ? 'Editar' : ($_SESSION['login'] == 'admin') ? 'Editar Perfil' : 'Visualizar Pefil'; ?></a></td> -->
-                                            <td><a target="_blank" class="action" href="<?php echo "usuario.php?id=".$row->id."&euid=".$uid; ?>"><?php echo ($_SESSION['login'] == $row->login && $row->id==$uid) ? 'Editar' : ($_SESSION['login'] == 'admin') ? 'Editar Perfil' : 'Visualizar Pefil'; ?></a> <?php if($_SESSION['login'] == 'admin' && $row->id!=$uid) : ?> | <a class="action" href="<?php echo "../_inc/delete.php?source=usuarios&uid=".$uid."&id=".$row->id; ?>">Deletar</a><?php endif; ?></td>
+                                            <td><a class="action" href="<?php echo "usuario.php?id=".$row->id."&euid=".$uid; ?>"><?php echo ($_SESSION['login'] == $row->login && $row->id==$uid) ? 'Editar' : ($_SESSION['login'] == 'admin') ? 'Editar Perfil' : 'Visualizar Pefil'; ?></a> <?php if($_SESSION['login'] == 'admin' && $row->id!=$uid) : ?> | <a class="action" href="<?php echo "../_inc/delete.php?source=usuarios&uid=".$uid."&id=".$row->id; ?>">Deletar</a><?php endif; ?></td>
                                         </tr>
                                         <?php endwhile; ?>
                                         <?php if($result->num_rows >= 5) : ?>

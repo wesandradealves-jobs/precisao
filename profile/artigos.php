@@ -29,7 +29,7 @@
                 </div>
                 <?php include('_inc/nav.php'); ?>
                 <div class="center p-20">
-                    <a href="../_inc/logout.php" target="_blank" class="btn btn-danger btn-block waves-effect waves-light" title="Sair">Sair</a>
+                    <a href="../_inc/logout.php"  class="btn btn-danger btn-block waves-effect waves-light" title="Sair">Sair</a>
                 </div>
             </div>
             
@@ -65,6 +65,7 @@
                                             <th>#</th>
                                             <th>TITULO</th>
                                             <th>THUMBNAIL</th>
+                                            <th>SEO/HEADER</th>
                                             <th>TEXTO</th>
                                             <th>-</th>
                                         </tr>
@@ -78,9 +79,9 @@
                                             <td class="txt-oflo">
                                                 <a class="<?php echo (substr($row->url, -3) == 'png' || substr($row->url, -3) == 'jpg' || substr($row->url, -3) == 'gif' || substr($row->url, -3) == 'bmp') ? 'lightbox' : ''; ?>" target="_blank" href="uploads/<?php echo (isset($row->url)) ? $row->url : ''; ?>"><?php echo $row->url; ?></a>
                                             </td>
-                                            <!-- <td class="txt-oflo"><a target="_blank" href="uploads/<?php echo $row->url; ?>"><?php echo $row->url; ?></a></td> -->
-                                            <td class="txt-oflo"><?php echo ($row->text) ? substr($row->text, 0, 40).( ( strlen($row->text) >= 40 ) ? '(...)' : '' ) : '' ?></td>
-                                            <td><a class="action" href="<?php echo "artigo.php?euid=".$uid."&id=".$row->id; ?>">Editar</a> | <a class="action" href="<?php echo "../_inc/delete.php?source=artigo&file=".$row->url."&uid=".$uid."&id=".$row->id; ?>">Deletar</a></td>
+                                            <td class="txt-oflo"><code><?php echo $row->headers; ?></code></td>
+                                            <td class="txt-oflo"><?php echo substr(strip_tags($row->text),0,30)."..."; ?></td>
+                                            <td><a class="action" href="artigo.php<?php echo '?euid='.$uid.'&id='.$row->id; ?>">Editar</a> | <a class="action" href="../_inc/delete.php<?php echo '?source=artigo&file'.$row->url.'&uid='.$uid.'&id='.$row->id; ?>">Deletar</a></td>
                                         </tr>
                                         <?php endwhile; ?>
                                     </tbody>

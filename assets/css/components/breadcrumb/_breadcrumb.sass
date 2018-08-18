@@ -1,0 +1,12 @@
+.breadcrumbs
+    >li 
+        display: inline-block 
+        vertical-align: middle 
+        +rem('font-size', 14px)
+        &:not(:last-child)
+            &::after
+                @extend .fas
+                content: "\f105"
+                display: inline-block 
+                margin: 0 0 0 5px
+                vertical-align: middle

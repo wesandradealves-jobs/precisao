@@ -1,6 +1,8 @@
 .header
     background-color: white
     &.-sticky
+        +mq('823px', max)
+            display: none
         left: 0
         position: fixed 
         top: -100%
@@ -15,10 +17,14 @@
             @extend .flex
             flex-flow: row wrap 
             justify-content: space-between
+            +mq('823px', max)
+                justify-content: center
             padding-top: 15px
             padding-bottom: 15px
             >.logo
                 flex: 0 0 auto 
+                +mq('823px', max)
+                    margin: 0 auto
                 img 
                     +mq('820px', max)
                         max-width: 70px
