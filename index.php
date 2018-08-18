@@ -19,7 +19,7 @@
                           if($widget){
                             if($widget_name) :
                               ob_start();
-                              include '_inc/components/'.$widget_name.'.php';
+                              include '_inc/widgets/'.$widget_name.'.php';
                               $bannerTPL .= ob_get_clean();
                             endif;
                           } else if(!$widget){
@@ -64,7 +64,7 @@
                             $servicosTPL .= '<div>';
                               $servicosTPL .= '<div>';
                                 $servicosTPL .= '<h3 class="title">'.$stitulo.'</h3>';
-                                $servicosTPL .= '<a href="single.php?post=servicos&id='.$SID.'" title="Saiba Mais +" class="btn -red">Saiba Mais +</a>';
+                                $servicosTPL .= '<a href="single?post=servicos&id='.$SID.'" title="Saiba Mais +" class="btn -red">Saiba Mais +</a>';
                               $servicosTPL .= '</div>';
                             $servicosTPL .= '</div>';
                           $servicosTPL .= '</div>';
@@ -106,7 +106,7 @@
                         $artigosTPL .= '<div>';
                           $artigosTPL .= '<h3 class="title">'.$atitulo.'</h3>';
                           $artigosTPL .= '<p>'.substr(strip_tags(htmlspecialchars_decode($atext)), 0, 200).((strlen(substr(strip_tags(htmlspecialchars_decode($atext)), 0, 200)) >= 200) ? '...' : '').'</p>';
-                          $artigosTPL .= '<a href="single.php?post=artigos&id='.$AID.'" class="btn -red" title="'.$atitulo.'">Saiba Mais +</a>';
+                          $artigosTPL .= '<a href="single?post=artigos&id='.$AID.'" class="btn -red" title="'.$atitulo.'">Saiba Mais +</a>';
                         $artigosTPL .= '</div>';
 
                         echo $artigosTPL;

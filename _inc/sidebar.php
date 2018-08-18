@@ -1,3 +1,3 @@
 <aside class="sidebar">
-    <?php include('_inc/components/cotacao_form.php'); ?>
+    <?php include('_inc/widgets/cotacao_form.php'); ?>
 </aside>

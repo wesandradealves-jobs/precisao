@@ -190,7 +190,7 @@
                                     <div class="col-md-12">
                                         <select name="widget_name">
                                             <?php 
-                                                $dir = '../_inc/components/';
+                                                $dir = '../_inc/widgets/';
                                                 if ($handle = opendir($dir)) {
 
                                                     while (false !== ($entry = readdir($handle))) {

@@ -1,10 +1,11 @@
 function _mobileNavigation(e) {
-    $(e).toggleClass("tcon-transform"),
-    $(e).closest($(".header")).find(".navigation.-mobile").toggleClass("-on")
+    $(".tcon").toggleClass("tcon-transform"),
+    $(".navigation.-mobile").toggleClass("-on")
 }
 function _closeMenu(){
     $(".tcon-transform").removeClass("tcon-transform"),
-    $(".-on").removeClass("-on")    
+    $(".-on").removeClass("-on"),
+    $(".-reveal").removeClass("-reveal")    
 }
 $(document).ready(function () {
     $('.owl-carousel').owlCarousel({

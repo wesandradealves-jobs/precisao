@@ -6,7 +6,7 @@
     $usr = $_SESSION['login'];
 
     if(!$_SESSION['login']){
-        header("Location: ../login.php");
+        header("Location: ../login");
     } else {
         $uid = $_SESSION['uid'];
     }

@@ -1,4 +1,6 @@
-<?php include('_inc/head.php'); ?> 
+<?php 
+    include('_inc/head.php'); 
+?> 
   <?php include('_inc/header.php'); ?>     
       <main>
         <section class="banner -internal" style="background-image: url(<?php echo (!$pgImage) ? "assets/imgs/default-banner.jpg" : (($the_mother_page->num_rows && $pgPaginaMaeBanner) ? "profile/uploads/".$pgPaginaMaeBanner : "profile/uploads/".$pgImage); ?>)">
@@ -89,12 +91,12 @@
                                     $repeatTPL .= '<div>';
                                     $repeatTPL .= '<h2 class="title">'.$crawler['titulo'].'</h2>';
                                     $repeatTPL .= '<div class="content-holder">'.substr(strip_tags(htmlspecialchars_decode($crawler['text'])), 0, 200).((strlen(substr(strip_tags(htmlspecialchars_decode($crawler['text'])), 0, 200)) >= 200) ? '...' : '')."</div>";
-                                    $repeatTPL .= '<a class="btn -red" href="single.php?post='.$slug.'&id='.$crawler['id'].'" title="'.$crawler['titulo'].'">Continue lendo</a>';
+                                    $repeatTPL .= '<a class="btn -red" href="single?post='.$slug.'&id='.$crawler['id'].'" title="'.$crawler['titulo'].'">Continue lendo</a>';
                                     $repeatTPL .= '</div>';
                                 else : 
                                     $repeatTPL .= '<h2 class="title">'.$crawler['titulo'].'</h2>';
                                     $repeatTPL .= '<div>';
-                                    $repeatTPL .= '<div style="background-image:url(profile/uploads/'.$crawler['url'].')"><a class="btn -red" href="single.php?post='.$slug.'&id='.$crawler['id'].'" title="'.$crawler['titulo'].'">Continue lendo</a></div>';
+                                    $repeatTPL .= '<div style="background-image:url(profile/uploads/'.$crawler['url'].')"><a class="btn -red" href="single?post='.$slug.'&id='.$crawler['id'].'" title="'.$crawler['titulo'].'">Continue lendo</a></div>';
                                     $repeatTPL .= '<div class="content-holder">'.substr(strip_tags(htmlspecialchars_decode($crawler['text'])), 0, 200).((strlen(substr(strip_tags(htmlspecialchars_decode($crawler['text'])), 0, 200)) >= 200) ? '...' : '')."</div>";
                                     $repeatTPL .= '</div>';
                                 endif; 

@@ -3,28 +3,101 @@
     +mq('820px', max)
         +rem('font-size', 12px)
     &.-mobile
-        +height(500ms)
-        max-height: 0
+        align-items: flex-start 
+        bottom: 0 
+        justify-content: flex-end
+        background-color: opacify(darken($red,5%), .8)
+        height: 0
+        +transition(.2s)
+        +mq('820px', max)
+            &.-reveal
+                height: 60px
+            &.-on
+                height: 100vh
+                .contact
+                    display: block
+                >ul 
+                    &:not(.shortcuts)
+                        display: block                
+        @extend .flex
+        flex-flow: column 
         overflow: hidden
-        &.-on
-            max-height: 600px
-        >ul 
-            >li 
+        left: 0
+        position: fixed
+        z-index: 10
+        width: 100%
+        .contact
+            color: white
+            display: none
+            @media screen and (max-height: 320px)
+                display: none!important
+            flex: 0 0 auto
+            padding: 15px 25px
+            width: 100%
+            >* 
+                display: inline-block 
+                vertical-align: middle
+                &:last-child
+                    margin-left: 25px
+        >ul
+            width: 100%
+            &.shortcuts
+                align-items: stretch 
                 background-color: $red
-                border-bottom: 1px darken($red, 15%) solid 
-                color: white 
-                display: block
-                +rem('font-size', 11px)
-                padding: 8px 15px
-                >.submenu
-                    display: block 
-                    margin: 8px -15px -8px
-                    >li 
-                        background-color: darken($red,5%)
-                        padding: 8px 15px 0
-                        &:last-child
-                            padding-bottom: 8px
+                @extend .flex
+                flex-flow: row wrap 
+                flex: 0 0 auto
+                height: 60px
+                justify-content: space-between
+                >li 
+                    align-items: center
+                    color: white
+                    @extend .flex
+                    flex-flow: column wrap 
+                    flex: 1
+                    justify-content: center
+                    text-align: center
+                    >* 
+                        display: block 
+                        margin: 0 auto
+                        i 
+                            display: block 
+                            +rem('font-size', 24px)
+                            margin: 0 auto
+                    .tcon
+                        line-height: 0
+                        &.tcon-transform
+                            .tcon-menu__lines
+                                background: rgba(0,0,0,0)
+                        &-menu__lines
+                            background: white 
+                            &::after,
+                            &::before 
+                                background: white
+            &:not(.shortcuts) 
+                display: none
+                flex: 1
+                padding: 10px 0
+                @media screen and (max-height: 414px)
+                    padding: 0
+                >li 
+                    color: white 
+                    display: block
+                    +rem('font-size', 11px)
+                    padding: 10px 25px
+                    >.submenu
+                        display: block 
+                        @media screen and (max-height: 414px)
+                            display: none
+                        margin: 20px -15px 0px
+                        >li 
+                            padding-left: 25px
+                            padding-right: 25px
+                            &:not(:first-child)
+                                padding-top: 10px
     &:not(.-mobile)
+        +mq('823px', max)
+            display: none
         flex: 1
         >ul 
             align-items: center
@@ -56,11 +129,11 @@
                         color: $red
                         &::after
                             width: calc(100% - 20.5px)       
-                +mq('690px', max)
-                    &:not(:last-child)
-                        display: none 
-                    &:last-child 
-                        display: inline-block  
+                // +mq('823px', max)
+                //     &:not(:last-child)
+                //         display: none 
+                //     &:last-child 
+                //         display: inline-block  
                 >.submenu
                     border-top: 2px $red solid
                     color: white 

@@ -8,7 +8,7 @@ const gulp = require('gulp'),
     uglify = require('gulp-uglify'),    
     htmlmin = require('gulp-htmlmin'),
     imagemin = require('gulp-imagemin'),    
-    phpMinify = require('@cedx/gulp-php-minify'),
+    {phpMinify, TransformMode} = require('@cedx/gulp-php-minify'),
     imageminJpegtran = require('imagemin-jpegtran'),
     imageminPngquant = require('imagemin-pngquant'), 
     imageminGifsicle = require('imagemin-gifsicle'), 
@@ -31,8 +31,8 @@ const gulp = require('gulp'),
             {name: "dist/page.php",content: "<?php // Silence is golden... ?>"}],
     browserSync = require('browser-sync').create();
 
-var development = environments.development,
-    production = environments.production;
+var development = environments.development;
+    // production = environments.production;
     
 
 // SASS / CSS generator 
@@ -151,37 +151,36 @@ gulp.task('images', function(){
 gulp.task('html', function() {
     return gulp.src('*.html')
     .pipe(development(htmlmin({collapseWhitespace: true})))
-    .pipe(production(ext_replace('.php')))
+    // .pipe(production(ext_replace('.php')))
     .pipe(gulp.dest('dist'));
 });
 
 // Php minifying and copy
 
-gulp.task('php', function() {
-    return gulp.src('*.php', {read: true})
-    .pipe(phpMinify())
-    .pipe(gulp.dest('dist'));
-});
+gulp.task('php', () => gulp.src('*.php', {read: false})
+  .pipe(phpMinify({mode: TransformMode.fast}))
+  .pipe(gulp.dest('dist'))
+);
 
 // Inc to dist
 
 gulp.task('inc-dist', function() {
     return gulp.src(['./_inc/**/*'])
-        .pipe(gulp.dest('dist'));
+        .pipe(gulp.dest('dist/_inc/'));
 });
 
 // Profile to dist
 
 gulp.task('profile-dist', function() {
     return gulp.src(['./profile/**/*'])
-        .pipe(gulp.dest('dist'));
+        .pipe(gulp.dest('dist/profile'));
 });
 
 // Phpmailer to dist
 
 gulp.task('phpmailer-dist', function() {
     return gulp.src(['./phpmailer/**/*'])
-        .pipe(gulp.dest('dist'));
+        .pipe(gulp.dest('dist/phpmailer'));
 });
 
 // Create util files for prod:build
@@ -191,11 +190,11 @@ gulp.task("create-file", function() {
         files.forEach(function(gfile){
             stream
                 .pipe(file(gfile.name, gfile.content))
-                .pipe(production(gulp.dest("./")));
+                // .pipe(production(gulp.dest("./")));
         });
         return stream;
     }))
-    .pipe(production(gulp.dest("./dist")));
+    // .pipe(production(gulp.dest("./dist")));
 });
 
 // Fonts to dist
