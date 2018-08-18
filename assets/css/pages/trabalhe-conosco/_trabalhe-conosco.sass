@@ -7,6 +7,9 @@
                 flex-flow: row wrap 
                 justify-content: space-between
                 width: 100%
+                &.form-group-full
+                    span 
+                        width: 100%
                 &:not(:last-child)
                     margin-bottom: 15px
                 &:nth-child(2n+1),
@@ -16,11 +19,22 @@
                 flex: 0 0 auto
                 span
                     margin-bottom: 0
-                    flex: 1
+                    flex: 1 
+                    +mq(495px, max)
+                        flex: 0 0 auto 
+                        width: 50%
                     &:not(:last-child)
                         padding-right: 7.5px
                     &:not(:first-child)
                         padding-left: 7.5px
+                        &:nth-child(2n+2)
+                            padding-right: 0
+                        &:nth-child(3n+3)
+                            +mq(495px, max)
+                                padding-left: 0
+                                padding-right: 0
+                                padding-top: 15px
+                                width: 100%
                     p, label
                         display: inline-block 
                         margin-bottom: 0

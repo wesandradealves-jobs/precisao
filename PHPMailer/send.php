@@ -21,10 +21,10 @@ if($_POST['orcamento']){
     $enviarPara = "orcamentos@precisaoservicos.com.br";
     //
     $assunto = 'Cotação - '.$orcamento_tipo;
-    $message = $nome;
-    $message .= '<br/>'.$email;
-    $message .= '<br/>'.$telefone;
-    $message .= '<br/>'.$orcamento_tipo;
+    $message = 'Nome: '.$nome;
+    $message .= '<br/>E-mail: '.$email;
+    $message .= '<br/>Telefone: '.$telefone;
+    $message .= '<br/>Orçamento: '.$orcamento_tipo;
 } else if($_POST['trabalhe-conosco']){
     $nome = $_POST['nome'];
     $rg = $_POST['rg'];
@@ -47,43 +47,36 @@ if($_POST['orcamento']){
     $enviarPara = "curriculos@precisaoservicos.com.br";
     //
     $assunto = 'Trabalhe Conosco';
-    $message = $nome;
-    $message .= '<br/>'.$email;
-    $message .= '<br/>'.$rg;
-    $message .= '<br/>'.$cpf;
-    $message .= '<br/>'.$nascimento;
-    $message .= '<br/>'.$sexo;
-    $message .= '<br/>'.$email;
-    $message .= '<br/>'.$telefone;
-    $message .= '<br/>'.$celular;
-    $message .= '<br/>'.$cep;
-    $message .= '<br/>'.$cidade;
-    $message .= '<br/>'.$uf;
-    $message .= '<br/>'.$bairro;
-    $message .= '<br/>'.$rua;
-    $message .= '<br/>'.$numero;
-    $message .= '<br/>'.$trabalhando;
-    $message .= '<br/>'.$horario;
-    $message .= '<br/>'.$disponibilidade;
-    $message .= '<br/>'.$mensagem;
+    $message = 'Nome: '.$nome;
+    $message .= '<br/>Email: '.$email;
+    $message .= '<br/>RG: '.$rg;
+    $message .= '<br/>CPF: '.$cpf;
+    $message .= '<br/>Nascimento: '.$nascimento;
+    $message .= '<br/>Sexo: '.$sexo;
+    $message .= '<br/>Telefone: '.$telefone;
+    $message .= '<br/>Celular: '.$celular;
+    $message .= '<br/>Endereço: '.$rua.', '.$numero.' - '.$bairro.', '.$uf.' - '.$cidade.' - '.$cep;
+    $message .= '<br/>Trabalhando: '.$trabalhando;
+    $message .= '<br/>Disponibilidade: '.$disponibilidade;
+    $message .= '<br/><hr/><br/>'.$mensagem;
 } else {
     $nome = $_POST['nome'];
     $email = $_POST['email'];
     $empresa = $_POST['empresa'];
     $telefone = $_POST['telefone'];
     $celular = $_POST['celular'];
-    $tipo_mensagem = $_POST['tipo_mensagem'];
+    $tipo_mensagem = $_POST['assunto'];
     $mensagem = $_POST['mensagem'];
     $enviarPara = "contatos@precisaoservicos.com.br";
     //
     $assunto = 'Contato - '.$tipo_mensagem;
-    $message = $nome;
-    $message .= '<br/>'.$email;
-    $message .= '<br/>'.$empresa;
-    $message .= '<br/>'.$telefone;
-    $message .= '<br/>'.$celular;
-    $message .= '<br/>'.$tipo_mensagem;
-    $message .= '<br/>'.$mensagem;
+    $message = 'Nome: '.$nome;
+    $message .= '<br/>E-mail: '.$email;
+    $message .= '<br/>Empresa: '.$empresa;
+    $message .= '<br/>Telefone: '.$telefone;
+    $message .= '<br/>Celular: '.$celular;
+    $message .= '<br/>Assunto: '.$tipo_mensagem;
+    $message .= '<br/><hr/><br/>'.$mensagem;
 }
 
 // use PHPMailer\PHPMailer\PHPMailer;
@@ -111,6 +104,7 @@ $mail->SMTPAuth = true;
 $mail->Username = "wesandradealves@gmail.com";
 //Password to use for SMTP authentication
 $mail->Password = "Wes@03122530";
+$mail->AddCC('wesandradealves@gmail.com', 'Wesley SD');
 $mail->AddBCC('luiz.sd@gmail.com', 'Luiz SD');
 //Set who the message is to be sent from
 $mail->setFrom('no-reply@precisaoservicos.com.br', 'NoReply - Precisão Serviços');

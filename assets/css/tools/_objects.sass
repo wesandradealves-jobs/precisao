@@ -301,6 +301,18 @@ section
                         color: $red
                     &:-ms-input-placeholder 
                         color: $red
+                    &[readonly]
+                        background-color: lightgray
+                        cursor: default
+                        color: gray
+                        &[placeholder]
+                            color: inherit
+                        &::-moz-placeholder
+                            color: inherit
+                        &::-webkit-input-placeholder
+                            color: inherit
+                        &:-ms-input-placeholder 
+                            color: inherit
                 .custom-select
                     select
                         font-size: inherit 

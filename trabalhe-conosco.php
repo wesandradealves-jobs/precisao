@@ -6,7 +6,7 @@
         <div class="form-row">
             <div class="form-group">
                 <span>
-                    <input required="required" type="text" name="nome" placeholder="Nome" />
+                    <input class="letter" required="required" type="text" name="nome" placeholder="Nome" />
                 </span>
                 <span>
                     <input required="required" class="rg" required="required" type="text" name="rg" placeholder="RG" />
@@ -41,7 +41,10 @@
             </div>
             <div class="form-group">
                 <span>
-                    <input required="required" type="text" name="rua" placeholder="Rua" />
+                    <input class="cep" id="cep" required="required" type="text" name="cep" placeholder="CEP" />
+                </span>
+                <span>
+                    <input readonly id="rua" required="required" type="text" name="rua" placeholder="Rua" />
                 </span>
                 <span>
                     <input required="required" type="number" name="numero" placeholder="Número" />
@@ -49,16 +52,16 @@
             </div>
             <div class="form-group">
                 <span>
-                    <input required="required" type="text" name="bairro" placeholder="Bairro" />
+                    <input readonly id="bairro" required="required" type="text" name="bairro" placeholder="Bairro" />
                 </span>
                 <span>
-                    <input required="required" type="text" name="cidade" placeholder="Cidade" />
+                    <input readonly id="cidade" required="required" type="text" name="cidade" placeholder="Cidade" />
                 </span>
                 <span>
-                    <input required="required" type="text" name="uf" max-length="2" placeholder="UF" />
+                    <input readonly required="required" type="text" name="uf" id="uf" class="uf" maxlength="2" size="2" max="2" placeholder="UF" />
                 </span>
             </div>
-            <div class="form-group">
+            <div class="form-group form-group-full">
                 <span>
                     <p>Está Trabalhando?</p> 
                     <p>
@@ -71,7 +74,7 @@
                     </p>
                 </span>
             </div>
-            <div class="form-group">
+            <div class="form-group form-group-full">
                 <span>
                     <p>Disponível Sábado, Domingos e Feriados?</p> 
                     <p>
@@ -84,7 +87,7 @@
                     </p>
                 </span>
             </div>
-            <div class="form-group">
+            <div class="form-group form-group-full">
                 <span>
                     <textarea name="mensagem" placeholder="Mensagem"></textarea>
                 </span>

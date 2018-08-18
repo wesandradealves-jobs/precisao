@@ -11,7 +11,7 @@
         <input name="email" type="email" placeholder="E-mail" />
       </span>
       <span>
-        <input required="required" name="telefone" type="tel" placeholder="Telefone" />
+        <input class="telefone" required="required" name="telefone" type="text" placeholder="Telefone" />
       </span>                                  
       <span>
         <span class="custom-select">

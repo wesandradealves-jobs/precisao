@@ -8,17 +8,11 @@ $(document).ready(function () {
             else
                 $(this).addClass('-animated');
         });
-     
-        // if(st > $(".header").outerHeight())
-        //     $(".navigation.-mobile").addClass("-reveal")
-        // else if($('section#contato').offset().top >= (st + ($(".header").outerHeight() * 2)))
-        //     $(".navigation.-mobile").removeClass("-reveal")
-        // else 
-        //     $(".navigation.-mobile").addClass("-reveal")
-    
-        if (st > 0)
-            $(".navigation.-mobile").addClass("-reveal");
-        if ($('section#contato').offset().top < (st + ($(".header").outerHeight() * 2)))
+        if($('.footer').offset().top <= (st + $(".footer").outerHeight() * 6))
             $(".navigation.-mobile").removeClass("-reveal"); 
+        else if (st == 0)
+            $(".navigation.-mobile").removeClass("-reveal");     
+        else 
+            $(".navigation.-mobile").addClass("-reveal");
     }); 
 });

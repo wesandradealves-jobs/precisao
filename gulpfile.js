@@ -105,7 +105,7 @@ gulp.task('commons', function(){
 
 // Vendors .js generator
 gulp.task('vendors', function() {
-  return gulp.src(['node_modules/jquery/dist/jquery.js','node_modules/jquery-validation/dist/jquery.validate.js','node_modules/owl.carousel/dist/owl.carousel.js', 'node_modules/jQuery-Mask-Plugin-master/dist/jquery.mask.js', 'node_modules/jquery-datepicker/jquery-datepicker.js'])
+  return gulp.src(['node_modules/jquery/dist/jquery.js','node_modules/jquery-validation/dist/jquery.validate.js','node_modules/owl.carousel/dist/owl.carousel.js', 'node_modules/jquery-mask-plugin/dist/jquery.mask.js', 'node_modules/jquery-datepicker/jquery-datepicker.js'])
     .pipe(uglify())
     .pipe(concat('vendors.js'))
     .pipe(gulp.dest('assets/js'));
