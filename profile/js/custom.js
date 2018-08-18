@@ -19,6 +19,8 @@
          $(".sidebar-head .open-close i").toggleClass("ti-menu");
      });
 
+
+
      /* ===========================================================
          Loads the correct sidebar on window load.
          collapses the sidebar on window resize.

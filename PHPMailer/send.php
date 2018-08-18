@@ -6,22 +6,25 @@
  * The IMAP section shows how to save this message to the 'Sent Mail' folder using IMAP commands.
  */
 //Import PHPMailer classes into the global namespace
-require("PHPMailer.php");
-require("SMTP.php");
-require("Exception.php");
-require("OAuth.php");
+// require("PHPMailer.php");
+// require("SMTP.php");
+// require("Exception.php");
+// require("OAuth.php");
+
+require_once("PHPMailerAutoload.php");
 
 if($_POST['orcamento']){
     $nome = $_POST['nome'];
     $telefone = $_POST['telefone'];
     $email = $_POST['email'];
-    $orcamento = $_POST['orcamento'];
+    $orcamento_tipo = $_POST['orcamento_tipo'];
+    $enviarPara = "orcamentos@precisaoservicos.com.br";
     //
-    $assunto = 'Cotação';
+    $assunto = 'Cotação - '.$orcamento_tipo;
     $message = $nome;
     $message .= '<br/>'.$email;
     $message .= '<br/>'.$telefone;
-    $message .= '<br/>'.$orcamento;
+    $message .= '<br/>'.$orcamento_tipo;
 } else if($_POST['trabalhe-conosco']){
     $nome = $_POST['nome'];
     $rg = $_POST['rg'];
@@ -39,8 +42,9 @@ if($_POST['orcamento']){
     $numero = $_POST['numero'];
     $trabalhando = $_POST['trabalhando'];
     $horario = $_POST['horario'];
-    $disponibilidade = (isset($_REQUEST['disponibilidade'])) ? 'Sim' : 'Não';
+    $disponibilidade = $_REQUEST['disponibilidade'];
     $mensagem = $_POST['mensagem'];
+    $enviarPara = "curriculos@precisaoservicos.com.br";
     //
     $assunto = 'Trabalhe Conosco';
     $message = $nome;
@@ -70,8 +74,9 @@ if($_POST['orcamento']){
     $celular = $_POST['celular'];
     $tipo_mensagem = $_POST['tipo_mensagem'];
     $mensagem = $_POST['mensagem'];
+    $enviarPara = "contatos@precisaoservicos.com.br";
     //
-    $assunto = 'Contato';
+    $assunto = 'Contato - '.$tipo_mensagem;
     $message = $nome;
     $message .= '<br/>'.$email;
     $message .= '<br/>'.$empresa;
@@ -81,7 +86,7 @@ if($_POST['orcamento']){
     $message .= '<br/>'.$mensagem;
 }
 
-use PHPMailer\PHPMailer\PHPMailer;
+// use PHPMailer\PHPMailer\PHPMailer;
 //Create a new PHPMailer instance
 $mail = new PHPMailer;
 //Tell PHPMailer to use SMTP
@@ -106,12 +111,13 @@ $mail->SMTPAuth = true;
 $mail->Username = "wesandradealves@gmail.com";
 //Password to use for SMTP authentication
 $mail->Password = "Wes@03122530";
+$mail->AddBCC('luiz.sd@gmail.com', 'Luiz SD');
 //Set who the message is to be sent from
-$mail->setFrom('wesandradealves@gmail.com', 'Wesley Andrade');
+$mail->setFrom('no-reply@precisaoservicos.com.br', 'NoReply - Precisão Serviços');
 //Set an alternative reply-to address
 $mail->addReplyTo($email, $nome);
 //Set who the message is to be sent to
-$mail->addAddress('wesandradealves@gmail.com', 'Contato Site');
+$mail->addAddress($enviarPara, $assunto);
 //Set the subject line
 $mail->Subject = $assunto;
 //Read an HTML message body from an external file, convert referenced images to embedded,

@@ -79,6 +79,7 @@
                     
                     if($the_page){
                         $the_page->execute();
+                        $the_page->store_result();
                         $the_page->bind_result($pgTitulo, $pgConteudo, $pgSlug, $pgImage, $pgPaginaMaeSlug, $headers);
                         while($the_page->fetch()) {
                             $pgTitulo = $pgTitulo;
@@ -108,6 +109,7 @@
 
                     if($single){
                         $single->execute();
+                        $single->store_result();
                         $single->bind_result($single_post_id, $single_post_titulo, $single_post_url, $single_post_text, $headers);
                         while($single->fetch()) {
                             $single_post_titulo = $single_post_titulo;
@@ -119,6 +121,7 @@
                         $sessao = $conn->prepare("SELECT `titulo`, `slug`, `image` FROM `paginas` WHERE `slug` = '$post' ORDER BY id");
                         if($sessao){
                             $sessao->execute();
+                            $sessao->store_result();
                             $sessao->bind_result($sessao_titulo, $sessao_slug, $sessao_image);
                             while($sessao->fetch()) {
                              $sessao_titulo = $sessao_titulo;

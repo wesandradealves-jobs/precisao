@@ -2,8 +2,8 @@
      "use strict";
      // toat popup js
     //  $.toast({
-    //      heading: 'Welcome to Ample admin',
-    //      text: 'Use the predefined ones, or specify a custom position object.',
+    //      heading: 'Seja Bem Vindo, Usuário.',
+    //      text: 'Configure seu site a partir deste Painel.',
     //      position: 'top-right',
     //      loaderBg: '#fff',
     //      icon: 'warning',
@@ -80,7 +80,4 @@
          sparkResize = setTimeout(sparklineLogin, 500);
      });
      sparklineLogin();
-     $(".list-open").on("click", function () {
-        $(this).toggleClass("toggle"); 
-    });
  });

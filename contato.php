@@ -1,7 +1,7 @@
 <?php include('_inc/sidebar-interna.php'); ?>   
 <div class="internal-content-fill">
     <h2 class="title"><?php echo str_replace('-', ' ', $slug); ?></h2>
-    <form class="contact-form" action="PHPMailer/send.php" method="POST">
+    <form class="contact-form" action="phpmailer/send.php" method="POST">
         <p>PARA SUGESTÕES, CRÍTICAS, ELOGIOS OU RECLAMAÇÕES, PREENCHA O FORMULÁRIO ABAIXO</p>
         <div class="form-row">
             <div class="form-group">

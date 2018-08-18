@@ -216,7 +216,7 @@
                     <div class="col-lg-12">
                         <div class="white-box">
                             <form class="form-horizontal form-material" action="" method="POST" enctype="multipart/form-data">
-                                <div class="form-group">
+                                <!-- <div class="form-group">
                                     <label class="col-md-12">SMTP HOST</label>
                                     <div class="col-md-12">
                                         <input <?php echo ($_SESSION['login']!='admin') ? 'readonly' : ''; ?> name="smtp_host" type="text" value="<?php echo (isset($smtp_host)) ? $smtp_host : ''; ?>" class="form-control form-control-line"> 
@@ -239,7 +239,7 @@
                                     <div class="col-md-12">
                                         <input <?php echo ($_SESSION['login']!='admin') ? 'readonly' : ''; ?> name="smtp_port" type="text" value="<?php echo (isset($smtp_port)) ? $smtp_port : ''; ?>" class="form-control form-control-line"> 
                                     </div>
-                                </div>   
+                                </div>    -->
                                 <div class="form-group">
                                     <label class="col-md-12">Título do seu Website</label>
                                     <div class="col-md-12">

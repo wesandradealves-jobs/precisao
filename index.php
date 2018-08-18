@@ -45,7 +45,7 @@
                 <h2 class="title">
                   <span><?php echo $row->titulo; ?></span>
                 </h2>
-                <p><?php echo $row->resumo; ?></p>
+                <p><?php echo strip_tags(htmlspecialchars_decode($row->resumo)); ?></p>
               </div>
               <?php if($servicos) : ?>
               <ul class="servicos-list">
@@ -85,7 +85,7 @@
                 <h2 class="title">
                   <span><?php echo $row->titulo; ?></span>
                 </h2>
-                <p><?php echo $row->resumo; ?></p>
+                <p><?php echo strip_tags(htmlspecialchars_decode($row->resumo)); ?></p>
               </div>
               <?php if($artigos) : ?>
               <div class="artigos-section-content">
@@ -126,7 +126,7 @@
                     <span><?php echo $row->titulo; ?></span>
                   </h2>
                 </div>
-                <p><?php echo $row->resumo; ?></p>
+                <p><?php echo strip_tags(htmlspecialchars_decode($row->resumo)); ?></p>
               </div>
             </div>
           </section>

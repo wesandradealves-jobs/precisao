@@ -40,7 +40,7 @@
                     display: none
                 &:not(:last-child),
                 &:not(:nth-last-child(2))
-                    margin-right: 15px
+                    padding-right: 20.5px
                 &:not(:last-child)
                     &::after 
                         background-color: $red
@@ -55,7 +55,7 @@
                     &:hover
                         color: $red
                         &::after
-                            width: 100%        
+                            width: calc(100% - 20.5px)       
                 +mq('690px', max)
                     &:not(:last-child)
                         display: none 

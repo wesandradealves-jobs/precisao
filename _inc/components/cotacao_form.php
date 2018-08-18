@@ -1,4 +1,4 @@
-<form action="PHPMailer/send.php" method="POST" class="cotacao-form">
+<form action="phpmailer/send.php" method="POST" class="cotacao-form">
     <div class="cotacao-header">
       <h2 class="title">Faça sua cotação online agora!</h2>
       <p class="text">Profissionais capacitados que atendem às necessidades específicas</p>
@@ -15,7 +15,7 @@
       </span>                                  
       <span>
         <span class="custom-select">
-          <select required="required" name="orcamento" id="orcamento">
+          <select required="required" name="orcamento_tipo" id="orcamento_tipo">
             <?php 
               echo $servicos_para_cotacao;
             ?>

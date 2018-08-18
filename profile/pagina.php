@@ -21,6 +21,7 @@
                 
                 if($stmt){
                     $stmt->execute();
+                    $stmt->store_result();
                     $stmt->bind_result($titulo, $conteudo, $headers, $slug, $anchor, $pagina_mae, $subpagina, $showmenu, $image, $resumo);
                     while($stmt->fetch()) {
                         $titulo = $titulo;

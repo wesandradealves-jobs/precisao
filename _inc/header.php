@@ -18,7 +18,7 @@
             <div class="container">
               <?php if($logo) : ?>
               <h1 class="logo">
-                <a href="<?php echo $default_url; ?>" title="PRECISÃO SERVIÇOS GERAIS"><img height="90" src="profile/uploads/<?php echo $logo; ?>" alt="PRECISÃO SERVIÇOS GERAIS" /></a>
+                <a href="<?php echo $default_url; ?>" title="<?php echo $ctitulo; ?>"><img height="90" src="profile/uploads/<?php echo $logo; ?>" alt="<?php echo $ctitulo; ?>" /></a>
               </h1>
               <?php endif; ?>
               <?php if ($result = $conn->query("SELECT * FROM paginas ORDER BY id ASC")) : if ($result->num_rows > 0) : ?>

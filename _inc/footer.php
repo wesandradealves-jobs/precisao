@@ -35,9 +35,9 @@
         </div>
       </footer>
     </div> 
-    <script defer src="<?php echo "assets/js/vendors.js?v=".rand(5, 15); ?>"></script>
+    <script defer src="assets/js/vendors.js"></script>
     <noscript>Seu Navegador pode não aceitar javascript.</noscript>
-    <script defer src="<?php echo "assets/js/commons.js?v=".rand(5, 15); ?>"></script>
+    <script defer src="assets/js/commons.js"></script>
     <noscript>Seu Navegador pode não aceitar javascript.</noscript>
     <?php if($MAPS) : ?>
     <script src='https://maps.googleapis.com/maps/api/js?key=AIzaSyC5QMfSnVnSCcmkFag0ygrXzj2QJ9usEG4'></script>
@@ -67,6 +67,6 @@
       <noscript>Seu Navegador pode não aceitar javascript.</noscript>    
     <?php endif; ?>
     <noscript>Seu Navegador pode não aceitar javascript.</noscript>        
-    <link rel="stylesheet" href="<?php echo "style.css?v=".rand(5, 15); ?>" type="text/css" media="all" />
+    <link rel="stylesheet" href="style.css" type="text/css" media="all" />
   </body>
 </html>

@@ -8,7 +8,7 @@ const gulp = require('gulp'),
     uglify = require('gulp-uglify'),    
     htmlmin = require('gulp-htmlmin'),
     imagemin = require('gulp-imagemin'),    
-    {phpMinify} = require('@cedx/gulp-php-minify'),
+    phpMinify = require('@cedx/gulp-php-minify'),
     imageminJpegtran = require('imagemin-jpegtran'),
     imageminPngquant = require('imagemin-pngquant'), 
     imageminGifsicle = require('imagemin-gifsicle'), 
@@ -105,7 +105,7 @@ gulp.task('commons', function(){
 
 // Vendors .js generator
 gulp.task('vendors', function() {
-  return gulp.src(['node_modules/jquery/dist/jquery.js','node_modules/jquery-validation/dist/jquery.validate.js','node_modules/owl.carousel/dist/owl.carousel.js', 'node_modules/jQuery-Mask-Plugin-master/dist/jquery.mask.js'])
+  return gulp.src(['node_modules/jquery/dist/jquery.js','node_modules/jquery-validation/dist/jquery.validate.js','node_modules/owl.carousel/dist/owl.carousel.js', 'node_modules/jQuery-Mask-Plugin-master/dist/jquery.mask.js', 'node_modules/jquery-datepicker/jquery-datepicker.js'])
     .pipe(uglify())
     .pipe(concat('vendors.js'))
     .pipe(gulp.dest('assets/js'));
@@ -154,10 +154,35 @@ gulp.task('html', function() {
     .pipe(production(ext_replace('.php')))
     .pipe(gulp.dest('dist'));
 });
-gulp.task('php', () => gulp.src('*.php', {read: false})
-  .pipe(phpMinify())
-  .pipe(gulp.dest('dist'))
-);
+
+// Php minifying and copy
+
+gulp.task('php', function() {
+    return gulp.src('*.php', {read: true})
+    .pipe(phpMinify())
+    .pipe(gulp.dest('dist'));
+});
+
+// Inc to dist
+
+gulp.task('inc-dist', function() {
+    return gulp.src(['./_inc/**/*'])
+        .pipe(gulp.dest('dist'));
+});
+
+// Profile to dist
+
+gulp.task('profile-dist', function() {
+    return gulp.src(['./profile/**/*'])
+        .pipe(gulp.dest('dist'));
+});
+
+// Phpmailer to dist
+
+gulp.task('phpmailer-dist', function() {
+    return gulp.src(['./phpmailer/**/*'])
+        .pipe(gulp.dest('dist'));
+});
 
 // Create util files for prod:build
 gulp.task("create-file", function() {   
@@ -197,7 +222,7 @@ gulp.task('clean:build', function () {
 // Build task
 gulp.task('build', function (callback) {
     console.log('Building project...')
-    runSequence('clean:build', ['html', 'php', 'css-dist', 'images', 'favico', 'fonts', 'htaccess', 'js-dist', 'create-file'],
+    runSequence('clean:build', ['html', 'phpmailer-dist', 'profile-dist', 'inc-dist', 'php', 'css-dist', 'images', 'favico', 'fonts', 'htaccess', 'js-dist', 'create-file'],
         callback
     );
 });

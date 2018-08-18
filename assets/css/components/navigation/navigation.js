@@ -6,7 +6,6 @@ if($('body').is('.pg-home')){
             e.preventDefault();
             $('html, body').animate({
                 scrollTop: ($(window).width() > 814) ? $($.attr(this, 'href')).offset().top - $(".header").outerHeight() : $($.attr(this, 'href')).offset().top - 134
-                // scrollTop: $($.attr(this, 'href')).offset().top - $(".header").outerHeight()
             }, 500);                    
         }
     }); 
