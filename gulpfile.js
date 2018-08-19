@@ -157,10 +157,10 @@ gulp.task('html', function() {
 
 // Php minifying and copy
 
-gulp.task('php', () => gulp.src('*.php', {read: false})
-  .pipe(phpMinify({mode: TransformMode.fast}))
-  .pipe(gulp.dest('dist'))
-);
+gulp.task('php', function() {
+    return gulp.src(['*.php'])
+        .pipe(gulp.dest('dist'))
+});
 
 // Inc to dist
 

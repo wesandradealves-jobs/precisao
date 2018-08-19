@@ -19,9 +19,9 @@
         </div>
       </footer>
     </div> 
-    <script defer src="assets/js/vendors.js"></script>
+    <script defer src="assets/js/vendors.js?v=1024"></script>
     <noscript>Seu Navegador pode não aceitar javascript.</noscript>
-    <script defer src="assets/js/commons.js"></script>
+    <script defer src="assets/js/commons.js?v=1024"></script>
     <noscript>Seu Navegador pode não aceitar javascript.</noscript>
     <?php if($MAPS) : ?>
     <script src='https://maps.googleapis.com/maps/api/js?key=AIzaSyC5QMfSnVnSCcmkFag0ygrXzj2QJ9usEG4'></script>
@@ -51,6 +51,6 @@
       <noscript>Seu Navegador pode não aceitar javascript.</noscript>    
     <?php endif; ?>
     <noscript>Seu Navegador pode não aceitar javascript.</noscript>        
-    <link rel="stylesheet" href="style.css" type="text/css" media="all" />
+    <link rel="stylesheet" href="style.css?v=1024" type="text/css" media="all" />
   </body>
 </html>

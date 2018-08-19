@@ -28,7 +28,7 @@
                 </a>
               </li>
               <li>
-                <a href="./page?slug=contato">
+                <a href="./page.php?slug=contato">
                   <i class="fas fa-envelope"></i>
                   <!-- Contato -->
                 </a>

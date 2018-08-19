@@ -11,6 +11,10 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="author" content="Wesley Andrade - github.com/wesandradealves" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta property="og:description" content="<?php echo $description; ?>">
+    <meta property="og:url" content="<?php echo (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") . "://$_SERVER[HTTP_HOST]";
+ ?>">
+    <meta property="og:image" content="<?php echo (isset($tmp_screenshot)) ? $default_url.$tmp_screenshot : $default_url."screenshot.png"; ?>">
     <meta property="og:type" content="website" />
     <meta property="og:title" content="<?php echo $ctitulo." - ".$pgTitulo; ?>" />
     <meta property="og:site_name" content="<?php echo $ctitulo." - ".$pgTitulo; ?>" />
@@ -19,6 +23,8 @@
     <meta name="HandheldFriendly" content="true" />
     <link rel="apple-touch-icon" href="profile/uploads/<?php echo $favico; ?>" />
     <link rel="shortcut icon" type="image/png" href="profile/uploads/<?php echo $favico; ?>" />
+    <link rel="canonical" href="<?php echo (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") . "://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
+ ?>">
   </head>
   <body <?php echo 'class="pg-'.(($slug) ? $slug : $post).'"'; ?>> 
     <div id="wrap">

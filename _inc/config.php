@@ -2,23 +2,9 @@
 
 session_start();
 
-$default_url = './';
+$default_url = 'http://precisaoservicos.com.br/hmg/';
 
 $basename = substr(strtolower(basename($_SERVER['PHP_SELF'])),0,strlen(basename($_SERVER['PHP_SELF']))-4);
-
-if(isset($_SESSION['login']) && $basename == 'login'){
-    header("Location: profile/index");
-} 
-
-if($basename == "single"){
-    if(!isset($_GET['id'])||!isset($_GET['post'])) :
-        header("Location: index");
-    endif;
-} else if($basename == "page"){
-    if(!isset($_GET['slug'])) :
-        header("Location: index");
-    endif;
-}
 
 $config = $conn->prepare("SELECT `logo`, `favico`, `titulo` FROM `smtp` ORDER BY id");
 $contato = $conn->prepare("SELECT `telefone`, `email`, `endereco`, `maps` FROM `contatos` ORDER BY id");
@@ -145,5 +131,49 @@ if($seo = $conn->query("SELECT * FROM paginas ORDER BY id ASC")) :
         endwhile;
     endif; 
 endif;    
+
+if(isset($_SESSION['login']) && $basename == 'login'){
+    header("Location: profile/index.php");
+} else if($basename == "single"){
+    if(!isset($_GET['id'])||!isset($_GET['post'])) :
+        header("Location: ./");
+    endif;
+    preg_match( '@src="([^"]+)"@' , htmlspecialchars_decode($single_post_text), $match );
+    $screenshot = array_pop($match);
+
+	// requires php5
+	define('UPLOAD_DIR', 'profile/uploads/');
+	$img = $screenshot;
+	$img = str_replace('data:image/png;base64,', '', $img);
+	$img = str_replace(' ', '+', $img);
+	$data = base64_decode($img);
+	$tmp_screenshot = UPLOAD_DIR . uniqid() . '.png';
+	$success = file_put_contents($tmp_screenshot, $data);
+	// print $success ? $default_url.$tmp_screenshot : 'Unable to save the file.';
+
+    $description = substr( strip_tags(htmlspecialchars_decode($single_post_text)), 0, 300 )."...";
+} else if($basename == "page"){
+    if(!isset($_GET['slug'])) :
+        header("Location: ./");
+    endif;
+    preg_match( '@src="([^"]+)"@' , htmlspecialchars_decode($pgConteudo), $match );
+    $screenshot = array_pop($match);
+
+	// requires php5
+	define('UPLOAD_DIR', 'profile/uploads/');
+	$img = $screenshot;
+	$img = str_replace('data:image/png;base64,', '', $img);
+	$img = str_replace(' ', '+', $img);
+	$data = base64_decode($img);
+	$tmp_screenshot = UPLOAD_DIR . uniqid() . '.png';
+	$success = file_put_contents($tmp_screenshot, $data);
+	// print $success ? $default_url.$tmp_screenshot : 'Unable to save the file.';
+
+    $description = substr( strip_tags(htmlspecialchars_decode($pgConteudo)), 0, 300 )."...";
+} else if($basename != "page" && $basename != "single"){
+    $description = 'Com sede em São Paulo e Filiais no Rio de Janeiro e Santa Catarina, o Grupo Precisão está no mercado, cuja meta principal é a satisfação de seus clientes e a qualidade nos serviços prestados. O Grupo Precisão tem como escopo a escolha de profissionais capacitados que atendam às necessidades específicas do contratante, oferecendo segurança, qualidade e consciência no cumprimento de seus deveres.';
+}
+
+
 
 ?>
