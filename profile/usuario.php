@@ -13,7 +13,7 @@
 
     if(!isset($_GET['id'])){
         if(isset($_POST['update'])) :
-            $login = to_permalink(removeSpecialChars($_POST['login']));
+            $login = to_permalink($_POST['login']);
             
             $senha = md5(to_permalink($_POST['senha']));
             if($login && $senha){ 

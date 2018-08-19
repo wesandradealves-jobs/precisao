@@ -1,6 +1,6 @@
               <?php while ($row = $result->fetch_object()) : ?>
                 <?php if($row->showmenu && !$row->subpagina) : ?>
-                  <li>
+                  <li class="<?php echo ((isset($slug) && $slug == $row->slug) || (isset($post) && $post == $row->slug)) ? '-active' : ''; ?>">
                     <a href="<?php echo ($row->anchor) ? '#'.$row->slug : "page.php?slug=".$row->slug; ?>" title="<?php echo $row->titulo; ?>"><?php echo $row->titulo; ?></a>
                     <?php 
                         if($row->slug != 'servicos') {

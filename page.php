@@ -1,13 +1,21 @@
 <?php 
     include('_inc/head.php'); 
+    if($slug == "sucesso") :
+        $fetchContato = $conn->query("SELECT * FROM `paginas` WHERE `slug` = 'contato' LIMIT 1");
+        if($fetchContato && $fetchContato->num_rows) : 
+            while ($row = $fetchContato->fetch_object()) :
+                $contatoBanner = $row->image; 
+            endwhile;
+        endif;
+    endif;
 ?> 
   <?php include('_inc/header.php'); ?>     
       <main>
-        <section class="banner -internal" style="background-image: url(<?php echo (!$pgImage) ? "assets/imgs/default-banner.jpg" : (($the_mother_page->num_rows && $pgPaginaMaeBanner) ? "profile/uploads/".$pgPaginaMaeBanner : "profile/uploads/".$pgImage); ?>)">
+        <section class="banner -internal" style="background-image: url(<?php echo (!$pgImage) ? ($slug == 'sucesso' && isset($contatoBanner)) ? "profile/uploads/".$contatoBanner : "assets/imgs/default-banner.jpg" : (($the_mother_page->num_rows && $pgPaginaMaeBanner) ? "profile/uploads/".$pgPaginaMaeBanner : "profile/uploads/".$pgImage); ?>)">
           <div class="container">
             <h2>
               <?php 
-               echo (($pgPaginaMaeTitulo) ? "<span>".$pgPaginaMaeTitulo.":</span> ".$pgTitulo : "<span>".$pgTitulo."</span>");
+               echo (($pgPaginaMaeTitulo) ? "<span>".$pgPaginaMaeTitulo.":</span> ".$pgTitulo : ($slug != 'sucesso') ? "<span>".$pgTitulo."</span>" : "<span>Sucesso</span>");
               ?>
             </h2>
             <?php include('_inc/components/breadcrumb.php'); ?>
@@ -15,7 +23,7 @@
         </section>
         <section class="internal-content">
           <div class="container">
-            <?php if($slug == 'contato'||$slug == 'trabalhe-conosco'): ?>
+            <?php if($slug == 'contato'||$slug == 'trabalhe-conosco'||$slug == 'sucesso'): ?>
                 <?php include($slug.".php"); ?>
             <?php else : ?>
                 <div class="internal-content-fill">

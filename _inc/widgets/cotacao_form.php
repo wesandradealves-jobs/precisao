@@ -23,7 +23,7 @@
         </span>
       </span>     
       <span>
-        <input type="submit" name="orcamento" class="btn -red" />
+        <input type="submit" value="Solicitar" name="orcamento" class="btn -red" />
       </span>     
     </div>
   </form>

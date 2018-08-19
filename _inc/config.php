@@ -138,18 +138,22 @@ if(isset($_SESSION['login']) && $basename == 'login'){
     if(!isset($_GET['id'])||!isset($_GET['post'])) :
         header("Location: ./");
     endif;
-    preg_match( '@src="([^"]+)"@' , htmlspecialchars_decode($single_post_text), $match );
-    $screenshot = array_pop($match);
 
-	// requires php5
-	define('UPLOAD_DIR', 'profile/uploads/');
-	$img = $screenshot;
-	$img = str_replace('data:image/png;base64,', '', $img);
-	$img = str_replace(' ', '+', $img);
-	$data = base64_decode($img);
-	$tmp_screenshot = UPLOAD_DIR . uniqid() . '.png';
-	$success = file_put_contents($tmp_screenshot, $data);
-	// print $success ? $default_url.$tmp_screenshot : 'Unable to save the file.';
+    if(isset($_GET['post'])) :
+        $tmp_screenshot = $single_post_url; 
+    endif; 
+    
+    // preg_match( '@src="([^"]+)"@' , htmlspecialchars_decode($single_post_text), $match );
+
+	// // requires php5
+	// define('UPLOAD_DIR', 'profile/uploads/');
+	// $img = $screenshot;
+	// $img = str_replace('data:image/png;base64,', '', $img);
+	// $img = str_replace(' ', '+', $img);
+	// $data = base64_decode($img);
+	// $tmp_screenshot = UPLOAD_DIR . uniqid() . '.png';
+	// $success = file_put_contents($tmp_screenshot, $data);
+	// // print $success ? $default_url.$tmp_screenshot : 'Unable to save the file.';
 
     $description = substr( strip_tags(htmlspecialchars_decode($single_post_text)), 0, 300 )."...";
 } else if($basename == "page"){

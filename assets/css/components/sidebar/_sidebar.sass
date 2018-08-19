@@ -30,3 +30,56 @@
         strong 
             @extend .title 
             +rem('font-size', 13px)
+    .cotacao-form
+        >.cotacao-header
+            >.text
+                +rem('font-size', 12px)
+                margin: 8px 0
+        >.cotacao-content
+            >span, 
+            >span>input,
+            >span>textarea,
+            >span>select,
+            >span>button 
+                display: inline-block 
+                width: 100%
+            >span
+                &::after
+                    content: ""
+                    clear: both
+                    display: block 
+                    position: relative
+                &:not(:last-child)
+                    margin-bottom: 15px
+                >.btn 
+                    +border(0px)
+                    display: inline-block
+                    padding: 14px
+            .custom-select,
+            input,
+            textarea,
+            select
+                background-color: lighten(gray, 35%)
+                +border(0px)
+                color: gray 
+                display: block
+                +rem('font-size', 14px)
+                text-transform: uppercase
+                padding: 10px
+                width: 100%
+                &[placeholder]
+                    color: gray
+                &::-moz-placeholder
+                    color: gray
+                &::-webkit-input-placeholder
+                    color: gray
+                &:-ms-input-placeholder 
+                    color: gray
+            select 
+                padding: 0
+            .custom-select
+                padding: 10px 5px!important
+            .btn
+                &:hover
+                    background-color: gray
+                    color: white 

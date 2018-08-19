@@ -15,11 +15,14 @@
             width: 100%
         >.cotacao-header
             >.title
+                color: black 
                 +rem('font-size', 16px)
-                font-weight: bold 
+                font-weight: bold
+                text-transform: initial 
                 text-align: center 
             >.text
-                +rem('font-size', 14px)
+                color: black
+                +rem('font-size', 13px)
                 +mq('480px', max)
                     +rem('font-size', 11px)
                 margin: 15px auto
@@ -42,7 +45,10 @@
                     +mq('480px', max)
                         margin-bottom: 8px
             button, input[type="submit"]
+                font-weight: bold
+                +rem('font-size', 17px)
                 text-align: center  
+                text-transform: uppercase 
                 width: 100%
             input, textarea, select, .custom-select
                 @extend .btn
@@ -67,53 +73,3 @@
                     color: gray
                 &:-ms-input-placeholder 
                     color: gray
-.sidebar
-    .cotacao-form
-        >.cotacao-header
-            >.text
-                +rem('font-size', 12px)
-                margin: 8px 0
-        >.cotacao-content
-            >span, 
-            >span>input,
-            >span>textarea,
-            >span>select,
-            >span>button 
-                display: inline-block 
-                width: 100%
-            >span
-                &::after
-                    content: ""
-                    clear: both
-                    display: block 
-                    position: relative
-                &:not(:last-child)
-                    margin-bottom: 15px
-                >.btn 
-                    +border(0px)
-                    display: inline-block
-                    padding: 14px
-            .custom-select,
-            input,
-            textarea,
-            select
-                background-color: lighten($red, 35%)
-                +border(0px)
-                color: $red 
-                display: block
-                +rem('font-size', 14px)
-                text-transform: uppercase
-                padding: 10px
-                width: 100%
-                &[placeholder]
-                    color: $red
-                &::-moz-placeholder
-                    color: $red
-                &::-webkit-input-placeholder
-                    color: $red
-                &:-ms-input-placeholder 
-                    color: $red
-            select 
-                padding: 0
-            .custom-select
-                padding: 10px 5px!important

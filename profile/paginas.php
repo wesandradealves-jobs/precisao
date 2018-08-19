@@ -101,7 +101,7 @@
                                             <td class="txt-oflo"><?php echo ($row->anchor) ? 'Sim' : 'Não'; ?></td>
                                             <td class="txt-oflo"><?php echo ($row->subpagina) ? 'Sim' : 'Não'; ?></td>
                                             <td class="txt-oflo"><?php echo ($row->showmenu) ? 'Sim' : 'Não'; ?></td>
-                                            <td><a class="action" href="<?php echo "pagina.php?euid=".$uid."&id=".$row->id; ?>">Editar</a> | <a class="action" href="<?php echo "../_inc/delete.php?source=pagina&uid=".$uid."&id=".$row->id; ?>">Deletar</a></td>
+                                    <td><a class="action" href="<?php echo "pagina.php?euid=".$uid."&id=".$row->id; ?>">Editar</a> <?php if($row->slug != "home") : ?> | <a class="action" href="<?php echo "../_inc/delete.php?source=pagina&uid=".$uid."&id=".$row->id; ?>">Deletar</a> <?php endif; ?></td>
                                         </tr>
                                         <?php endwhile; ?>
                                     </tbody>

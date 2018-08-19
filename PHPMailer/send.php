@@ -128,7 +128,7 @@ $mail->AltBody = 'This is a plain-text message body';
 if (!$mail->send()) {
     echo "Mailer Error: " . $mail->ErrorInfo;
 } else {
-    header("Location: http://precisaoservicos.com.br/");
+    header("Location: ../page.php?slug=sucesso");
     //Section 2: IMAP
     //Uncomment these to save your message in the 'Sent Mail' folder.
     #if (save_mail($mail)) {

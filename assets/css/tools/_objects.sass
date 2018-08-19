@@ -54,6 +54,7 @@ input
     text-transform: uppercase  
     &.-red
         background-color: $red
+        box-shadow: inset 0 3px 10px -4px white
         color: white
         &:hover
             background-color: lighten($red, 15%) 
@@ -82,8 +83,9 @@ section
                 margin-bottom: 15px
                 text-align: center
                 >.title
-                    color: gray
+                    color: black
                     +rem('font-size', 26px)
+                    font-family: MyriadPro
                     font-weight: bold
                     text-transform: uppercase 
                     >span 
@@ -103,8 +105,8 @@ section
         align-items: center
         @extend .flex
         flex-flow: column wrap 
-        justify-content: center 
-        border: 5px $red solid
+        justify-content: center  
+        border: 5px transparentize($red,.4) solid
         height: 214px
         padding: 0 30px
     &.-hover
@@ -158,6 +160,8 @@ section
 .listing
     .content-holder
         +rem('font-size', 13px)
+    .btn 
+        box-shadow: none
     &.-servicos
         align-items: stretch
         @extend .flex
@@ -248,73 +252,3 @@ section
                     color: gray
                     display: block
                     margin: 15px 0
-.contact-form
-    p 
-        display: block 
-        +rem('font-size', 12px)
-        padding: 15px 0 
-    .form-row
-        align-items: stretch 
-        @extend .flex
-        flex-flow: row wrap
-        justify-content: space-between
-        .form-group 
-            flex: 1
-            margin-bottom: 15px
-            &-full 
-                flex: 0 0 auto
-                padding-left: 0
-                padding-right: 0 
-                width: 100% 
-            &:nth-child(2n+1)
-                padding-right: 7.5px
-            &:nth-child(2n+2)
-                padding-left: 7.5px
-            span 
-                display: block 
-                &:only-of-type
-                    height: 100% 
-                &:not(:last-child)
-                    margin-bottom: 15px
-                width: 100%
-                * 
-                    display: inherit 
-                    width: inherit 
-                .custom-select,
-                input:not([type="submit"]):not([type="radio"]):not([type="checkbox"]),
-                textarea 
-                    background-color: lighten($red, 35%)
-                    +border(0px)
-                    color: $red 
-                    display: block
-                    height: 100%
-                    +rem('font-size', 14px)
-                    text-transform: uppercase
-                    padding: 10px
-                    resize: none
-                    width: 100%
-                    &[placeholder]
-                        color: $red
-                    &::-moz-placeholder
-                        color: $red
-                    &::-webkit-input-placeholder
-                        color: $red
-                    &:-ms-input-placeholder 
-                        color: $red
-                    &[readonly]
-                        background-color: lightgray
-                        cursor: default
-                        color: gray
-                        &[placeholder]
-                            color: inherit
-                        &::-moz-placeholder
-                            color: inherit
-                        &::-webkit-input-placeholder
-                            color: inherit
-                        &:-ms-input-placeholder 
-                            color: inherit
-                .custom-select
-                    select
-                        font-size: inherit 
-                        color: inherit 
-                        text-transform: inherit

@@ -3,7 +3,7 @@
           <?php if($email||$telefone) : ?>
           <div id="topo">
             <div class="container">
-              <p class="phone">Telefone: <?php echo $telefone; ?> | E-mail: <a href="mailto:<?php echo $email; ?>" title="<?php echo $email; ?>"><?php echo $email; ?></a></p>
+              <p class="phone">Telefone: <?php echo explode("/", $telefone, 2)[0]; ?> | E-mail: <a href="mailto:<?php echo $email; ?>" title="<?php echo $email; ?>"><?php echo $email; ?></a></p>
             </div>
           </div>
           <?php endif; ?>
@@ -46,7 +46,7 @@
             <div class="container">
               <?php if($logo) : ?>
               <h1 class="logo">
-                <a href="<?php echo $default_url; ?>" title="<?php echo $ctitulo; ?>"><img height="90" src="profile/uploads/<?php echo $logo; ?>" alt="<?php echo $ctitulo; ?>" /></a>
+                <a href="<?php echo $default_url; ?>" title="<?php echo $ctitulo; ?>"><img src="profile/uploads/<?php echo $logo; ?>" alt="<?php echo $ctitulo; ?>" /></a>
               </h1>
               <?php endif; ?>
               <?php if ($result = $conn->query("SELECT * FROM paginas ORDER BY id ASC")) : if ($result->num_rows > 0) : ?>

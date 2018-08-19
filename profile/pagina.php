@@ -228,13 +228,13 @@
                                         <input name="titulo" type="text" value="<?php echo (isset($titulo)) ? $titulo : ''; ?>" class="form-control form-control-line"> 
                                     </div>
                                 </div>
-                                <div class="form-group">
+                                <div style="<?php echo ($slug == 'home') ? 'display: none' : '' ?>" class="form-group">
                                     <label class="col-md-12">Conteudo</label>
                                     <div class="col-md-12">
                                         <textarea name="conteudo" rows="10" class="froala-editor form-control form-control-line"><?php echo (isset($conteudo)) ? $conteudo : ''; ?></textarea>
                                     </div>
                                 </div>
-                                <div class="form-group">
+                                <div style="<?php echo ($slug == 'home') ? 'display: none' : '' ?>" class="form-group">
                                     <label class="col-md-12">Resumo</label>
                                     <div class="col-md-12">
                                         <textarea name="resumo" rows="10" class="froala-editor form-control form-control-line"><?php echo (isset($resumo)) ? $resumo : ''; ?></textarea>
@@ -246,7 +246,7 @@
                                     <textarea rows="10" class="form-control form-control-line" name="headers"><?php echo (isset($headers)) ? htmlspecialchars_decode($headers) : ''; ?></textarea>
                                     </div>
                                 </div>
-                                <div class="form-group">
+                                <div style="<?php echo ($slug == 'home') ? 'display: none' : '' ?>" class="form-group">
                                     <label class="col-md-12">Imagem Header</label>
                                     <div class="col-md-12">
                                         <input type="file" name="file" class="form-control form-control-line" />
@@ -264,7 +264,7 @@
                                     </div>
                                 </div>
                                 <?php endif; ?>
-                                <div class="form-group">
+                                <div style="<?php echo ($slug == 'home') ? 'display: none' : '' ?>" class="form-group">
                                     <label class="col-md-12">Página Mãe</label>
                                     <div class="col-md-12">
                                         <select name="pagina_mae">
@@ -287,7 +287,7 @@
                                         </select>
                                     </div>
                                 </div>
-                                <div class="form-group">
+                                <div style="<?php echo ($slug == 'home') ? 'display: none' : '' ?>" class="form-group">
                                     <label class="col-md-12">Inserir como submenu</label>
                                     <div class="col-md-12">
                                         <input name="subpagina" type="checkbox" <?php echo (isset($subpagina) && $subpagina == 1) ? 'checked' : ''; ?> class="form-control form-control-line"> 

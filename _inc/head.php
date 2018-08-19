@@ -14,7 +14,7 @@
     <meta property="og:description" content="<?php echo $description; ?>">
     <meta property="og:url" content="<?php echo (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") . "://$_SERVER[HTTP_HOST]";
  ?>">
-    <meta property="og:image" content="<?php echo (isset($tmp_screenshot)) ? $default_url.$tmp_screenshot : $default_url."screenshot.png"; ?>">
+    <meta property="og:image" content="<?php echo (isset($tmp_screenshot)) ? $default_url."profile/uploads/".$tmp_screenshot : $default_url."screenshot.png"; ?>">
     <meta property="og:type" content="website" />
     <meta property="og:title" content="<?php echo $ctitulo." - ".$pgTitulo; ?>" />
     <meta property="og:site_name" content="<?php echo $ctitulo." - ".$pgTitulo; ?>" />

@@ -119,21 +119,17 @@
                         background-color: $red
                         content: ""
                         display: block
-                        height: 2px
+                        height: 3px
                         left: 0
                         position: absolute
                         top: 100%
                         +transition(500ms)
                         width: 0
+                    &.-active,
                     &:hover
                         color: $red
                         &::after
                             width: calc(100% - 20.5px)       
-                // +mq('823px', max)
-                //     &:not(:last-child)
-                //         display: none 
-                //     &:last-child 
-                //         display: inline-block  
                 >.submenu
                     border-top: 2px $red solid
                     color: white 

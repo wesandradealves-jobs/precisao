@@ -207,7 +207,7 @@
             <div class="container-fluid">
                 <div class="row bg-title">
                     <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
-                        <h4 class="page-title">SMTP/E-MAIL Settings</h4> 
+                        <h4 class="page-title">Configurações Gerais</h4> 
                     </div>
                 </div>
                 <!-- /.row -->
@@ -262,7 +262,7 @@
                                         <input type="hidden" name="favico" value="<?php echo (isset($favico)) ? $favico : ''; ?>" />
                                     </div>
                                 </div>
-                                <div class="form-group">
+                                <!-- <div class="form-group">
                                     <label class="col-md-12">Email para contato</label>
                                     <div class="col-md-12">
                                         <input name="contact_form" type="email" value="<?php echo (isset($contact_form)) ? $contact_form : ''; ?>" class="form-control form-control-line"> 
@@ -273,7 +273,7 @@
                                     <div class="col-md-12">
                                         <input name="cotacao_form" type="email" value="<?php echo (isset($cotacao_form)) ? $cotacao_form : ''; ?>" class="form-control form-control-line"> 
                                     </div>
-                                </div>             
+                                </div>              -->
                                 <div class="form-group">
                                     <div class="col-sm-12">
                                         <input type="submit" name="update" class="btn btn-success" value="Salvar" />

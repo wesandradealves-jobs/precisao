@@ -1,0 +1,70 @@
+.contact-form
+    p 
+        display: block 
+        +rem('font-size', 12px)
+        padding: 15px 0 
+    .form-row
+        align-items: stretch 
+        @extend .flex
+        flex-flow: row wrap
+        justify-content: space-between
+        .form-group 
+            flex: 1
+            margin-bottom: 15px
+            &-full 
+                flex: 0 0 auto
+                padding-left: 0
+                padding-right: 0 
+                width: 100% 
+            &:nth-child(2n+1)
+                padding-right: 7.5px
+            &:nth-child(2n+2)
+                padding-left: 7.5px
+            span 
+                display: block 
+                &:only-of-type
+                    height: 100% 
+                &:not(:last-child)
+                    margin-bottom: 15px
+                width: 100%
+                * 
+                    display: inherit 
+                    width: inherit 
+                .custom-select,
+                input:not([type="submit"]):not([type="radio"]):not([type="checkbox"]),
+                textarea 
+                    background-color: lighten(gray, 35%)
+                    +border(0px)
+                    color: gray 
+                    display: block
+                    height: 100%
+                    +rem('font-size', 14px)
+                    text-transform: uppercase
+                    padding: 10px
+                    resize: none
+                    width: 100%
+                    &[placeholder]
+                        color: gray
+                    &::-moz-placeholder
+                        color: gray
+                    &::-webkit-input-placeholder
+                        color: gray
+                    &:-ms-input-placeholder 
+                        color: gray
+                    &[readonly] 
+                        background-color: gray
+                        cursor: not-allowed
+                        color: white
+                        &[placeholder]
+                            color: inherit
+                        &::-moz-placeholder
+                            color: inherit
+                        &::-webkit-input-placeholder
+                            color: inherit
+                        &:-ms-input-placeholder 
+                            color: inherit
+                .custom-select
+                    select
+                        font-size: inherit 
+                        color: inherit 
+                        text-transform: inherit
