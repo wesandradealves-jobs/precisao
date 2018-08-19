@@ -54,6 +54,7 @@ input
     text-transform: uppercase  
     &.-red
         background-color: $red
+        box-shadow: inset 0 3px 10px -4px white
         color: white
         &:hover
             background-color: lighten($red, 15%) 
@@ -77,10 +78,14 @@ section
             padding-top: 35px
             padding-bottom: 35px
             .section-header
+                display: block
                 font-family: 'MyriadPro'
+                margin-bottom: 15px
                 text-align: center
                 >.title
+                    color: black
                     +rem('font-size', 26px)
+                    font-family: MyriadPro
                     font-weight: bold
                     text-transform: uppercase 
                     >span 
@@ -88,7 +93,8 @@ section
                         display: inline-block
                 >p 
                     +rem('font-size', 14px)
-                    margin: 5px auto 15px
+                    margin: 5px auto 0
+                    text-align: inherit!important
 
 .thumbnail
     background-size: cover 
@@ -99,14 +105,14 @@ section
         align-items: center
         @extend .flex
         flex-flow: column wrap 
-        justify-content: center 
-        border: 5px $red solid
+        justify-content: center  
+        border: 5px transparentize($red,.4) solid
         height: 214px
         padding: 0 30px
     &.-hover
         position: relative
         &::after 
-            background-color: rgba(0,0,0,.3)
+            background-color: rgba(0,0,0,.7)
             content: ""
             display: block
             height: 100%
@@ -145,3 +151,104 @@ section
                 >div 
                     bottom: 0
                     opacity: 1
+.title
+    color: $red
+    font-weight: 500
+    text-transform: uppercase
+    +rem('font-size', 19px)
+
+.listing
+    .content-holder
+        +rem('font-size', 13px)
+    .btn 
+        box-shadow: none
+    &.-servicos
+        align-items: stretch
+        @extend .flex
+        flex-flow: row wrap 
+        justify-content: space-between
+        .title 
+            margin-bottom: 15px
+        .btn
+            +border(0px) 
+            bottom: 15px
+            left: -15px
+            +mq(620px, max)
+                bottom: 0
+                background-color: white 
+                color: $red
+                +rem('font-size', 12px)
+                left: 0
+                width: 100%
+            position: absolute 
+            padding: 10px 
+        >*
+            flex: 0 0 auto 
+            margin-bottom: 30px
+            width: 50%
+            +mq(540px, max)
+                width: 100%
+            &:nth-child(2n+1)
+                padding-right: 15px
+                +mq(540px, max)
+                    padding-right: 0
+            &:nth-child(2n+2)
+                padding-left: 15px
+                +mq(540px, max)
+                    padding-left: 0
+            >div
+                align-items: stretch
+                @extend .flex
+                flex-flow: row wrap 
+                justify-content: space-between
+                >*
+                    flex: 0 0 auto 
+                    min-height: 224px
+                    width: 50%
+                    &[style]
+                        background-color: lightgray 
+                        background-size: cover 
+                        background-position: center center 
+                        background-repeat: no-repeat
+                    &.content-holder
+                        background-color: $red 
+                        color: white 
+                        padding: 15px
+                        text-align: center 
+    &.-artigos
+        >*
+            align-items: stretch
+            border-bottom: 1px lightgray solid 
+            @extend .flex
+            flex-flow: row wrap 
+            justify-content: space-between
+            margin-bottom: 30px
+            padding-bottom: 30px
+            >*
+                flex: 1
+                &[style]
+                    background-color: lightgray 
+                    background-size: cover 
+                    background-position: center center 
+                    background-repeat: no-repeat
+                    max-height: 134px
+                    +mq(840px, max)
+                        height: 230px
+                        max-height: initial
+                        width: 100% 
+                    flex: 0 0 auto 
+                    width: 243px
+                    &+*
+                        padding-left: 15px
+                        +mq(840px, max)
+                            padding-left: 0
+                            >.title 
+                                margin-top: 15px
+                &:nth-child(2n+1)
+                    padding-right: 15px
+                &:nth-chld(2n+2)
+                    padding-left: 15px
+                .content-holder
+                    color: gray
+                    display: block
+                    margin: 15px 0

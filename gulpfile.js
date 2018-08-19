@@ -8,6 +8,7 @@ const gulp = require('gulp'),
     uglify = require('gulp-uglify'),    
     htmlmin = require('gulp-htmlmin'),
     imagemin = require('gulp-imagemin'),    
+    {phpMinify, TransformMode} = require('@cedx/gulp-php-minify'),
     imageminJpegtran = require('imagemin-jpegtran'),
     imageminPngquant = require('imagemin-pngquant'), 
     imageminGifsicle = require('imagemin-gifsicle'), 
@@ -30,8 +31,8 @@ const gulp = require('gulp'),
             {name: "dist/page.php",content: "<?php // Silence is golden... ?>"}],
     browserSync = require('browser-sync').create();
 
-var development = environments.development,
-    production = environments.production;
+var development = environments.development;
+    // production = environments.production;
     
 
 // SASS / CSS generator 
@@ -104,7 +105,7 @@ gulp.task('commons', function(){
 
 // Vendors .js generator
 gulp.task('vendors', function() {
-  return gulp.src(['node_modules/jquery/dist/jquery.js', 'node_modules/owl.carousel/dist/owl.carousel.js'])
+  return gulp.src(['node_modules/jquery/dist/jquery.js','node_modules/jquery-validation/dist/jquery.validate.js','node_modules/owl.carousel/dist/owl.carousel.js', 'node_modules/jquery-mask-plugin/dist/jquery.mask.js', 'node_modules/jquery-datepicker/jquery-datepicker.js'])
     .pipe(uglify())
     .pipe(concat('vendors.js'))
     .pipe(gulp.dest('assets/js'));
@@ -150,8 +151,36 @@ gulp.task('images', function(){
 gulp.task('html', function() {
     return gulp.src('*.html')
     .pipe(development(htmlmin({collapseWhitespace: true})))
-    .pipe(production(ext_replace('.php')))
+    // .pipe(production(ext_replace('.php')))
     .pipe(gulp.dest('dist'));
+});
+
+// Php minifying and copy
+
+gulp.task('php', function() {
+    return gulp.src(['*.php'])
+        .pipe(gulp.dest('dist'))
+});
+
+// Inc to dist
+
+gulp.task('inc-dist', function() {
+    return gulp.src(['./_inc/**/*'])
+        .pipe(gulp.dest('dist/_inc/'));
+});
+
+// Profile to dist
+
+gulp.task('profile-dist', function() {
+    return gulp.src(['./profile/**/*'])
+        .pipe(gulp.dest('dist/profile'));
+});
+
+// Phpmailer to dist
+
+gulp.task('phpmailer-dist', function() {
+    return gulp.src(['./phpmailer/**/*'])
+        .pipe(gulp.dest('dist/phpmailer'));
 });
 
 // Create util files for prod:build
@@ -161,11 +190,11 @@ gulp.task("create-file", function() {
         files.forEach(function(gfile){
             stream
                 .pipe(file(gfile.name, gfile.content))
-                .pipe(production(gulp.dest("./")));
+                // .pipe(production(gulp.dest("./")));
         });
         return stream;
     }))
-    .pipe(production(gulp.dest("./dist")));
+    // .pipe(production(gulp.dest("./dist")));
 });
 
 // Fonts to dist
@@ -192,7 +221,7 @@ gulp.task('clean:build', function () {
 // Build task
 gulp.task('build', function (callback) {
     console.log('Building project...')
-    runSequence('clean:build', ['html', 'css-dist', 'images', 'favico', 'fonts', 'htaccess', 'js-dist', 'create-file'],
+    runSequence('clean:build', ['html', 'phpmailer-dist', 'profile-dist', 'inc-dist', 'php', 'css-dist', 'images', 'favico', 'fonts', 'htaccess', 'js-dist', 'create-file'],
         callback
     );
 });

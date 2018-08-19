@@ -1,0 +1,31 @@
+.admin-bar
+    background-color: $red
+    color: white 
+    >.container
+        align-items: center
+        @extend .flex
+        flex-flow: row wrap 
+        +rem('font-size', 13px)
+        justify-content: flex-end
+        >div 
+            align-items: inherit
+            display: inherit 
+            flex-flow: inherit 
+            justify-content: inherit 
+            >.profile-picture
+                background-color: darken($red, 15%)
+                display: block
+                padding: 12px
+            >.admin-shortcuts
+                align-items: inherit 
+                display: inherit
+                flex-flow: inherit 
+                justify-content: inherit
+                >li 
+                    &:not(:last-child)
+                        border-right: 1px white solid
+                        padding-right: 7.5px
+                        margin-right: 7.5px
+                    &:first-child
+                        padding-left: 7.5px
+        

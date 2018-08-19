@@ -1,11 +1,68 @@
 function _mobileNavigation(e) {
-    $(e).toggleClass("tcon-transform"),
-    $(e).closest($(".header")).find(".navigation.-mobile").toggleClass("-on")
+    $(".tcon").toggleClass("tcon-transform"),
+    $(".navigation.-mobile").toggleClass("-on")
 }
 function _closeMenu(){
     $(".tcon-transform").removeClass("tcon-transform"),
-    $(".-on").removeClass("-on")    
+    $(".-on").removeClass("-on"),
+    $(".-reveal").removeClass("-reveal")    
 }
+// Autocomplete CEP
+function limpa_formulário_cep() {
+    $("#cep").val("");
+    $("#rua").val("");
+    $("#bairro").val("");
+    $("#cidade").val("");
+    $("#uf").val("");
+}   
+//Quando o campo cep perde o foco.
+$("#cep").blur(function() {
+    //Nova variável "cep" somente com dígitos.
+    var cep = $(this).val().replace(/\D/g, '');
+
+    //Verifica se campo cep possui valor informado.
+    if ($(this).val() != "") {
+
+        //Expressão regular para validar o CEP.
+        var validacep = /^[0-9]{8}$/;
+
+        //Valida o formato do CEP.
+        if(validacep.test(cep)) {
+
+            //Preenche os campos com "..." enquanto consulta webservice.
+            $("#rua").val("...");
+            $("#bairro").val("...");
+            $("#cidade").val("...");
+            $("#uf").val("...");
+
+            //Consulta o webservice viacep.com.br/
+            $.getJSON("https://viacep.com.br/ws/"+ cep +"/json/?callback=?", function(dados) {
+
+                if (!("erro" in dados)) {
+                    //Atualiza os campos com os valores da consulta.
+                    $("#rua").val(dados.logradouro);
+                    $("#bairro").val(dados.bairro);
+                    $("#cidade").val(dados.localidade);
+                    $("#uf").val(dados.uf);
+                } //end if.
+                else {
+                    //CEP pesquisado não foi encontrado.
+                    limpa_formulário_cep();
+                    alert("CEP não encontrado.");
+                }
+            });
+        } //end if.
+        else {
+            //cep é inválido.
+            limpa_formulário_cep();
+            alert("Formato de CEP inválido.");
+        }
+    } //end if.
+    else {
+        //cep sem valor, limpa formulário.
+        limpa_formulário_cep();
+    }
+}); 
 $(document).ready(function () {
     $('.owl-carousel').owlCarousel({
         loop:false,
@@ -26,6 +83,33 @@ $(document).ready(function () {
     $(window).resize(function(){
         _closeMenu()
     });
+    $(".login-form").validate({
+        rules: {
+            login: {
+                required: true,
+                normalizer: function(value) {
+                    return $.trim(value);
+                }
+            },
+            senha: {
+                required: true
+            }            
+        },
+        messages: {
+            login: {
+                required: "Campo obrigatorio."
+            },
+            senha: {
+                required: "Campo obrigatorio."
+            }            
+        }
+    });
+    $('.telefone').mask('(99) 9999-9999');
+    $('.celular').mask('(99) 9-9999-9999');
+    $('.cpf').mask('999.999.999-99');
+    $('.cep').mask('99.999-999');
+    $('.data').datepicker();
+    $('.letter').mask('Z',{'translation': {0: {pattern: /[a-zA-Z ]/}}});
+    $('.uf').mask('Zz',{'translation': {0: {pattern: /[a-zA-Z]/}}});
 });
-      
-      
+    

@@ -1,0 +1,85 @@
+.sidebar 
+    border-left: 1px lightgray solid
+    flex: 0 0 auto 
+    max-width: 280px
+    padding-left: 15px
+    width: 30%
+    &.-interna
+        border-left: 0px
+        border-right: 1px lightgray solid 
+        padding-left: 0
+        padding-right: 15px
+        &+*
+            padding-right: 0
+            padding-left: 15px
+    +mq(840px, max)
+        border-left: 0!important
+        border-right: 0!important
+        max-width: 100%
+        padding-right: 0!important
+        padding-left: 0!important
+        width: 100%
+        &+*
+            padding-left: 0
+    >.title
+        display: block 
+        margin-bottom: 15px
+    p 
+        color: gray
+        +rem('font-size', 13px)
+        strong 
+            @extend .title 
+            +rem('font-size', 13px)
+    .cotacao-form
+        >.cotacao-header
+            >.text
+                +rem('font-size', 12px)
+                margin: 8px 0
+        >.cotacao-content
+            >span, 
+            >span>input,
+            >span>textarea,
+            >span>select,
+            >span>button 
+                display: inline-block 
+                width: 100%
+            >span
+                &::after
+                    content: ""
+                    clear: both
+                    display: block 
+                    position: relative
+                &:not(:last-child)
+                    margin-bottom: 15px
+                >.btn 
+                    +border(0px)
+                    display: inline-block
+                    padding: 14px
+            .custom-select,
+            input,
+            textarea,
+            select
+                background-color: lighten(gray, 35%)
+                +border(0px)
+                color: gray 
+                display: block
+                +rem('font-size', 14px)
+                text-transform: uppercase
+                padding: 10px
+                width: 100%
+                &[placeholder]
+                    color: gray
+                &::-moz-placeholder
+                    color: gray
+                &::-webkit-input-placeholder
+                    color: gray
+                &:-ms-input-placeholder 
+                    color: gray
+            select 
+                padding: 0
+            .custom-select
+                padding: 10px 5px!important
+            .btn
+                &:hover
+                    background-color: gray
+                    color: white 

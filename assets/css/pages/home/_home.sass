@@ -67,9 +67,10 @@
                 text-align: center
                 width: auto
                 >.title 
+                    color: black
+                    font-weight: bold
                     +rem('font-size', 19px)
                     margin-bottom: 25px
-                    text-transform: uppercase
                     &+p 
                         +rem(('font-size':12px,'line-height':19px))
                 .btn
@@ -120,14 +121,19 @@
     >.container
         z-index: 3
         .contato-content
-            padding: 80px 0 calc(80px - 35px)
-            >p 
-                +rem('font-size', 24px)
-                +mq('640px', max)
-                    +rem('font-size', 16px)
-                >small 
-                    font-size: 70%
+            padding: 40px 0 calc(80px - 35px)
+            >span
+                border: 4px rgba(255,255,255,.6) solid
+                display: inline-block
+                padding: 35px 15px
+                >p 
+                    +rem('font-size', 24px)
+                    +mq('640px', max)
+                        +rem('font-size', 16px)
+                    >small 
+                        font-size: 70%
         .section-header
             >.title
+                color: white!important
                 >span 
-                    border-bottom: 3px white solid !important
+                    border-bottom-color: white!important
