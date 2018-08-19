@@ -98,6 +98,20 @@
             $stmt->close();
             header("Location: ../profile/servico.php?id=".$id."&euid=".$_GET['uid']);
         break;
+        case "favico":
+        case "logo":
+            $file = $_GET['file'];
+            $stmt = $conn->prepare("UPDATE `smtp` SET `$source` = '' WHERE `$source` = `$source`");
+            if(isset($stmt) && $stmt !== FALSE) {
+                $stmt->bind_param("s", $file);
+                $stmt->execute();
+                ($_GET['file']) ? unlink('../profile/uploads/'.$file) : '';
+            } else {
+                die($conn->error);
+            }     
+            $stmt->close();
+            header("Location: ../profile/config_gerais.php?euid=".$_GET['uid']);
+        break;
         case "usuarios":
             if (isset($_GET['id']) && is_numeric($_GET['id']))
             {

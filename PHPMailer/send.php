@@ -12,13 +12,31 @@
 // require("OAuth.php");
 
 require_once("PHPMailerAutoload.php");
+require_once("../_inc/db.php");
+
+$stmt = $conn->prepare("SELECT `smtp_user`, `smtp_host`, `smtp_password`, `smtp_port`, `contact_form`, `cotacao_form`, `trabalhe_form` FROM `smtp` ORDER BY id");
+
+if($stmt){
+    $stmt->execute();
+    $stmt->bind_result($smtp_user, $smtp_host, $smtp_password, $smtp_port, $contact_form, $cotacao_form, $trabalhe_form);
+    while($stmt->fetch()) {
+        $smtp_user = $smtp_user;
+        $smtp_host = $smtp_host;
+        $smtp_password = $smtp_password;
+        $smtp_port = $smtp_port;
+        $contact_form = $contact_form;
+        $cotacao_form = $cotacao_form;
+        $trabalhe_form = $trabalhe_form;
+    }
+    $stmt->close();
+}
 
 if($_POST['orcamento']){
     $nome = $_POST['nome'];
     $telefone = $_POST['telefone'];
     $email = $_POST['email'];
     $orcamento_tipo = $_POST['orcamento_tipo'];
-    $enviarPara = "orcamentos@precisaoservicos.com.br";
+    $enviarPara = ($cotacao_form) ? $cotacao_form : '';
     //
     $assunto = 'Cotação - '.$orcamento_tipo;
     $message = 'Nome: '.$nome;
@@ -44,7 +62,7 @@ if($_POST['orcamento']){
     $horario = $_POST['horario'];
     $disponibilidade = $_REQUEST['disponibilidade'];
     $mensagem = $_POST['mensagem'];
-    $enviarPara = "curriculos@precisaoservicos.com.br";
+    $enviarPara = ($trabalhe_form) ? $trabalhe_form : '';
     //
     $assunto = 'Trabalhe Conosco';
     $message = 'Nome: '.$nome;
@@ -67,7 +85,7 @@ if($_POST['orcamento']){
     $celular = $_POST['celular'];
     $tipo_mensagem = $_POST['assunto'];
     $mensagem = $_POST['mensagem'];
-    $enviarPara = "contatos@precisaoservicos.com.br";
+    $enviarPara = ($contact_form) ? $contact_form : '';
     //
     $assunto = 'Contato - '.$tipo_mensagem;
     $message = 'Nome: '.$nome;
@@ -90,24 +108,24 @@ $mail->isSMTP();
 // 2 = client and server messages
 $mail->SMTPDebug = 0;
 //Set the hostname of the mail server
-$mail->Host = 'smtp.gmail.com';
+$mail->Host = ($smtp_host) ? $smtp_host : '';
 // use
 // $mail->Host = gethostbyname('smtp.gmail.com');
 // if your network does not support SMTP over IPv6
 //Set the SMTP port number - 587 for authenticated TLS, a.k.a. RFC4409 SMTP submission
-$mail->Port = 587;
+$mail->Port = ($smtp_port) ? $smtp_port : '';;
 //Set the encryption system to use - ssl (deprecated) or tls
 $mail->SMTPSecure = 'tls';
 //Whether to use SMTP authentication
 $mail->SMTPAuth = true;
 //Username to use for SMTP authentication - use full email address for gmail
-$mail->Username = "wesandradealves@gmail.com";
+$mail->Username = ($smtp_user) ? $smtp_user : '';
 //Password to use for SMTP authentication
-$mail->Password = "Wes@03122530";
+$mail->Password = ($smtp_password) ? $smtp_password : '';
 $mail->AddCC('wesandradealves@gmail.com', 'Wesley SD');
 $mail->AddBCC('luiz.sd@gmail.com', 'Luiz SD');
 //Set who the message is to be sent from
-$mail->setFrom('no-reply@precisaoservicos.com.br', 'NoReply - Precisão Serviços');
+$mail->setFrom(($smtp_user) ? $smtp_user : '', 'NoReply - Precisão Serviços');
 //Set an alternative reply-to address
 $mail->addReplyTo($email, $nome);
 //Set who the message is to be sent to
