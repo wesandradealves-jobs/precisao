@@ -14,10 +14,10 @@
     if ($result = $conn->query("SELECT * FROM smtp ORDER BY id")) {
         if ($result->num_rows > 0) {
             // Atualizo se tiver
-            $stmt = $conn->prepare("SELECT `smtp_user`, `smtp_host`, `smtp_password`, `smtp_port`, `contact_form`, `cotacao_form`, `logo`, `favico`, `titulo` FROM `smtp` ORDER BY id");
+            $stmt = $conn->prepare("SELECT `smtp_user`, `smtp_host`, `smtp_password`, `smtp_port`, `contact_form`, `cotacao_form`, `trabalhe_form`, `titulo`, `logo`, `favico` FROM `smtp` ORDER BY id");
             if($stmt){
                 $stmt->execute();
-                $stmt->bind_result($smtp_user, $smtp_host, $smtp_password, $smtp_port, $contact_form, $cotacao_form, $logo, $favico, $titulo);
+                $stmt->bind_result($smtp_user, $smtp_host, $smtp_password, $smtp_port, $contact_form, $cotacao_form, $trabalhe_form, $titulo, $logo, $favico);
                 while($stmt->fetch()) {
                     $smtp_user = $smtp_user;
                     $smtp_host = $smtp_host;
@@ -25,6 +25,7 @@
                     $smtp_port = $smtp_port;
                     $contact_form = $contact_form;
                     $cotacao_form = $cotacao_form;
+                    $trabalhe_form = $trabalhe_form;
                     $logo = $logo;
                     $favico = $favico;
                     $titulo = $titulo;
@@ -39,8 +40,9 @@
                 $smtp_port = $_POST['smtp_port'];
                 $contact_form = $_POST['contact_form'];
                 $cotacao_form = $_POST['cotacao_form'];
-                $logo = $_POST['logo'];
-                $favico = $_POST['favico'];
+                $trabalhe_form = $_POST['trabalhe_form'];
+                $logo = ($_POST['logo']) ? $_POST['logo'] : '';
+                $favico = ($_POST['titulo']) ? $_POST['titulo'] : '';
                 $titulo = $_POST['titulo'];
 
                 $target_dir = "uploads/";
@@ -89,10 +91,10 @@
 
                 // 
 
-                $stmt = $conn->prepare("UPDATE smtp SET `smtp_user` = ?, `smtp_host` = ?, `smtp_password` = ?, `smtp_port` = ?, `contact_form` = ?, `cotacao_form` = ?, `logo` = ?, `favico` = ?, `titulo` = ?");
+                $stmt = $conn->prepare("UPDATE smtp SET `smtp_user` = ?, `smtp_host` = ?, `smtp_password` = ?, `smtp_port` = ?, `contact_form` = ?, `cotacao_form` = ?, `trabalhe_form` = ?, `titulo` = ?, `logo` = ?, `favico` = ?");
 
                 if(isset($stmt) && $stmt !== FALSE) {
-                    $stmt->bind_param("sssssssss", $smtp_user, $smtp_host, $smtp_password, $smtp_port, $contact_form, $cotacao_form, $boolFile, $boolFileFavico, $titulo);
+                    $stmt->bind_param("ssssssssss", $smtp_user, $smtp_host, $smtp_password, $smtp_port, $contact_form, $cotacao_form, $trabalhe_form, $titulo, $boolFile, $boolFileFavico);
                     $stmt->execute();
                     $stmt->close();
                     (($logo != $file) && $file) ? unlink('../profile/uploads/'.$logo) : '';
@@ -106,13 +108,14 @@
         } else {
             // Adiciono se nao tiver
             if(isset($_POST['update'])) :
-                $stmt = $conn->prepare("INSERT smtp (`smtp_user`, `smtp_host`, `smtp_password`, `smtp_port`, `contact_form`, `cotacao_form`, `logo`, `favico`, `titulo`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)");
+                $stmt = $conn->prepare("INSERT smtp (`smtp_user`, `smtp_host`, `smtp_password`, `smtp_port`, `contact_form`, `cotacao_form`, `trabalhe_form`, `titulo`, `logo`, `favico`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
                 $smtp_user = $_POST['smtp_user'];
                 $smtp_host = $_POST['smtp_host'];
                 $smtp_password = $_POST['smtp_password'];
                 $smtp_port = $_POST['smtp_port'];
                 $contact_form = $_POST['contact_form'];
                 $cotacao_form = $_POST['cotacao_form'];
+                $trabalhe_form = $_POST['trabalhe_form'];
                 $titulo = $_POST['titulo'];
 
                 $target_dir = "uploads/";
@@ -134,7 +137,7 @@
                     }
                 }
 
-                $file = "'".basename($_FILES["file"]["name"])."'";
+                $file = basename($_FILES["file"]["name"]);
 
                 // 
 
@@ -155,12 +158,12 @@
                     }
                 }
 
-                $file_favico = "'".basename($_FILES["file_favico"]["name"])."'";
+                $file_favico = basename($_FILES["file_favico"]["name"]);
 
                 // 
 
                 if(isset($stmt) && $stmt !== FALSE) {
-                    $stmt->bind_param("sssssssss", $smtp_user, $smtp_host, $smtp_password, $smtp_port, $contact_form, $cotacao_form, $file, $file_favico, $titulo);
+                    $stmt->bind_param("ssssssssss", $smtp_user, $smtp_host, $smtp_password, $smtp_port, $contact_form, $cotacao_form, $trabalhe_form, $file, $file_favico, $titulo);
                     $stmt->execute();
                     $stmt->close();
                 } else {
@@ -216,7 +219,7 @@
                     <div class="col-lg-12">
                         <div class="white-box">
                             <form class="form-horizontal form-material" action="" method="POST" enctype="multipart/form-data">
-                                <!-- <div class="form-group">
+                                <div class="form-group">
                                     <label class="col-md-12">SMTP HOST</label>
                                     <div class="col-md-12">
                                         <input <?php echo ($_SESSION['login']!='admin') ? 'readonly' : ''; ?> name="smtp_host" type="text" value="<?php echo (isset($smtp_host)) ? $smtp_host : ''; ?>" class="form-control form-control-line"> 
@@ -239,7 +242,7 @@
                                     <div class="col-md-12">
                                         <input <?php echo ($_SESSION['login']!='admin') ? 'readonly' : ''; ?> name="smtp_port" type="text" value="<?php echo (isset($smtp_port)) ? $smtp_port : ''; ?>" class="form-control form-control-line"> 
                                     </div>
-                                </div>    -->
+                                </div> 
                                 <div class="form-group">
                                     <label class="col-md-12">Título do seu Website</label>
                                     <div class="col-md-12">
@@ -250,30 +253,40 @@
                                     <label class="col-md-12">Logo</label>
                                     <div class="col-md-12">
                                         <input type="file" name="file" class="form-control form-control-line" />
-                                        <p><small>Arquivo atual: <a target="_blank" href="uploads/<?php echo (isset($logo)) ? $logo : ''; ?>"><?php echo (isset($logo)) ? $logo : ''; ?></a></small></p>
-                                        <input type="hidden" name="logo" value="<?php echo (isset($logo)) ? $logo : ''; ?>" />
+                                        <?php if(isset($logo) && $logo!=='') : ?> 
+                                            <input type="hidden" name="logo" value="<?php echo (isset($logo) && $logo!=='') ? $logo : ''; ?>">
+                                            <p><small>Arquivo atual: <a class="<?php echo (substr($logo, -3) == 'png' || substr($logo, -3) == 'jpg' || substr($logo, -3) == 'gif' || substr($logo, -3) == 'bmp') ? 'lightbox' : ''; ?>" target="_blank" href="uploads/<?php echo (isset($logo)) ? $logo : ''; ?>"><?php echo (isset($logo)) ? $logo : ''; ?></a> <a href="<?php echo "../_inc/delete.php?source=logo&euid=".$euid."&file=".$logo; ?>" title="Deletar arquivo atual"><small>(Remover arquivo atual)</small></a></small></p>
+                                        <?php endif; ?>
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label class="col-md-12">Favico</label>
                                     <div class="col-md-12">
                                         <input type="file" name="file_favico" class="form-control form-control-line" />
-                                        <p><small>Arquivo atual: <a target="_blank" href="uploads/<?php echo (isset($favico)) ? $favico : ''; ?>"><?php echo (isset($favico)) ? $favico : ''; ?></a></small></p>
-                                        <input type="hidden" name="favico" value="<?php echo (isset($favico)) ? $favico : ''; ?>" />
+                                        <?php if(isset($favico) && $favico!=='') : ?> 
+                                            <input type="hidden" name="favico" value="<?php echo (isset($favico) && $favico!=='') ? $favico : ''; ?>">
+                                            <p><small>Arquivo atual: <a class="<?php echo (substr($favico, -3) == 'png' || substr($favico, -3) == 'jpg' || substr($favico, -3) == 'gif' || substr($favico, -3) == 'bmp') ? 'lightbox' : ''; ?>" target="_blank" href="uploads/<?php echo (isset($favico)) ? $favico : ''; ?>"><?php echo (isset($favico)) ? $favico : ''; ?></a> <a href="<?php echo "../_inc/delete.php?source=favico&euid=".$euid."&file=".$favico; ?>" title="Deletar arquivo atual"><small>(Remover arquivo atual)</small></a></small></p>
+                                        <?php endif; ?>
                                     </div>
                                 </div>
-                                <!-- <div class="form-group">
+                                <div class="form-group">
                                     <label class="col-md-12">Email para contato</label>
                                     <div class="col-md-12">
                                         <input name="contact_form" type="email" value="<?php echo (isset($contact_form)) ? $contact_form : ''; ?>" class="form-control form-control-line"> 
                                     </div>
-                                </div>  
+                                </div> 
+                                <div class="form-group">
+                                    <label class="col-md-12">Email para receber currículos</label>
+                                    <div class="col-md-12">
+                                        <input name="trabalhe_form" type="email" value="<?php echo (isset($trabalhe_form)) ? $trabalhe_form : ''; ?>" class="form-control form-control-line"> 
+                                    </div>
+                                </div>
                                 <div class="form-group">
                                     <label class="col-md-12">Email para receber a cotação</label>
                                     <div class="col-md-12">
                                         <input name="cotacao_form" type="email" value="<?php echo (isset($cotacao_form)) ? $cotacao_form : ''; ?>" class="form-control form-control-line"> 
                                     </div>
-                                </div>              -->
+                                </div>
                                 <div class="form-group">
                                     <div class="col-sm-12">
                                         <input type="submit" name="update" class="btn btn-success" value="Salvar" />
