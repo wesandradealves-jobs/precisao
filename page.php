@@ -15,7 +15,18 @@
           <div class="container">
             <h2>
               <?php 
-               echo (($pgPaginaMaeTitulo) ? "<span>".$pgPaginaMaeTitulo.":</span> ".$pgTitulo : ($slug != 'sucesso') ? "<span>".$pgTitulo."</span>" : (($slug == '404') ? '<span>ERRO 404 - PÁGINA NÃO ENCONTRADA</span>' : '<span>Parabéns</span>'));
+                switch ($slug) {
+                    case '404':
+                        echo "<span>ERRO 404 - PÁGINA NÃO ENCONTRADA</span>";
+                    break;
+                    case 'sucesso':
+                        echo "<span>Sucesso</span>";
+                    break;
+                    default:
+                        echo ($pgPaginaMaeTitulo) ? "<span>".$pgPaginaMaeTitulo.":</span> ".$pgTitulo  : "<span>".$pgTitulo."</span>";
+                        # code...
+                    break;
+                }
               ?>
             </h2>
             <?php include('_inc/components/breadcrumb.php'); ?>
@@ -26,7 +37,22 @@
             <?php if($slug == 'contato'||$slug == 'trabalhe-conosco'||$slug == 'sucesso'||$slug == '404'): ?>
                 <?php include('_inc/sidebar-interna.php'); ?>   
                 <div class="internal-content-fill">
-                    <h2 class="title"><?php echo ($slug != 'sucesso') ? str_replace('-', ' ', $slug) : ($slug == '404') ? 'Ops! Encontramos um erro :(' : 'Parabéns'; ?></h2>
+                    <h2 class="title">
+                        <?php 
+                            switch ($slug) {
+                                case '404':
+                                    echo "OOps! Encontramos um erro.";
+                                break;
+                                case 'sucesso':
+                                    echo "Parabéns";
+                                break;
+                                default:
+                                    echo ($pgPaginaMaeTitulo) ? "<span>".$pgPaginaMaeTitulo.":</span> ".$pgTitulo  : "<span>".$pgTitulo."</span>";
+                                    # code...
+                                break;
+                            }
+                        ?>
+                    </h2>
                     <?php if($slug == 'contato') : ?>
                         <form class="contact-form -contato" action="<?php echo $default_url; ?>phpmailer/send.php" method="POST">
                             <p>PARA SUGESTÕES, CRÍTICAS, ELOGIOS OU RECLAMAÇÕES, PREENCHA O FORMULÁRIO ABAIXO:</p>
