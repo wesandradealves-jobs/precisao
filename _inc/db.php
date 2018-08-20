@@ -3,6 +3,7 @@
   $usuario = "root";
   $senha = "";
   $dbname = "demo1380119880";
+  $default_url = 'http://localhost/precisao/';
   
   //Criar a conexao
   $conn = mysqli_connect($servidor, $usuario, $senha, $dbname);

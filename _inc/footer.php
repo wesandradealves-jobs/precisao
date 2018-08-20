@@ -19,9 +19,9 @@
         </div>
       </footer>
     </div> 
-    <script defer src="assets/js/vendors.js"></script>
+    <script defer src="<?php echo $default_url ?>assets/js/vendors.js"></script>
     <noscript>Seu Navegador pode não aceitar javascript.</noscript>
-    <script defer src="assets/js/commons.js"></script>
+    <script defer src="<?php echo $default_url ?>assets/js/commons.js"></script>
     <noscript>Seu Navegador pode não aceitar javascript.</noscript>
     <?php if($MAPS) : ?>
     <script src='https://maps.googleapis.com/maps/api/js?key=AIzaSyC5QMfSnVnSCcmkFag0ygrXzj2QJ9usEG4'></script>
@@ -53,18 +53,19 @@
     <noscript>Seu Navegador pode não aceitar javascript.</noscript> 
     <!-- Global site tag (gtag.js) - Google Analytics -->
     <?php if($ga) : ?>
-      <?php echo '
-        <script async src="https://www.googletagmanager.com/gtag/js?id='.$ga.'"></script>
-        <script>
-          window.dataLayer = window.dataLayer || [];
-          function gtag(){dataLayer.push(arguments);}
-          gtag("js", new Date());
+      <?php 
+        $ga_script = '<script async src="https://www.googletagmanager.com/gtag/js?id='.$ga.'"></script>';
+        $ga_script .= '<script>';
+        $ga_script .= 'window.dataLayer = window.dataLayer || [];';
+        $ga_script .= 'function gtag(){dataLayer.push(arguments);}';
+        $ga_script .= 'gtag("js", new Date());';
 
-          gtag("config", "'.$ga.'");
-        </script>;';
+        $ga_script .= 'gtag("config", "'.$ga.'");';
+        $ga_script .= '</script>';
+        echo $ga_script;
       ?>
     <noscript>Seu Navegador pode não aceitar javascript.</noscript> 
-    <?php endif ?>
-    <link rel="stylesheet" href="style.css" type="text/css" media="all" />
+    <?php endif; ?>
+    <link rel="stylesheet" href="<?php echo $default_url ?>style.css" type="text/css" media="all" />
   </body>
 </html>
