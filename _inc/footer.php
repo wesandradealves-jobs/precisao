@@ -50,7 +50,21 @@
       <script src='https://www.google.com/recaptcha/api.js' async defer></script>
       <noscript>Seu Navegador pode não aceitar javascript.</noscript>    
     <?php endif; ?>
-    <noscript>Seu Navegador pode não aceitar javascript.</noscript>        
+    <noscript>Seu Navegador pode não aceitar javascript.</noscript> 
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <?php if($ga) : ?>
+      <?php echo '
+        <script async src="https://www.googletagmanager.com/gtag/js?id='.$ga.'"></script>
+        <script>
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag("js", new Date());
+
+          gtag("config", "'.$ga.'");
+        </script>;';
+      ?>
+    <noscript>Seu Navegador pode não aceitar javascript.</noscript> 
+    <?php endif ?>
     <link rel="stylesheet" href="style.css" type="text/css" media="all" />
   </body>
 </html>

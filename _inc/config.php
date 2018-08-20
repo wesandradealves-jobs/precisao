@@ -50,7 +50,7 @@ if($config){
 
 if($fetchServicosCotacao = $conn->query("SELECT * FROM `servicos` ORDER BY id ASC")) :
     if($fetchServicosCotacao->num_rows) :
-        $servicos_para_cotacao = '<option>Selecione um serviço</option>'; 
+        $servicos_para_cotacao = '<option value="">Selecione um Serviço</option>'; 
         while ($row = $fetchServicosCotacao->fetch_object()) :
             $servicos_para_cotacao .= '<option value="'.$row->titulo.'">'.$row->titulo.'</option>';
         endwhile;
@@ -142,18 +142,6 @@ if(isset($_SESSION['login']) && $basename == 'login'){
     if(isset($_GET['post'])) :
         $tmp_screenshot = $single_post_url; 
     endif; 
-    
-    // preg_match( '@src="([^"]+)"@' , htmlspecialchars_decode($single_post_text), $match );
-
-	// // requires php5
-	// define('UPLOAD_DIR', 'profile/uploads/');
-	// $img = $screenshot;
-	// $img = str_replace('data:image/png;base64,', '', $img);
-	// $img = str_replace(' ', '+', $img);
-	// $data = base64_decode($img);
-	// $tmp_screenshot = UPLOAD_DIR . uniqid() . '.png';
-	// $success = file_put_contents($tmp_screenshot, $data);
-	// // print $success ? $default_url.$tmp_screenshot : 'Unable to save the file.';
 
     $description = substr( strip_tags(htmlspecialchars_decode($single_post_text)), 0, 300 )."...";
 } else if($basename == "page"){
@@ -178,6 +166,6 @@ if(isset($_SESSION['login']) && $basename == 'login'){
     $description = 'Com sede em São Paulo e Filiais no Rio de Janeiro e Santa Catarina, o Grupo Precisão está no mercado, cuja meta principal é a satisfação de seus clientes e a qualidade nos serviços prestados. O Grupo Precisão tem como escopo a escolha de profissionais capacitados que atendam às necessidades específicas do contratante, oferecendo segurança, qualidade e consciência no cumprimento de seus deveres.';
 }
 
-
+$ga = 'UA-124184563-1';
 
 ?>

@@ -1,0 +1,6 @@
+User-agent: *
+Disallow: /profile/
+NoIndex: /page?slug=sucesso
+Allow: /
+
+Sitemap: http://precisaoservicos.com.br/

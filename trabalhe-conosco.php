@@ -6,7 +6,7 @@
         <div class="form-row">
             <div class="form-group">
                 <span>
-                    <input class="letter" required="required" type="text" name="nome" placeholder="Nome" />
+                    <input onkeypress="mascara(this,soLetras)" required="required" type="text" name="nome" placeholder="Nome" />
                 </span>
                 <span>
                     <input required="required" class="rg" required="required" type="text" name="rg" placeholder="RG" />

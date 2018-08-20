@@ -137,14 +137,14 @@
               <h2 class="title"><span>Contato</span></h2>
             </div>
             <div class="contato-content">
-              <span>
+              <div>
                 <p>
                   <?php echo $telefone; ?><br/>
                   <a href="mailto:<?php echo $email; ?>"><?php echo $email; ?></a>
                   <br/><br/>
-                  <small><?php echo $endereco; ?></small>
+                  <small><?php echo strip_tags(htmlspecialchars_decode($endereco)); ?></small>
                 </p>
-              </span>      
+              </div>      
             </div>
           </div>
           <div id="googleMap"></div>
