@@ -3,7 +3,7 @@
 ?> 
   <?php include('_inc/header.php'); ?> 
       <main>
-        <section class="banner -internal" style="background-image: url(profile/uploads/<?php echo ($sessao_image) ? $sessao_image : ''; ?>)">
+        <section class="banner -internal" style="background-image: url(<?php echo $default_url; ?>profile/uploads/<?php echo ($sessao_image) ? $sessao_image : ''; ?>)">
           <div class="container">
             <h2>
               <?php 

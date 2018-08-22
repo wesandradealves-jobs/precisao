@@ -8,7 +8,7 @@ $(document).ready(function () {
             else
                 $(this).addClass('-animated');
         });
-        if($('.footer').offset().top <= (st + $(".footer").outerHeight() * 6))
+        if($('.footer').offset().top <= (st + $(".footer").outerHeight() * 3))
             $(".navigation.-mobile").removeClass("-reveal"); 
         else if (st == 0)
             $(".navigation.-mobile").removeClass("-reveal");     

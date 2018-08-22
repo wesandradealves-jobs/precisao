@@ -2,13 +2,14 @@
     include_once('db.php');
     include_once('config.php');
 ?>
-
 <!DOCTYPE html>
 <html lang="pt-br" xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <title><?php echo $ctitulo." - ".$pgTitulo; ?></title>
     <meta charset="UTF-8" />
+    <base href="/" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="robots" content="noindex,nofollow,disallow">
     <meta name="author" content="Wesley Andrade - github.com/wesandradealves" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta property="og:description" content="<?php echo $description; ?>">

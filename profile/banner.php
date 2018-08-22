@@ -154,12 +154,12 @@
                     <div class="col-lg-12">
                         <div class="white-box">
                             <form class="form-horizontal form-material" action="" method="POST" enctype="multipart/form-data">
-                                <div class="form-group">
+                                <!-- <div class="form-group">
                                     <label class="col-md-12">URL</label>
                                     <div class="col-md-12">
                                         <input name="url" type="text" value="<?php echo (isset($url)) ? $url : ''; ?>" class="form-control form-control-line"> 
                                     </div>
-                                </div>
+                                </div> -->
                                 <div class="form-group">
                                     <label class="col-md-12">Thumbnail</label>
                                     <div class="col-md-12">
