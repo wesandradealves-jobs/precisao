@@ -46,7 +46,7 @@
             <div class="container">
               <?php if($logo) : ?>
               <h1 class="logo">
-                <a href="<?php echo $default_url; ?>" title="<?php echo $ctitulo; ?>"><img src="profile/uploads/<?php echo $logo; ?>" alt="<?php echo $ctitulo; ?>" /></a>
+                <a href="<?php echo $default_url; ?>" title="<?php echo $ctitulo; ?>"><img src="<?php echo $default_url; ?>profile/uploads/<?php echo $logo; ?>" alt="<?php echo $ctitulo; ?>" /></a>
               </h1>
               <?php endif; ?>
               <?php if ($result = $conn->query("SELECT * FROM paginas ORDER BY id ASC")) : if ($result->num_rows > 0) : ?>

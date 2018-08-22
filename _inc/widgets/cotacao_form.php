@@ -5,7 +5,7 @@
     </div>
     <div class="cotacao-content">
       <span>
-        <input required="required" name="nome" type="text" placeholder="Nome" />
+        <input onkeypress="mascara(this,soLetras)" required="required" name="nome" type="text" placeholder="Nome" />
       </span>
       <span>
         <input name="email" type="email" placeholder="E-mail" />
@@ -15,7 +15,7 @@
       </span>                                  
       <span>
         <span class="custom-select">
-          <select required="required" name="orcamento_tipo" id="orcamento_tipo">
+          <select required="required" name="orcamento_tipo">
             <?php 
               echo $servicos_para_cotacao;
             ?>

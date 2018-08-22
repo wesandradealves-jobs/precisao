@@ -105,7 +105,7 @@ gulp.task('commons', function(){
 
 // Vendors .js generator
 gulp.task('vendors', function() {
-  return gulp.src(['node_modules/jquery/dist/jquery.js','node_modules/jquery-validation/dist/jquery.validate.js','node_modules/owl.carousel/dist/owl.carousel.js', 'node_modules/jquery-mask-plugin/dist/jquery.mask.js', 'node_modules/jquery-datepicker/jquery-datepicker.js'])
+  return gulp.src(['node_modules/jquery/dist/jquery.js','node_modules/jquery-validation/dist/jquery.validate.js','node_modules/owl.carousel/dist/owl.carousel.js', 'node_modules/jquery-mask-plugin/dist/jquery.mask.js'])
     .pipe(uglify())
     .pipe(concat('vendors.js'))
     .pipe(gulp.dest('assets/js'));
@@ -133,6 +133,13 @@ gulp.task('favico', function() {
 gulp.task('htaccess', function() {
     return gulp.src('./.htaccess')
         .pipe(development(gulp.dest('dist')));
+});
+
+// Copy robots
+
+gulp.task('robots-dist', function() {
+    return gulp.src(['robots.txt'])
+        .pipe(gulp.dest('dist'));
 });
 
 // Copy and minify images to dist
@@ -172,7 +179,7 @@ gulp.task('inc-dist', function() {
 // Profile to dist
 
 gulp.task('profile-dist', function() {
-    return gulp.src(['./profile/**/*'])
+    return gulp.src(['./profile/**/*/*'])
         .pipe(gulp.dest('dist/profile'));
 });
 
@@ -221,7 +228,7 @@ gulp.task('clean:build', function () {
 // Build task
 gulp.task('build', function (callback) {
     console.log('Building project...')
-    runSequence('clean:build', ['html', 'phpmailer-dist', 'profile-dist', 'inc-dist', 'php', 'css-dist', 'images', 'favico', 'fonts', 'htaccess', 'js-dist', 'create-file'],
+    runSequence('clean:build', ['html', 'phpmailer-dist', 'robots-dist', 'profile-dist', 'inc-dist', 'php', 'css-dist', 'images', 'favico', 'fonts', 'htaccess', 'js-dist', 'create-file'],
         callback
     );
 });

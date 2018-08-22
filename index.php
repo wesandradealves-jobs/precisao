@@ -13,7 +13,7 @@
                     $url = $url;
                     $html = $html;
 
-                    $bannerTPL = '<div style="background-image:url(profile/uploads/'.$image.')" id="post_banner_'.$bannerID.'" class="item">';
+                    $bannerTPL = '<div style="background-image:url('.$default_url.'profile/uploads/'.$image.')" id="post_banner_'.$bannerID.'" class="item">';
                       $bannerTPL .= '<div class="container">';
                         $bannerTPL .= '<div>';
                           if($widget){
@@ -60,11 +60,11 @@
                         $sSlug = to_permalink($stitulo);
 
                         $servicosTPL = '<li>';
-                          $servicosTPL .= '<div style="background-image:url(profile/uploads/'.$surl.')" id="post_servico_'.$SID.'" class="thumbnail -hover">';
+                          $servicosTPL .= '<div style="background-image:url('.$default_url.'profile/uploads/'.$surl.')" id="post_servico_'.$SID.'" class="thumbnail -hover">';
                             $servicosTPL .= '<div>';
                               $servicosTPL .= '<div>';
                                 $servicosTPL .= '<h3 class="title">'.$stitulo.'</h3>';
-                                $servicosTPL .= '<a href="single.php?post=servicos&id='.$SID.'" title="Saiba Mais +" class="btn -red">Saiba Mais +</a>';
+                                $servicosTPL .= '<a href="'.$default_url.'servicos/'.$SID.'" title="Saiba Mais +" class="btn -red">Saiba Mais +</a>';
                               $servicosTPL .= '</div>';
                             $servicosTPL .= '</div>';
                           $servicosTPL .= '</div>';
@@ -100,13 +100,13 @@
                         $aSlug = to_permalink($atitulo);
 
                         $artigosTPL = '<div>';
-                          $artigosTPL .= '<div class="thumbnail" id="post_artigo_'.$AID.'" style="background-image:url(profile/uploads/'.$aurl.')"><div></div></div>';
+                          $artigosTPL .= '<div class="thumbnail" id="post_artigo_'.$AID.'" style="background-image:url('.$default_url.'profile/uploads/'.$aurl.')"><div></div></div>';
                         $artigosTPL .= '</div>';
 
                         $artigosTPL .= '<div>';
                           $artigosTPL .= '<h3 class="title">'.$atitulo.'</h3>';
                           $artigosTPL .= '<p>'.substr(strip_tags(htmlspecialchars_decode($atext)), 0, 200).((strlen(substr(strip_tags(htmlspecialchars_decode($atext)), 0, 200)) >= 200) ? '...' : '').'</p>';
-                          $artigosTPL .= '<a href="single.php?post=artigos&id='.$AID.'" class="btn -red" title="'.$atitulo.'">Saiba Mais +</a>';
+                          $artigosTPL .= '<a href="'.$default_url.'artigos/'.$AID.'" class="btn -red" title="'.$atitulo.'">Saiba Mais +</a>';
                         $artigosTPL .= '</div>';
 
                         echo $artigosTPL;
@@ -137,14 +137,33 @@
               <h2 class="title"><span>Contato</span></h2>
             </div>
             <div class="contato-content">
-              <span>
-                <p>
-                  <?php echo $telefone; ?><br/>
-                  <a href="mailto:<?php echo $email; ?>"><?php echo $email; ?></a>
-                  <br/><br/>
-                  <small><?php echo $endereco; ?></small>
-                </p>
-              </span>      
+              <div>
+                <?php 
+                  error_reporting(0);
+
+                  foreach (explode("/", $telefone) as $key => $value) {
+                      $meusEnderecos[$key]->o_telefone = $value;
+                  } 
+                  foreach (explode("/", $email) as $key => $value) {
+                      $meusEnderecos[$key]->o_email = $value;
+                  } 
+                  foreach (explode("/", $endereco) as $key => $value) {
+                      $meusEnderecos[$key]->o_endereco = $value;
+                  }
+
+                  if(count($meusEnderecos) > 2) :
+                    $tplAddress = "<ul class='footer-multiple-addresses'>";
+                    foreach ($meusEnderecos as $object) :
+                      if($object->o_telefone&&$object->o_email&&$object->o_endereco) :
+                        $tplAddress .= "<li><div><h2>".$object->o_telefone."</h2><p>".$object->o_email."</p><p><small>".$object->o_endereco."</small></p></div></li>";
+                      endif;
+                    endforeach; 
+                    $tplAddress .= "</ul>";
+                    
+                    echo $tplAddress;
+                  endif;
+                ?>
+              </div>      
             </div>
           </div>
           <div id="googleMap"></div>

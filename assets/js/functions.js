@@ -7,6 +7,17 @@ function _closeMenu(){
     $(".-on").removeClass("-on"),
     $(".-reveal").removeClass("-reveal")    
 }
+function mascara(o,f){
+    v_obj=o
+    v_fun=f
+    setTimeout("execmascara()",1)
+}
+function execmascara(){
+    v_obj.value=v_fun(v_obj.value)
+}
+function soLetras(v){
+    return v.replace(/\d/g,"") //Remove tudo o que não é Letra
+}
 // Autocomplete CEP
 function limpa_formulário_cep() {
     $("#cep").val("");
@@ -108,8 +119,5 @@ $(document).ready(function () {
     $('.celular').mask('(99) 9-9999-9999');
     $('.cpf').mask('999.999.999-99');
     $('.cep').mask('99.999-999');
-    $('.data').datepicker();
-    $('.letter').mask('Z',{'translation': {0: {pattern: /[a-zA-Z ]/}}});
-    $('.uf').mask('Zz',{'translation': {0: {pattern: /[a-zA-Z]/}}});
 });
     

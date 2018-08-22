@@ -21,23 +21,23 @@
                         $_SESSION['login'] = $resultado['login'];
                         $_SESSION['uid'] = $resultado['id'];
                         $_SESSION['timestamp']=time();
-                        header("Location: ../profile/index.php");
+                        header("Location: ".$default_url."profile/index.php");
                     }  else{    
                         $_SESSION['loginErro'] = "Usuário ou senha Inválido";
-                        header("Location: ../login.php");
+                        header("Location: ".$default_url."login.php");
                     }
                 } else {
                     $_SESSION['loginErro'] = "Robot verification failed, please try again.";
                     
                     echo $responseData;
-                    header("Location: ../login.php");
+                    header("Location: ".$default_url."login.php");
                 }
             } else {
                 $_SESSION['loginErro'] = "Por favor, digite o reCAPTCHA.";
-                header("Location: ../login.php");
+                header("Location: ".$default_url."login.php");
             }
     } else {
         $_SESSION['loginErro'] = "Usuário ou senha inválido";
-        header("Location: ../login.php");
+        header("Location: ".$default_url."login.php");
     }
 ?>
