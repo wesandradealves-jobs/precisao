@@ -179,7 +179,7 @@ gulp.task('inc-dist', function() {
 // Profile to dist
 
 gulp.task('profile-dist', function() {
-    return gulp.src(['./profile/**/*'])
+    return gulp.src(['./profile/**/*/*'])
         .pipe(gulp.dest('dist/profile'));
 });
 

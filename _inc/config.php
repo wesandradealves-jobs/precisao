@@ -30,10 +30,10 @@
         $contato->execute();
         $contato->bind_result($telefone, $email, $endereco, $MAPS);
         while($contato->fetch()) {
-            $telefone = $telefone;
-            $email = $email;
-            $endereco = $endereco;
-            $MAPS = $MAPS;
+            $telefone = strip_tags($telefone);
+            $email = strip_tags($email);
+            $endereco = strip_tags($endereco);
+            $MAPS = strip_tags($MAPS);
         }
     } if($portfolio_comercial){
         $portfolio_comercial->execute();
@@ -47,7 +47,7 @@
 
     if($fetchServicosCotacao = $conn->query("SELECT * FROM `servicos` ORDER BY id ASC")) :
         if($fetchServicosCotacao->num_rows) :
-            $servicos_para_cotacao = '<option value="">Selecione um Serviço</option>'; 
+            $servicos_para_cotacao = '<option value="">Orçamento Desejado</option>'; 
             while ($row = $fetchServicosCotacao->fetch_object()) :
                 $servicos_para_cotacao .= '<option value="'.$row->titulo.'">'.$row->titulo.'</option>';
             endwhile;

@@ -11,7 +11,7 @@
         padding-bottom: 6px
         >h2 
             flex: 1
-            color: gray
+            color: black
             +rem('font-size', 14px)
             +mq('820px', max)
                 +rem('font-size', 11px)
@@ -67,7 +67,7 @@
                 text-align: center
                 width: auto
                 >.title 
-                    color: black
+                    color: $gray
                     font-weight: bold
                     +rem('font-size', 19px)
                     margin-bottom: 25px
@@ -137,3 +137,15 @@
                 color: white!important
                 >span 
                     border-bottom-color: white!important
+        .footer-multiple-addresses
+            align-items: stretch
+            @extend .flex
+            flex-flow: row wrap 
+            justify-content: space-between
+            >*
+                flex: 1
+                padding: 0 15px
+                >div 
+                    border: 4px rgba(255,255,255,.6) solid
+                    height: 100%
+                    padding: 15px                    

@@ -7,7 +7,7 @@
 ?>
 <main class="main">
   <div class="content">
-    <form role="form" action="_inc/login.php" class="login-form" method="POST">
+    <form role="form" action="<?php echo $default_url ?>_inc/login.php" class="login-form" method="POST">
       <h1 class="logo">
         <a href="<?php echo $default_url; ?>" title="<?php echo $ctitulo; ?>"><img src="<?php echo $default_url; ?>profile/uploads/<?php echo $logo; ?>" alt="<?php echo $ctitulo; ?>" /></a>
         <!-- <img height="90" src="assets/imgs/logo.png" alt="PRECISÃO SERVIÇOS GERAIS - Login"> -->

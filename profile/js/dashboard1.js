@@ -2,8 +2,8 @@
      "use strict";
      // toat popup js
     //  $.toast({
-    //      heading: 'Seja Bem Vindo, Usuário.',
-    //      text: 'Configure seu site a partir deste Painel.',
+    //      heading: 'Welcome to Ample admin',
+    //      text: 'Use the predefined ones, or specify a custom position object.',
     //      position: 'top-right',
     //      loaderBg: '#fff',
     //      icon: 'warning',

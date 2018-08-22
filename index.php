@@ -138,12 +138,31 @@
             </div>
             <div class="contato-content">
               <div>
-                <p>
-                  <?php echo $telefone; ?><br/>
-                  <a href="mailto:<?php echo $email; ?>"><?php echo $email; ?></a>
-                  <br/><br/>
-                  <small><?php echo strip_tags(htmlspecialchars_decode($endereco)); ?></small>
-                </p>
+                <?php 
+                  error_reporting(0);
+
+                  foreach (explode("/", $telefone) as $key => $value) {
+                      $meusEnderecos[$key]->o_telefone = $value;
+                  } 
+                  foreach (explode("/", $email) as $key => $value) {
+                      $meusEnderecos[$key]->o_email = $value;
+                  } 
+                  foreach (explode("/", $endereco) as $key => $value) {
+                      $meusEnderecos[$key]->o_endereco = $value;
+                  }
+
+                  if(count($meusEnderecos) > 2) :
+                    $tplAddress = "<ul class='footer-multiple-addresses'>";
+                    foreach ($meusEnderecos as $object) :
+                      if($object->o_telefone&&$object->o_email&&$object->o_endereco) :
+                        $tplAddress .= "<li><div><h2>".$object->o_telefone."</h2><p>".$object->o_email."</p><p><small>".$object->o_endereco."</small></p></div></li>";
+                      endif;
+                    endforeach; 
+                    $tplAddress .= "</ul>";
+                    
+                    echo $tplAddress;
+                  endif;
+                ?>
               </div>      
             </div>
           </div>
