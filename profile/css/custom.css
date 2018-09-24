@@ -3,7 +3,7 @@
     background-color: white
 }
 .navbar-header{
-    background-color: #f33155!important
+    background-color: rgb(207,8,15)!important
 }
 .bg-title h4, .bg-title p{
     display: inline-block;
@@ -64,4 +64,10 @@ input[readonly]{
 select{
     padding: 8px;
     cursor: pointer
+}
+.btn-danger, .btn-danger.disabled{
+    background-color: rgb(207,8,15)!important
+}
+.froala-editor{
+    height: 500px
 }

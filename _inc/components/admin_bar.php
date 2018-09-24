@@ -6,7 +6,7 @@
               </p>
               <ul class="admin-shortcuts">
                 <li> 
-                  <a target="_blank" href="profile/" title="Ver minha conta">Ver minha conta</a>
+                  <a target="_blank" href="<?php echo $default_url; ?>login.php" title="Ver minha conta">Ver minha conta</a>
                 </li>
                 <li>
                   <a href="_inc/logout.php?action=home" title="Sair">Sair</a>

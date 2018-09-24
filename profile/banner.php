@@ -13,10 +13,10 @@
 
     if(!isset($_GET['id'])){
         if(isset($_POST['update'])) :
-            $stmt = $conn->prepare("INSERT banner (`image`, `url`, `html`, `widget`, `widget_name`) VALUES (?, ?, ?, ?, ?)");
-            $url = $_POST['url'];
+            $stmt = $conn->prepare("INSERT banner (`image`, `html`, `widget`, `widget_name`) VALUES (?, ?, ?, ?)");
+
             $html = htmlspecialchars($_POST['html']);
-            $widget = (isset($_REQUEST['widget'])) ? 1 : 0;
+            $widget = (isset($_POST['widget'])) ? 1 : 0;
             $widget_name = isset($_POST['widget_name']) ? $_POST['widget_name'] : '';
 
             $target_dir = "uploads/";
@@ -41,7 +41,7 @@
             $file = basename($_FILES["file"]["name"]);
 
             if(isset($stmt) && $stmt !== FALSE) {
-                $stmt->bind_param("sssss", $file, $url, $html, $widget, $widget_name);
+                $stmt->bind_param("ssss", $file, $html, $widget, $widget_name);
                 $stmt->execute();
                 $stmt->close();
             } else {
@@ -170,44 +170,40 @@
                                         <?php endif; ?>
                                     </div>
                                 </div>
-                                <?php if($widget == 0) : ?>
-                                <div class="form-group">
+                                <div class="form-group custom_html">
                                     <label class="col-md-12">Custom HTML</label>
                                     <div class="col-md-12">
                                         <textarea rows="10" class="form-control form-control-line" name="html"><?php echo (isset($html)) ? htmlspecialchars_decode($html) : ''; ?></textarea>
                                     </div>
                                 </div>
-                                <?php endif; ?>
                                 <div class="form-group">
                                     <label class="col-md-12">Tem Widget?</label>
                                     <div class="col-md-12">
-                                        <input name="widget" type="checkbox" <?php echo (isset($widget) && $widget == 1) ? 'checked' : ''; ?> class="form-control form-control-line"> 
+                                        <input class="checkbox" name="widget" type="checkbox" <?php echo (isset($widget) && $widget == 1) ? 'checked' : ''; ?> class="form-control form-control-line"> 
                                     </div>
                                 </div>
-                                <?php if(isset($widget) && $widget == 1) : ?>
-                                <div class="form-group">
-                                    <label class="col-md-12">Selecione um Widget</label>
+                                <div class="form-group sel_widget">
+                                    <label class="col-md-12">Selecione um Widget ID</label>
                                     <div class="col-md-12">
                                         <select name="widget_name">
                                             <?php 
                                                 $dir = '../_inc/widgets/';
                                                 if ($handle = opendir($dir)) {
-
+                                                    
                                                     while (false !== ($entry = readdir($handle))) {
-                                                
+                                                        
                                                         if ($entry != "." && $entry != "..") {
-                                                
+                                                            
                                                             echo "<option ".(( substr($entry, 0, -4) == $widget_name ) ? 'selected' : '')." value='".substr($entry, 0, -4)."'>".substr($entry, 0, -4)."</option>";
                                                         }
                                                     }
-                                                
+                                                    
                                                     closedir($handle);
                                                 }
-                                            ?>
+                                                ?>
                                         </select>
                                     </div>
                                 </div>
-                                <?php endif; ?>
                                 <div class="form-group">
                                     <div class="col-sm-12">
                                         <input type="submit" name="update" class="btn btn-success" value="Salvar" />

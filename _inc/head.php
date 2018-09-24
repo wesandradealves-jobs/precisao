@@ -23,8 +23,8 @@
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="HandheldFriendly" content="true" />
     <?php if($favico) : ?>
-      <link rel="apple-touch-icon" href="profile/uploads/<?php echo $favico; ?>" />
-      <link rel="shortcut icon" type="image/png" href="profile/uploads/<?php echo $favico; ?>" />
+      <link rel="apple-touch-icon" href="<?php echo $default_url; ?>profile/uploads/<?php echo $favico; ?>" />
+      <link rel="shortcut icon" type="image/png" href="<?php echo $default_url; ?>profile/uploads/<?php echo $favico; ?>" />
     <?php endif; ?>
     <link rel="canonical" href="<?php echo (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") . "://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
  ?>">
