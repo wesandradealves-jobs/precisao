@@ -95,7 +95,7 @@
                                             <td class="txt-oflo">
                                                 <a class="<?php echo (substr($row->image, -3) == 'png' || substr($row->image, -3) == 'jpg' || substr($row->image, -3) == 'gif' || substr($row->image, -3) == 'bmp') ? 'lightbox' : ''; ?>" target="_blank" href="uploads/<?php echo (isset($row->image)) ? $row->image : ''; ?>"><?php echo $row->image; ?></a>
                                             </td>  
-                                            <td class="txt-oflo"><code><?php echo $row->headers; ?></code></td>
+                                            <td class="txt-oflo"><code><?php echo substr($row->headers,0,140)."..."; ?></code></td>
                                             <td class="txt-oflo"><?php echo $row->slug; ?></td>
                                             <td class="txt-oflo"><?php echo $row->pagina_mae; ?></td>
                                             <td class="txt-oflo"><?php echo ($row->anchor) ? 'Sim' : 'Não'; ?></td>

@@ -80,6 +80,7 @@ $(document).ready(function () {
         center:false,
         autoWidth:false,
         autoplay:false,
+        autoplayTimeout:7000,
         margin: 0,
         nav:true,
         dots:false,

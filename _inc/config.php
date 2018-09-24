@@ -165,4 +165,24 @@
     }
 
     $ga = 'UA-124184563-1';
+
+    error_reporting(0);
+
+    foreach (explode("/", $telefone) as $key => $value) {
+
+        $meusEnderecos[$key]->o_telefone = $value;
+
+    } 
+
+    foreach (explode("/", $email) as $key => $value) {
+
+        $meusEnderecos[$key]->o_email = $value;
+
+    } 
+
+    foreach (explode("/", $endereco) as $key => $value) {
+
+        $meusEnderecos[$key]->o_endereco = $value;
+
+    }
 ?>

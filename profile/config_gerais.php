@@ -163,7 +163,7 @@
                 // 
 
                 if(isset($stmt) && $stmt !== FALSE) {
-                    $stmt->bind_param("ssssssssss", $smtp_user, $smtp_host, $smtp_password, $smtp_port, $contact_form, $cotacao_form, $trabalhe_form, $file, $file_favico, $titulo);
+                    $stmt->bind_param("ssssssssss", $smtp_user, $smtp_host, $smtp_password, $smtp_port, $contact_form, $cotacao_form, $trabalhe_form, $titulo, $file, $file_favico);
                     $stmt->execute();
                     $stmt->close();
                 } else {

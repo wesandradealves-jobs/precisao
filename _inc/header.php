@@ -3,7 +3,7 @@
           <?php if($email||$telefone) : ?>
           <div id="topo">
             <div class="container">
-              <p class="phone">Telefone: <?php $telefone_tratado = explode("/", $telefone, 2); echo $telefone_tratado[0]; ?> | E-mail: <a href="mailto:<?php echo $email; ?>" title="<?php echo $email; ?>"><?php echo $email; ?></a></p>
+              <p class="phone">Telefone: <?php $telefone_tratado = explode("/", $telefone, 2); echo $telefone_tratado[0]; ?> | E-mail: <?php $email_tratado = explode("/", $email, 2); ?> <a href="mailto:<?php echo $email_tratado[0]; ?>" title="<?php echo $email_tratado[0]; ?>"><?php echo $email_tratado[0]; ?></a></p>
             </div>
           </div>
           <?php endif; ?>
