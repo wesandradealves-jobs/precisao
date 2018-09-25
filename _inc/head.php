@@ -10,7 +10,7 @@
     <base href="/" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="robots" content="noindex,nofollow,disallow">
-    <meta name="author" content="Wesley Andrade - github.com/wesandradealves" />
+    <meta name="author" content="System Dreams - https://www.system-dreams.com" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta property="og:description" content="<?php echo $description; ?>">
     <meta property="og:url" content="<?php echo (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") . "://$_SERVER[HTTP_HOST]";

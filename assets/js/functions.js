@@ -76,10 +76,10 @@ $("#cep").blur(function() {
 }); 
 $(document).ready(function () {
     $('.owl-carousel').owlCarousel({
-        loop:false,
+        loop:true,
         center:false,
         autoWidth:false,
-        autoplay:false,
+        autoplay:true,
         autoplayTimeout:7000,
         margin: 0,
         nav:true,
