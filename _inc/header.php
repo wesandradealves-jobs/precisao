@@ -4,6 +4,7 @@
           <div id="topo">
             <div class="container">
               <p class="phone">Telefone: <?php $telefone_tratado = explode("/", $telefone, 2); echo $telefone_tratado[0]; ?> | E-mail: <?php $email_tratado = explode("/", $email, 2); ?> <a href="mailto:<?php echo $email_tratado[0]; ?>" title="<?php echo $email_tratado[0]; ?>"><?php echo $email_tratado[0]; ?></a></p>
+              <img src="<?php echo $default_url."/assets/imgs/Fundacao_Abrinq.png"; ?>" alt="Abrinq" height="48" />
             </div>
           </div>
           <?php endif; ?>
