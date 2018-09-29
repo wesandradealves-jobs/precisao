@@ -54,7 +54,7 @@
                         ?>
                     </h2>
                     <?php if($slug == 'contato') : ?>
-                        <form class="contact-form -contato" action="<?php echo $default_url; ?>phpmailer/send.php" method="POST">
+                        <form class="contact-form -contato" name="contato" action="<?php echo $default_url; ?>phpmailer/send.php" method="POST">
                             <p>PARA SUGESTÕES, CRÍTICAS, ELOGIOS OU RECLAMAÇÕES, PREENCHA O FORMULÁRIO ABAIXO:</p>
                             <div class="form-row">
                                 <div class="form-group">
@@ -91,6 +91,9 @@
                                     </span>
                                 </div>
                                 <div class="form-group-full">
+                                    <div>
+                                        <span class="g-recaptcha" data-sitekey="6LcBeGgUAAAAAAP5FLtp7o8S6Bl41Lq6kNMyUPf8"></span>
+                                    </div>
                                     <input type="submit" name="contato" value="Enviar" class="btn -red" />
                                 </div>
                             </div>
@@ -100,7 +103,7 @@
                     <?php elseif($slug == '404') : ?>
                         <p>Encontramos um erro ao processar sua página. Desculpe-nos o transtorno.</p>
                     <?php else : ?>
-                        <form class="contact-form -trabalhe-conosco" action="<?php echo $default_url; ?>phpmailer/send.php" method="POST">
+                        <form class="contact-form -trabalhe-conosco" name="trabalhe-conosco" action="<?php echo $default_url; ?>phpmailer/send.php" method="POST">
                             <p>PARA SE CADASTRAR, PREENCHA O FORMULÁRIO ABAIXO:</p>
                             <div class="form-row">
                                 <div class="form-group">
@@ -192,6 +195,9 @@
                                     </span>
                                 </div>
                                 <div class="form-group-full">
+                                    <div>
+                                        <span class="g-recaptcha" data-sitekey="6LcBeGgUAAAAAAP5FLtp7o8S6Bl41Lq6kNMyUPf8"></span>
+                                    </div>
                                     <input type="submit" name="trabalhe-conosco" value="Enviar" class="btn -red" />
                                 </div>
                             </div>

@@ -1,4 +1,4 @@
-<form action="phpmailer/send.php" method="POST" class="cotacao-form">
+<form action="phpmailer/send.php" name="orcamento" method="POST" class="cotacao-form">
     <div class="cotacao-header">
       <h2 class="title">Faça sua cotação online agora!</h2>
       <p class="text">Profissionais capacitados que atendem às necessidades específicas</p>
