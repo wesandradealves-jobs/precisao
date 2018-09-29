@@ -275,12 +275,12 @@
                                     $repeatTPL .= '<h2 class="title">'.$crawler['titulo'].'</h2>';
                                     $repeatTPL .= '<div class="content-holder">'.substr(strip_tags(htmlspecialchars_decode($crawler['text']), '<style>'), 0, 300).((strlen(substr(strip_tags(htmlspecialchars_decode($crawler['text']), '<style>'), 0, 300)) >= 300) ? '...' : '')."</div>";
                                     // '.$default_url.$row->slug.'/'.$rowID.'  single.php?post='.$slug.'&id='.$crawler['id'].'
-                                    $repeatTPL .= '<a class="btn -red" href="'.$default_url.$slug.'/'.$crawler['id'].'" title="'.$crawler['titulo'].'">Continue lendo</a>';
+                                    $repeatTPL .= '<a class="btn -red" href="'.$default_url.$slug.'/'.to_permalink($crawler['titulo']).'" title="'.$crawler['titulo'].'">Continue lendo</a>';
                                     $repeatTPL .= '</div>';
                                 else : 
                                     $repeatTPL .= '<h2 class="title">'.$crawler['titulo'].'</h2>';
                                     $repeatTPL .= '<div>';
-                                    $repeatTPL .= '<div style="background-image:url('.$default_url.'profile/uploads/'.$crawler['url'].')"><a class="btn -red" href="'.$default_url.$slug.'/'.$crawler['id'].'" title="'.$crawler['titulo'].'">Continue lendo</a></div>';
+                                    $repeatTPL .= '<div style="background-image:url('.$default_url.'profile/uploads/'.$crawler['url'].')"><a class="btn -red" href="'.$default_url.$slug.'/'.to_permalink($crawler['titulo']).'" title="'.$crawler['titulo'].'">Continue lendo</a></div>';
                                     $repeatTPL .= '<div class="content-holder">'.substr(strip_tags(htmlspecialchars_decode($crawler['text']), '<style>'), 0, 300).((strlen(substr(strip_tags(htmlspecialchars_decode($crawler['text']), '<style>'), 0, 300)) >= 300) ? '...' : '')."</div>";
                                     $repeatTPL .= '</div>';
                                 endif; 

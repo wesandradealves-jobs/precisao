@@ -13,8 +13,9 @@
 
     if(!isset($_GET['id'])){
         if(isset($_POST['update'])) :
-            $stmt = $conn->prepare("INSERT servicos (`titulo`, `url`, `text`, `headers`) VALUES (?, ?, ?, ?)");
+            $stmt = $conn->prepare("INSERT servicos (`titulo`, `url`, `text`, `headers`, `slug`) VALUES (?, ?, ?, ?, ?)");
             $titulo = $_POST['titulo'];
+            $slug = to_permalink($_POST['titulo']);
             $text = htmlspecialchars($_POST['text']);
             $headers = htmlspecialchars($_POST['headers']);
 
@@ -40,7 +41,7 @@
             $file = basename($_FILES["file"]["name"]);
 
             if(isset($stmt) && $stmt !== FALSE) {
-                $stmt->bind_param("ssss", $titulo, $file, $text, $headers);
+                $stmt->bind_param("sssss", $titulo, $file, $text, $headers, $slug);
                 $stmt->execute();
                 $stmt->close();
             } else {
@@ -51,13 +52,14 @@
         endif;           
     } else {
         $id = $_GET['id'];
-        $stmt = $conn->prepare("SELECT `titulo`, `url`, `text`, `headers` FROM `servicos` WHERE `servicos`.`id` = '".$id."'");
+        $stmt = $conn->prepare("SELECT `titulo`, `url`, `text`, `headers`, `slug` FROM `servicos` WHERE `servicos`.`id` = '".$id."'");
         if($stmt){
             $stmt->execute();
-            $stmt->bind_result($titulo, $url, $text, $headers);
+            $stmt->bind_result($titulo, $url, $text, $headers, $slug);
             while($stmt->fetch()) {
                 $titulo = $titulo;
                 $url = $url;
+                $url = $slug;
                 $text = htmlspecialchars($text);
                 $headers = htmlspecialchars($headers);
             }
@@ -66,6 +68,7 @@
 
         if(isset($_POST['update'])) :
             $titulo = $_POST['titulo'];
+            $slug = to_permalink($_POST['titulo']);
             $url = $_POST['url'];
             $text = htmlspecialchars($_POST['text']);
             $headers = htmlspecialchars($_POST['headers']);
@@ -92,10 +95,10 @@
             $file = basename($_FILES["file"]["name"]);
             $boolFile = ($file) ? $file : $url;
 
-            $stmt = $conn->prepare("UPDATE servicos SET `titulo` = ?, `url` = ?, `text` = ?, `headers` = ? WHERE `servicos`.`id` = '".$id."'");
+            $stmt = $conn->prepare("UPDATE servicos SET `titulo` = ?, `url` = ?, `text` = ?, `headers` = ?, `slug` = ? WHERE `servicos`.`id` = '".$id."'");
 
             if(isset($stmt) && $stmt !== FALSE) {
-                $stmt->bind_param("ssss", $titulo, $boolFile, $text, $headers);
+                $stmt->bind_param("sssss", $titulo, $boolFile, $text, $headers, $slug);
                 $stmt->execute();
                 $stmt->close();
                 (($url != $file) && $file) ? unlink('../profile/uploads/'.$url) : '';

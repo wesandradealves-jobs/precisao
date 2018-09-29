@@ -3,7 +3,7 @@
     $usuario = "demo1380119880";
     $senha = "Di@290236";
     $dbname = "demo1380119880";
-    $default_url = 'http://precisaoservicos.com.br/novo/';
+    $default_url = 'http://localhost/precisao/';
   
     //Criar a conexao
     $conn = mysqli_connect($servidor, $usuario, $senha, $dbname);

@@ -18,14 +18,15 @@
                           if($fetchSubmenu = $conn->prepare("SELECT * FROM `$row->slug` ORDER BY id ASC")) :
                             if($fetchSubmenu) :
                               $fetchSubmenu->execute();
-                              $fetchSubmenu->bind_result($rowID, $rowTITULO, $rowURL, $rowTEXT, $rowHEADERS);
+                              $fetchSubmenu->bind_result($rowID, $rowTITULO, $rowURL, $rowTEXT, $rowHEADERS, $rowSLUG);
                               $submenuTpl = '<ul class="submenu">';
                               while($fetchSubmenu->fetch()) :
                                   $rowID = $rowID;
                                   $rowTITULO = $rowTITULO;
                                   $rowURL = $rowURL;
+                                  $rowSLUG = $rowSLUG;
                                   $rowTEXT = $rowTEXT; //single.php?post='.$row->slug.'&id='.$rowID.'
-                                  $submenuTpl .= '<li><a href="'.$default_url.$row->slug.'/'.$rowID.'" title="'.$rowTITULO.'">'.$rowTITULO.'</a></li>';
+                                  $submenuTpl .= '<li><a href="'.$default_url.$row->slug.'/'.$rowSLUG.'" title="'.$rowTITULO.'">'.$rowTITULO.'</a></li>';
                               endwhile;
                               $submenuTpl .= '</ul>';
                               echo $submenuTpl;

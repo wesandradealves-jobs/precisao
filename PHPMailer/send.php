@@ -122,7 +122,6 @@ $mail->SMTPAuth = true;
 $mail->Username = ($smtp_user) ? $smtp_user : '';
 //Password to use for SMTP authentication
 $mail->Password = ($smtp_password) ? $smtp_password : '';
-$mail->AddCC('wesandradealves@gmail.com', 'Wesley SD');
 $mail->AddBCC('luiz.sd@gmail.com', 'Luiz SD');
 //Set who the message is to be sent from
 $mail->setFrom(($smtp_user) ? $smtp_user : '', 'NoReply - Precisão Serviços');

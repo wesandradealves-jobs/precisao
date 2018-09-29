@@ -5,21 +5,31 @@
 <!DOCTYPE html>
 <html lang="pt-br" xmlns="http://www.w3.org/1999/xhtml">
   <head>
-    <title><?php echo $ctitulo." - ".$pgTitulo; ?></title>
     <meta charset="UTF-8" />
     <base href="/" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="robots" content="noindex,nofollow,disallow">
-    <meta name="author" content="System Dreams - https://www.system-dreams.com" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta property="og:description" content="<?php echo $description; ?>">
-    <meta property="og:url" content="<?php echo (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") . "://$_SERVER[HTTP_HOST]";
- ?>">
-    <meta property="og:image" content="<?php echo (isset($tmp_screenshot)) ? $default_url."profile/uploads/".$tmp_screenshot : $default_url."screenshot.png"; ?>">
-    <meta property="og:type" content="website" />
-    <meta property="og:title" content="<?php echo $ctitulo." - ".$pgTitulo; ?>" />
-    <meta property="og:site_name" content="<?php echo $ctitulo." - ".$pgTitulo; ?>" />
-    <?php echo (isset($headers)) ? html_entity_decode($headers) : ''; ?>
+
+    <?php if(isset($headers) && $headers != '') : ?>
+
+        <?php echo html_entity_decode($headers); ?>
+        
+    <?php else : ?>
+
+        <title><?php echo $ctitulo." - ".$pgTitulo; ?></title>
+
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="robots" content="noindex,nofollow,disallow">
+        <meta name="author" content="System Dreams - https://www.system-dreams.com" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <meta property="og:description" content="<?php echo strip_tags($description); ?>">
+        <meta property="og:url" content="<?php echo (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") . "://$_SERVER[HTTP_HOST]";
+     ?>">
+        <meta property="og:image" content="<?php echo (isset($tmp_screenshot)) ? $default_url."profile/uploads/".$tmp_screenshot : $default_url."screenshot.png"; ?>">
+        <meta property="og:type" content="website" />
+        <meta property="og:title" content="<?php echo $ctitulo." - ".$pgTitulo; ?>" />
+        <meta property="og:site_name" content="<?php echo $ctitulo." - ".$pgTitulo; ?>" />
+
+    <?php endif; ?>
+
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="HandheldFriendly" content="true" />
     <?php if($favico) : ?>

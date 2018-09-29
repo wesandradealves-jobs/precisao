@@ -97,22 +97,22 @@
                     } 
                     // if($slug == "" || !isset($slug)) {
                     //     header("Location: ./page.php?slug=404");
-                    // }
+                    // } 
                 } else if($basename == "single"){
-                    $post_id = $_GET['id'];
+                    $post_slug = $_GET['post_slug'];
                     $post = $_GET['post'];
-                    $single = $conn->prepare("SELECT * FROM `$post` WHERE `id` = '$post_id' ORDER BY id");
-
+                    $single = $conn->prepare("SELECT * FROM `$post` WHERE `slug` = '$post_slug' ORDER BY id");
                     if($single){
                         $single->execute();
                         $single->store_result();
-                        $single->bind_result($single_post_id, $single_post_titulo, $single_post_url, $single_post_text, $headers);
+                        $single->bind_result($single_post_id, $single_post_titulo, $single_post_url, $single_post_text, $headers, $slug);
                         while($single->fetch()) {
                             $single_post_titulo = $single_post_titulo;
                             $single_post_url = $single_post_url;
                             $single_post_text = $single_post_text;
                             $single_post_id = $single_post_id;
                             $headers = $headers;
+                            $slug = $slug;
                         }
                         $sessao = $conn->prepare("SELECT `titulo`, `slug`, `image` FROM `paginas` WHERE `slug` = '$post' ORDER BY id");
                         if($sessao){

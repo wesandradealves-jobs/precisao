@@ -40,7 +40,7 @@ RewriteCond %{REQUEST_FILENAME} !-d
 
 RewriteCond %{REQUEST_URI} !^/profile
 
-RewriteRule ^(.*)/([0-9]+) single.php?post=$1&id=$2 [L]
+RewriteRule ^(.*)/(.*) single.php?post=$1&post_slug=$2 [L]
 
 RewriteCond %{SCRIPT_FILENAME} !-f
 RewriteCond %{SCRIPT_FILENAME} !-d
@@ -52,8 +52,12 @@ RewriteCond %{REQUEST_URI} !^/profile
 
 RewriteRule ^login login.php [L]
 
-ErrorDocument 404 http://precisaoservicos.com.br/novo/pagina/404
+#RewriteRule ^pagina/(.*) page.php?slug=$1
 
+ErrorDocument 404 http://localhost/precisao/pagina/404
+
+RewriteCond %{HTTP_HOST} ^precisaoservicos.com.br [NC]
+RewriteRule ^(.*)$ http://www.precisaoservicos.com.br/$1 [L,R=301,NC]
 
 <IfModule mod_deflate.c>
     AddOutputFilterByType DEFLATE text/plain
