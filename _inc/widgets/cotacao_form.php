@@ -1,4 +1,4 @@
-<form action="phpmailer/send.php" name="orcamento" method="POST" class="cotacao-form">
+<form action="<?php echo $default_url; ?>PHPMailer/send.php" name="orcamento" method="POST" class="cotacao-form">
     <div class="cotacao-header">
       <h2 class="title">Faça sua cotação online agora!</h2>
       <p class="text">Profissionais capacitados que atendem às necessidades específicas</p>
@@ -23,6 +23,9 @@
         </span>
       </span>     
       <span>
+        <span class="form-group-full">
+            <span class="g-recaptcha" data-sitekey="6LcBeGgUAAAAAAP5FLtp7o8S6Bl41Lq6kNMyUPf8"></span>
+        </span>
         <input type="submit" value="Solicitar" name="orcamento" class="btn -red" />
       </span>     
     </div>

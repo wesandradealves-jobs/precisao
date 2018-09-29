@@ -79,6 +79,7 @@ $(document).ready(function () {
         loop:true,
         center:false,
         autoWidth:false,
+        autoplayHoverPause: true,
         autoplay:true,
         autoplayTimeout:7000,
         margin: 0,
