@@ -1,7 +1,7 @@
 <?php
-    $servidor = "demo1380119880.mysql.dbaas.com.br";
-    $usuario = "demo1380119880";
-    $senha = "Di@290236";
+    $servidor = "localhost";
+    $usuario = "root";
+    $senha = "";
     $dbname = "demo1380119880";
     $default_url = 'http://localhost/precisao/';
   
