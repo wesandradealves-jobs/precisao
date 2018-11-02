@@ -13,7 +13,7 @@
 // atendimento@precisaoservicos.com.br
 
 require_once("PHPMailerAutoload.php");
-require_once("../_inc/db.php");
+require ( dirname(__FILE__).'../../_inc/db.php' );
 
 $stmt = $conn->prepare("SELECT `smtp_user`, `smtp_host`, `smtp_password`, `smtp_port`, `contact_form`, `cotacao_form`, `trabalhe_form` FROM `smtp` ORDER BY id");
 
@@ -121,22 +121,19 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                                             'FILE',
                                             'Error Uploading File'
                                         ));
-                                        exit;
                                     }
                                 } else {
                                     print_r(array(
                                         'FILE',
                                         'File Not Supported'
                                     ));
-                                    exit;
                                 }
                             }
                         }
                     }
                 }
                 
-                
-                db('localhost', 'root', '', 'demo1380119880');
+                db($servidor, $usuario, $senha, $dbname);
                 
                 //
                 $assunto = 'Trabalhe Conosco';
