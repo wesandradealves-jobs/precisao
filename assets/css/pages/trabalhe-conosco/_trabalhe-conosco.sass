@@ -7,6 +7,8 @@
                 flex-flow: row wrap 
                 justify-content: space-between
                 width: 100%
+                &.with-label
+                    padding-bottom: 15px
                 &.form-group-full
                     span 
                         width: 100%
@@ -49,5 +51,7 @@
                             padding-bottom: 7.3px
                         &[type="radio"]
                             width: auto
+                        &[type="file"]
+                            height: auto !important
                     textarea 
                         height: 90px
