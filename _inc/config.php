@@ -150,7 +150,7 @@
         $screenshot = array_pop($match);
 
         // requires php5
-        define('UPLOAD_DIR', 'profile/uploads/');
+        define('UPLOAD_DIR', 'profile/tmp/');
         $img = $screenshot;
         $img = str_replace('data:image/png;base64,', '', $img);
         $img = str_replace(' ', '+', $img);

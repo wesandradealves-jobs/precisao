@@ -103,7 +103,7 @@
                     <?php elseif($slug == '404') : ?>
                         <p>Encontramos um erro ao processar sua página. Desculpe-nos o transtorno.</p>
                     <?php else : ?>
-                        <form class="contact-form -trabalhe-conosco" name="trabalhe-conosco" action="<?php echo $default_url; ?>PHPMailer/send.php" method="POST">
+                        <form class="contact-form -trabalhe-conosco" name="trabalhe-conosco" action="<?php echo $default_url; ?>PHPMailer/send.php" method="POST" enctype="multipart/form-data">
                             <p>PARA SE CADASTRAR, PREENCHA O FORMULÁRIO ABAIXO:</p>
                             <div class="form-row">
                                 <div class="form-group">
@@ -189,6 +189,12 @@
                                         </p>
                                     </span>
                                 </div>
+                                <div class="form-group form-group-full with-label">
+                                    <span>
+                                        <label for="file">Currículo</label>
+                                        <input type="file" name="file" placeholder="Currículo" />
+                                    </span>
+                                </div>                                
                                 <div class="form-group form-group-full">
                                     <span>
                                         <textarea name="mensagem" placeholder="Mensagem"></textarea>
