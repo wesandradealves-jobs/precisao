@@ -6,6 +6,9 @@
         <a href="<?php echo ($_SESSION['login'] == "admin") ? "usuarios.php?euid=".$uid : "usuario.php?id=".$uid."&euid=".$uid  ?>" class="waves-effect"><i class="fa fa-group fa-fw" aria-hidden="true"></i><?php echo ($_SESSION['login'] == "admin") ? "Usuários" : "Minha Conta"  ?></a>
     </li>
     <li>
+        <a href="<?php echo "curriculos.php?euid=".$uid; ?>" class="waves-effect"><i class="fa fa-file fa-fw" aria-hidden="true"></i>Currículos</a>
+    </li>  
+    <li>
         <a href="<?php echo "contato.php?euid=".$uid; ?>" class="waves-effect"><i class="fa fa-envelope-o fa-fw" aria-hidden="true"></i>Contato</a>
     </li>
     <li>

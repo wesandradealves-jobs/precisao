@@ -36,6 +36,20 @@
             $stmt->close();
             header("Location: ../profile/artigo.php?id=".$id."&euid=".$_GET['uid']);
         break;
+        case "curriculos":
+            $id = $_GET['id'];
+            $file = $_GET['file'];
+            $stmtProc = $conn->prepare("DELETE FROM curriculos WHERE id = ? LIMIT 1");
+            if(isset($stmtProc) && $stmtProc !== FALSE) {
+                $stmtProc->bind_param("i",$id);
+                $stmtProc->execute();
+                ($_GET['file']) ? unlink('../profile/curriculos/'.$file) : '';
+            } else {
+                die($conn->error);
+            }    
+            $stmtProc->close();
+            header("Location: ../profile/curriculos.php?euid=".$_GET['uid']);
+        break;        
         case "banner":
             $id = $_GET['id'];
             $file = $_GET['file'];
